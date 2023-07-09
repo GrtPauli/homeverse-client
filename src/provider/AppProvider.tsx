@@ -1,6 +1,6 @@
 import { ApolloProvider } from "@apollo/client";
-import AppClient from "./ApolloClient";
 import AppContextProvider from "./AppContext";
+import AppClient from "@/constants/ApolloClient";
 
 interface IProps {
     children: any;
