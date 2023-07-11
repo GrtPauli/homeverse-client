@@ -153,3 +153,31 @@ body{
   height: 45px;
   border-radius: 5px;
 }
+
+.parallax {
+  /* The image used */
+  /* background-image: url("img_parallax.jpg"); */
+
+  /* Set a specific height */
+  /* min-height: 100vh;  */
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.parallax-m {
+  /* The image used */
+  /* background-image: url("img_parallax.jpg"); */
+
+  /* Set a specific height */
+  min-height: 600px; 
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
