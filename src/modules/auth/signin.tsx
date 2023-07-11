@@ -1,9 +1,10 @@
 import React from 'react'
 import { AuthLayout } from './components'
 import { Formik, FormikProps } from "formik"
-import { TextInput } from '@/components'
+import { PasswordInput, TextInput } from '@/components'
 import Logo from '../../assets/images/logo2.png'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function SigninPage(){
   return (
@@ -36,11 +37,7 @@ export default function SigninPage(){
                           placeHolder='Enter your email address'
                         />
 
-                        <TextInput
-                          name='password'
-                          label='Password'
-                          placeHolder='Enter your password'
-                        />
+                        <PasswordInput/>
                       </div>
 
                       <div className='mt-8'>
@@ -49,7 +46,9 @@ export default function SigninPage(){
                         </button>
 
                         <div className='text-sm mt-5 flex flex-col justify-center items-center gap-3'>
-                          <p>Don't have an account ?</p>
+                          <Link href='/signup'>
+                            <p>Don't have an account ?</p>
+                          </Link>
                           <p>Forgot your password ?</p>
                         </div>
                       </div>

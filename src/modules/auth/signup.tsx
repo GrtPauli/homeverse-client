@@ -1,9 +1,10 @@
 import React from 'react'
 import { AuthLayout } from './components'
 import { Formik, FormikProps } from "formik"
-import { TextInput } from '@/components'
+import { PasswordInput, TextInput } from '@/components'
 import Logo from '../../assets/images/logo2.png'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function SignUpPage(){ 
     return (
@@ -31,9 +32,9 @@ export default function SignUpPage(){
                         <div className='flex flex-col justify-between'>
                             <div className='flex flex-col gap-3'>
                             <TextInput
-                                name='email'
-                                label='Email'
-                                placeHolder='Enter your email address'
+                                name='username'
+                                label='Username'
+                                placeHolder='Enter your username'
                             />
 
                             <TextInput
@@ -42,11 +43,7 @@ export default function SignUpPage(){
                                 placeHolder='Enter your email address'
                             />
 
-                            <TextInput
-                                name='password'
-                                label='Password'
-                                placeHolder='Enter your password'
-                            />
+                            <PasswordInput/>
                             </div>
 
                             <div className='mt-8'>
@@ -55,7 +52,9 @@ export default function SignUpPage(){
                             </button>
 
                             <div className='text-sm mt-5 flex flex-col justify-center items-center gap-3'>
-                                <p>Already have an account ?</p>
+                                <Link href='/signin'>
+                                    <p>Already have an account ?</p>
+                                </Link>
                             </div>
                             </div>
                         </div>
