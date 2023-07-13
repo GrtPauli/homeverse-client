@@ -24,7 +24,7 @@ export const Button: FC<IProps> = ({
   title,
   loading,
   loadingText,
-  fullWidth = true
+  fullWidth = true,
 }) => {
   const [isLoading, setLoading] = useState(loading)
   useEffect(() => {
@@ -33,10 +33,8 @@ export const Button: FC<IProps> = ({
 
   return (
     <button
-      className={
-        `bg-primary py-2.5 ${fullWidth ? "w-full" : ""} 
-        rounded text-light-white px-5 flex justify-center items-center font-bold`
-      }
+      className={`bg-primary py-2.5 ${fullWidth ? 'w-full' : ''} 
+        rounded text-light-white px-5 flex justify-center items-center font-bold`}
       type={type ? type : 'submit'}
       onClick={onClick}
       disabled={loading}

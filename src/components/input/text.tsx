@@ -32,17 +32,14 @@ export const TextInput: React.FC<IProps> = ({
   }, [field])
 
   return (
-    <div
-      style={{ marginBottom: 10, display: '', flexDirection: 'column' }}
-      className="w-full"
-    >
+    <div style={{ marginBottom: 10, display: '', flexDirection: 'column' }} className="w-full">
       {label && <p className="text-dark-prussian-blue font-medium mb-3">{label}</p>}
 
       {type == 'textarea' ? (
         <textarea
           className={`
             text-sm border border-colors-opal/40 w-full rounded py-3 outline-none px-5 resize-none     
-          ${className}`}          
+          ${className}`}
           {...field}
           {...props}
           name={name}
