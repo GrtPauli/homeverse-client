@@ -1,3 +1,4 @@
+import { AuthContextProvider } from "@/modules/auth/context";
 import React, { ComponentProps, FC } from "react";
 
 const CombineContext = (...components: FC[]): FC<any> => {
@@ -16,7 +17,7 @@ const CombineContext = (...components: FC[]): FC<any> => {
     )
 }
 
-const providers = [] as any
+const providers = [AuthContextProvider] as any
 const AppContextProvider = CombineContext(...providers)
 
 export default AppContextProvider
