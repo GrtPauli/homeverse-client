@@ -1,1 +1,1 @@
-export * from "./sell/page"
+export * from './sell/page'

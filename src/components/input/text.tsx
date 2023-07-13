@@ -1,18 +1,18 @@
-import { ErrorMessage, Field, useField } from "formik";
-import React, { useEffect } from "react";
+import { ErrorMessage, Field, useField } from 'formik'
+import React, { useEffect } from 'react'
 
 interface IProps {
-  label?: string;
-  type?: string;
-  name: string;
-  className?: string;
-  placeHolder?: string;
-  disabled?: boolean;
+  label?: string
+  type?: string
+  name: string
+  className?: string
+  placeHolder?: string
+  disabled?: boolean
   // onChange?:(value:string)=>void;
   props?: {
-    [x: string]: any;
-  };
-  containerClassName?: string | undefined;
+    [x: string]: any
+  }
+  containerClassName?: string | undefined
 }
 
 export const TextInput: React.FC<IProps> = ({
@@ -25,20 +25,20 @@ export const TextInput: React.FC<IProps> = ({
   disabled,
   ...props
 }) => {
-  const [field, meta] = useField(name);
+  const [field, meta] = useField(name)
 
   useEffect(() => {
     // console.log(field);
-  }, [field]);
+  }, [field])
 
   return (
     <div
-      style={{ marginBottom: 10, display: "", flexDirection: "column" }}
+      style={{ marginBottom: 10, display: '', flexDirection: 'column' }}
       className={containerClassName}
     >
       {label && <p className="text-[13px] text-dark mb-3">{label}</p>}
 
-      {type == "textarea" ? (
+      {type == 'textarea' ? (
         <textarea
           className={`form-control
           block
@@ -76,11 +76,7 @@ export const TextInput: React.FC<IProps> = ({
         />
       )}
 
-      <>
-        {meta?.touched && meta.error && (
-          <div className="text-red-500">{meta.error}</div>
-        )}
-      </>
+      <>{meta?.touched && meta.error && <div className="text-red-500">{meta.error}</div>}</>
     </div>
-  );
-};
+  )
+}

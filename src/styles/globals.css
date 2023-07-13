@@ -8,7 +8,6 @@
 \*-----------------------------------*/
 
 :root {
-
   /**
    * colors
    */
@@ -33,8 +32,8 @@
    * typography
    */
 
-  --ff-nunito-sans: "Nunito Sans", sans-serif;
-  --ff-poppins: "Poppins", sans-serif;
+  --ff-nunito-sans: 'Nunito Sans', sans-serif;
+  --ff-poppins: 'Poppins', sans-serif;
 
   --fs-1: 1.875rem;
   --fs-2: 1.5rem;
@@ -71,7 +70,7 @@
 /*-----------------------------------*\
   #RESET
 \*-----------------------------------*/
-body{
+body {
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -80,34 +79,35 @@ body{
   height: 8px;
 }
 
-::-webkit-scrollbar-track { background: var(--white); }
+::-webkit-scrollbar-track {
+  background: var(--white);
+}
 
 ::-webkit-scrollbar-thumb {
   background: var(--cadet);
   border-left: 0px solid var(--white);
 }
 
-
 @media (min-height: 900px) {
-    .hero-s{
-        height: 700px;
-      }
+  .hero-s {
+    height: 700px;
   }
-  
+}
+
 .slide-1 {
-    background-image: url(../assets/images/slide-1.jpg);
+  background-image: url(../assets/images/slide-1.jpg);
 }
 .slide-2 {
-    background-image: url(../assets/images/slide-2.jpg);
+  background-image: url(../assets/images/slide-2.jpg);
 }
 .slide-3 {
-    background-image: url(../assets/images/slide-5.jpg);
+  background-image: url(../assets/images/slide-5.jpg);
 }
 .slide-4 {
-    background-image: url(../assets/images/slide-4.jpg);
+  background-image: url(../assets/images/slide-4.jpg);
 }
 .slide-5 {
-    background-image: url(../assets/images/slide-3.jpg);
+  background-image: url(../assets/images/slide-3.jpg);
 }
 
 .app_input .fgWxYL.input_filled {
@@ -127,20 +127,17 @@ body{
   font-weight: 600;
 }
 
-.app_input .fgWxYL:focus-within label
-{
+.app_input .fgWxYL:focus-within label {
   color: #0b2c3c;
 }
 
-.app_input .fgWxYL.input_filled label
-{
+.app_input .fgWxYL.input_filled label {
   color: #0b2c3c;
 }
 
 .app_input .fgWxYL .ksGqvh {
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
-
 }
 
 .app_input .fgWxYL .dRtNVC {
@@ -173,7 +170,7 @@ body{
   /* background-image: url("img_parallax.jpg"); */
 
   /* Set a specific height */
-  min-height: 600px; 
+  min-height: 600px;
 
   /* Create the parallax scrolling effect */
   background-attachment: fixed;

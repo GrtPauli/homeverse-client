@@ -4,14 +4,14 @@ import { CTA, Hero, Services } from './components'
 
 export const HomePage = () => {
   return (
-    <div className='w-full'>
-        <Header/>
-        <div className='pt-[109px]'>
-          <Hero/>
-          <Services/>
-          <CTA/>
-        </div>
-        <Footer/>
+    <div className="w-full">
+      <Header />
+      <div className="pt-[109px]">
+        <Hero />
+        <Services />
+        <CTA />
+      </div>
+      <Footer />
     </div>
   )
 }

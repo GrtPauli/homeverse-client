@@ -1,20 +1,20 @@
-import { AuthContextProvider } from "@/modules/auth/context";
-import React, { ComponentProps, FC } from "react";
+import { AuthContextProvider } from '@/modules/auth/context'
+import React, { ComponentProps, FC } from 'react'
 
 const CombineContext = (...components: FC[]): FC<any> => {
-    return components.reduce(
-        (AccumulatedComponents: any, CurrentComponent: any) => {
-            return ({ children }: ComponentProps<FC<any>>): JSX.Element => {
-                return (
-                    <AccumulatedComponents>
-                      <CurrentComponent>{children}</CurrentComponent>
-                    </AccumulatedComponents>
-                  );
-            }
-        },
+  return components.reduce(
+    (AccumulatedComponents: any, CurrentComponent: any) => {
+      return ({ children }: ComponentProps<FC<any>>): JSX.Element => {
+        return (
+          <AccumulatedComponents>
+            <CurrentComponent>{children}</CurrentComponent>
+          </AccumulatedComponents>
+        )
+      }
+    },
 
-        ({ children }) => <>{children}</>
-    )
+    ({ children }) => <>{children}</>,
+  )
 }
 
 const providers = [AuthContextProvider] as any

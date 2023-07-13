@@ -9,8 +9,8 @@ interface Props {
 export const Header: React.FC<Props> = ({ noBanner = false }) => {
   return (
     <header className="header fixed w-full shadow-md z-50">
-        {noBanner == false && <TopBanner/>}
-        <Navbar/>
+      {noBanner == false && <TopBanner />}
+      <Navbar />
     </header>
   )
 }
