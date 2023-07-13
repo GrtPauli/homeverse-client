@@ -14,7 +14,8 @@ export const PasswordInput = () => {
         placeHolder='Enter your password'
       />
 
-      <button 
+      <button
+        type='button' 
         className='absolute right-5 top-11 h-5 w-5 text-gray-500'
         onClick={() => setTogglePassword(!togglePassword)}
       >

@@ -1,12 +1,22 @@
 import React from 'react'
 import { AuthLayout } from './components'
-import { Formik, FormikProps } from "formik"
-import { PasswordInput, TextInput } from '@/components'
+import { Form, Formik, FormikProps } from "formik"
+import { Button, PasswordInput, TextInput } from '@/components'
 import Logo from '../../assets/images/logo2.png'
 import Image from 'next/image'
 import Link from 'next/link'
+import { IUser } from './model'
+import { useAuthContext } from './context'
 
 export default function SigninPage(){
+
+  const { loading, logIn } = useAuthContext()
+
+  const handleSignIn = (val: IUser) => {
+    console.log(val)
+    logIn(val)
+  }
+
   return (
     <AuthLayout>
       <div className='w-full'>
@@ -24,35 +34,40 @@ export default function SigninPage(){
                 <Formik
                   // validationSchema={}
                   initialValues={{
-
+                    email: "",
+                    password: ""
                   }}
-                  onSubmit={() => {}}
+                  onSubmit={handleSignIn}
                 >
                   {(props: FormikProps<any>) => (
-                    <div className='flex flex-col justify-between'>
-                      <div className='flex flex-col gap-3'>
-                        <TextInput
-                          name='email'
-                          label='Email'
-                          placeHolder='Enter your email address'
-                        />
+                    <Form>
+                      <div className='flex flex-col justify-between'>
+                        <div className='flex flex-col gap-3'>
+                          <TextInput
+                            name='email'
+                            label='Email'
+                            placeHolder='Enter your email address'
+                          />
 
-                        <PasswordInput/>
-                      </div>
+                          <PasswordInput/>
+                        </div>
 
-                      <div className='mt-8'>
-                        <button className='bg-primary py-2.5 w-full rounded text-light-white font-bold'>
-                          Sign In
-                        </button>
+                        <div className='mt-8'>
+                          <Button
+                            loading={loading}
+                            onClick={() => props.handleSubmit()}
+                            title="Sign In"
+                          />
 
-                        <div className='text-sm mt-5 flex flex-col justify-center items-center gap-3'>
-                          <Link href='/signup'>
-                            <p>Don't have an account ?</p>
-                          </Link>
-                          <p>Forgot your password ?</p>
+                          <div className='text-sm mt-5 flex flex-col justify-center items-center gap-3'>
+                            <Link href='/signup'>
+                              <p>Don't have an account ?</p>
+                            </Link>
+                            <p>Forgot your password ?</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </Form>
                   )}
                 </Formik>
             </div>
