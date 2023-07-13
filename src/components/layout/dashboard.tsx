@@ -15,7 +15,7 @@ export const DashboardLayout: React.FC<Props> = ({ children, page }) => {
       {/* <DashboardHeader/> */}
       <div className="bg-light-cultured-2">
         <div className="flex ">
-          <div className="fixed pt-[130px] flex flex-col justify-between px-5 w-72 bg-dark-prussian-blue h-screen pb-3 text-light-white">
+          <div className="fixed pt-[130px] flex flex-col justify-between px-5 w-64 bg-dark-prussian-blue h-screen pb-3 text-light-white">
             <div className="flex flex-col gap-3 text-sm">
               <div className="flex gap-3 mb-5 items-center">
                 <div className="relative h-14 w-[58px]">
@@ -60,7 +60,7 @@ export const DashboardLayout: React.FC<Props> = ({ children, page }) => {
             </div>
           </div>
 
-          <div className="pl-72 pt-[140px] pb-[50px] flex justify-center items-center w-full">
+          <div className="pl-64 pt-[140px] pb-[50px] flex justify-center items-center w-full">
             {children}
           </div>
         </div>

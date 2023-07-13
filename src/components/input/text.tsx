@@ -34,32 +34,19 @@ export const TextInput: React.FC<IProps> = ({
   return (
     <div
       style={{ marginBottom: 10, display: '', flexDirection: 'column' }}
-      className={containerClassName}
+      className="w-full"
     >
-      {label && <p className="text-[13px] text-dark mb-3">{label}</p>}
+      {label && <p className="text-dark-prussian-blue font-medium mb-3">{label}</p>}
 
       {type == 'textarea' ? (
         <textarea
-          className={`form-control
-          block
-          w-full
-          px-3
-          py-1
-          text-base
-          font-normal
-          text-gray-700
-          bg-white bg-clip-padding
-          border border-solid border-gray-300
-          rounded
-          transition
-          ease-in-out
-          m-0
-          focus:text-gray-700 focus:bg-white focus:border-gray-200 focus:outline-none
-        ${className}`}
+          className={`
+            text-sm border border-colors-opal/40 w-full rounded py-3 outline-none px-5 resize-none     
+          ${className}`}          
           {...field}
           {...props}
           name={name}
-          rows={4}
+          rows={8}
           placeholder={placeHolder}
         ></textarea>
       ) : (
@@ -70,7 +57,7 @@ export const TextInput: React.FC<IProps> = ({
           name={name}
           disabled={disabled || false}
           className={`
-            text-xs bg-gray-100 placeholder-slate-700 w-full rounded-full py-3.5 outline-none px-5        
+            text-sm border border-colors-opal/40 w-full rounded py-3 outline-none px-5        
           ${className}`}
           placeholder={placeHolder}
         />
