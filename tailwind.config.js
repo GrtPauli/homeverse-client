@@ -22,7 +22,7 @@ module.exports = {
           "alice-blue": "#f0f7ff",
           "cultured-1": "#ededed",
           "cultured-2": "#f2f6f7",
-          "cultured-3": "#fdfdfd"
+          "cultured-3": "#FBFBFB"
         },
         dark: {
           black: "#000000",
@@ -47,7 +47,7 @@ module.exports = {
           "alice-blue": "#f0f7ff",
           "cultured-1": "#ededed",
           "cultured-2": "#f2f6f7",
-          "cultured-3": "#fcfcfc"
+          "cultured-3": "#FBFBFB"
         },
         dark: {
           black: "#000000",
@@ -71,7 +71,8 @@ module.exports = {
           seashell: "#fff2f0",
           "alice-blue": "#f0f7ff",
           "cultured-1": "#ededed",
-          "cultured-2": "#f2f6f7"
+          "cultured-2": "#f2f6f7",
+          "cultured-3": "#FBFBFB"
         },
         dark: {
           black: "#000000",
