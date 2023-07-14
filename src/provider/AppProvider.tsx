@@ -1,6 +1,7 @@
 import { ApolloProvider } from "@apollo/client";
 import AppContextProvider from "./AppContext";
 import AppClient from "@/constants/ApolloClient";
+import { SessionProvider } from "next-auth/react";
 
 interface IProps {
     children: any;
@@ -8,11 +9,13 @@ interface IProps {
 
 const AppProvider: React.FC<IProps> = ({ children }) => {
     return (
-        <ApolloProvider client={AppClient}>
-            <AppContextProvider>
-                {children}
-            </AppContextProvider>
-        </ApolloProvider>
+        <SessionProvider>
+            <ApolloProvider client={AppClient}>
+                <AppContextProvider>
+                    {children}
+                </AppContextProvider>
+            </ApolloProvider>
+        </SessionProvider>
     )
 }
 
