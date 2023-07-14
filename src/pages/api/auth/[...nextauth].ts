@@ -20,14 +20,14 @@ const LOGIN = gql`
   }
 `;
 
-const PROFILE = gql`
-  query user($id: String!) {
-    user(id: $id) {
-      _id
-      name
-      roles
+const GET_USER = gql`
+    query GetUser($id: String!) {
+        getUser(id: $id) {
+            _id
+            username
+            email
+        }
     }
-  }
 `;
 
 export default NextAuth({
@@ -37,7 +37,6 @@ export default NextAuth({
         secret: process.env.TOKEN_SECRET,
         async encode(data: any){
             const { secret, token, user } = data
-            // console.log(data);
             
             const jwtClaims = {
                 sub: token.sub,
@@ -48,6 +47,7 @@ export default NextAuth({
                 expiresIn: "60 days",
                 algorithm: "HS512"
             })
+
             return encodedToken;
         },
         async decode(data: any) {
@@ -68,7 +68,7 @@ export default NextAuth({
     callbacks: {
         async jwt(params: any) {
             const { token, user, account, profile, isNewUser } = params;
-            console.log(params);
+            // console.log(params);
             
             if (account?.accessToken) {
                 token.accessToken = account.accessToken;
@@ -80,18 +80,21 @@ export default NextAuth({
         },
         async session(params: any) {
             const { session, token } = params;
-            console.log(params);
+            // console.log(params);
             
             const user: any = session.user._id
                 ? { account: session.user }
-                : await apolloClient.request(PROFILE, { id: token.sub });
+                : await apolloClient.request(GET_USER, { id: token.sub });
 
             const encodedToken = jwt.sign(token, process.env.TOKEN_SECRET as any, {
                 algorithm: "HS256",
             });
+
+            // console.log(user);
+            
             session.id = token.sub;
             session.token = encodedToken;
-            session.user = { ...user.user, name: user.user.name };
+            session.user = { _id: user.getUser._id, name: user.getUser.username, email: user.getUser.email };
 
             return Promise.resolve(session);
         },
@@ -122,7 +125,7 @@ export default NextAuth({
                         name: username,
                         id: _id,
                         email,
-                        // user: res.signIn,
+                        user: res.login,
                     }
                 })
                 .catch((err) => {
