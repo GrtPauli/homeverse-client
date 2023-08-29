@@ -3,6 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css');
 /*-----------------------------------*\
   #CUSTOM PROPERTY
 \*-----------------------------------*/
@@ -74,8 +75,19 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
   height: 8px;
 }
 
@@ -92,6 +104,26 @@ body {
   .hero-s {
     height: 700px;
   }
+}
+
+._3sXmFundefined{
+  display: flex;
+  align-items: center;
+}
+
+._3sXmFundefined ._1qEzs{
+  margin-top: 0.5px;
+  margin-left: 8px;
+}
+
+.css-b62m3t-container .select__control {
+  min-height: 45px;
+}
+
+.location-selector ._3Ifyx {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding: 0px;
 }
 
 .slide-1 {
@@ -178,3 +210,43 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+.ant-steps-item-container .ant-steps-item-icon {
+  padding-top: 8px;
+}
+.ant-steps-item-container .ant-steps-item-icon .ant-steps-icon .ant-steps-finish-icon {
+  margin-top: -5px;
+}
+.ant-steps-item .ant-steps-item-container .ant-steps-item-content .ant-steps-item-description {
+  max-width: 100%;
+}
+
+.leaflet-container {
+  height: 75vh;
+  /* width: 90%;
+  border-radius: 2rem;*/ 
+}
+/* .leaflet-container .leaflet-pane {
+  z-index: 0;
+}
+
+.leaflet-top.leaflet-left .leaflet-control{
+  z-index: 0;
+}
+
+.cluster-icon {
+  background-color: #333;
+  height: 2em;
+  width: 2em;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  box-shadow: 0 0 0px 5px #fff;
+} */
+
+.ant-table-tbody tr.ant-table-row td.ant-table-cell.ant-table-cell-row-hover {
+  background-color: #fff;
+}
+

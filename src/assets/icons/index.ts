@@ -17,3 +17,8 @@ export * from './walletconnect'
 export * from './coinbase'
 export * from './eye'
 export * from './eye-slash'
+export * from "./camera"
+export * from "./video"
+export * from "./delete"
+export * from "./check"
+export * from "./chevron-left"

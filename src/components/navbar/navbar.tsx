@@ -1,35 +1,31 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Logo from '../../assets/images/logo.png'
 import Image from 'next/image'
-import {
-  ChevronDownIcon,
-  CoinBaseIcon,
-  MetamaskIcon,
-  WalletConnectIcon,
-  WalletIcon,
-} from '@/assets/icons'
-import { Button } from '../button'
-import UserImg from '../../assets/images/user.png'
+import UserProfile from './user'
 
 export const Navbar = () => {
-  const [modal, setModal] = useState<{ open: boolean }>({ open: false })
+  const renderContent = () => {
+    return (
+        <div>
+          ffffffffffffff
+        </div>
+    )
+  }
 
   return (
     <div>
-      <div className="bg-light-white py-2 px-16 flex justify-between items-center">
+      <div className="bg-light-white py-1.5 px-12 flex justify-between items-center">
         <div>
-          <Image src={Logo} alt="logo" width={200} height={100} />
+          <Image src={Logo} alt="logo" width={180} height={80} />
         </div>
 
-        <div className="flex gap-8 items-center font-medium">
+        <div className="flex gap-8 items-center ">
           <p>Buy</p>
           <p>Rent</p>
           <p>Sell</p>
           <p>Agent Finder</p>
 
-          <button className="border-gray-400 border-2 rounded-full">
-            <Image src={UserImg} alt="user" width={35} height={35} />
-          </button>
+          <UserProfile content={renderContent}/>
         </div>
       </div>
     </div>

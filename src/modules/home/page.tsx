@@ -6,7 +6,7 @@ export const HomePage = () => {
   return (
     <div className="w-full">
       <Header />
-      <div className="pt-[109px]">
+      <div className="pt-[100px]">
         <Hero />
         <Services />
         <CTA />

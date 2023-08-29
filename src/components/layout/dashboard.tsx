@@ -3,19 +3,19 @@ import User from '../../assets/images/user.png'
 import Image from 'next/image'
 import { Header } from '@/components'
 
-interface Props {
+interface IProps {
   children: React.ReactNode
-  page?: 'listings' | 'offers' | 'transactions' | 'profile'
+  page?: 'listings' | 'contacts' | 'transactions' | 'profile' | "messages"
 }
 
-export const DashboardLayout: React.FC<Props> = ({ children, page }) => {
+export const DashboardLayout: React.FC<IProps> = ({ children, page }) => {
   return (
     <div>
-      <Header />
+      <Header noBanner/>
       {/* <DashboardHeader/> */}
-      <div className="bg-light-cultured-2 min-h-[100vh]">
-        <div className="flex">
-          <div className="fixed pt-[130px] flex flex-col justify-between px-5 w-64 bg-dark-prussian-blue h-screen pb-3 text-light-white">
+      <div className="bg-light-cultured-3 min-h-[100vh]">
+        <div className="flex w-full">
+          <div className="fixed pt-[100px] flex flex-col justify-between px-5 w-64 bg-dark-prussian-blue h-screen pb-3 text-light-white">
             <div className="flex flex-col gap-3 text-sm">
               <div className="flex gap-3 mb-5 items-center">
                 <div className="relative h-14 w-[58px]">
@@ -35,9 +35,15 @@ export const DashboardLayout: React.FC<Props> = ({ children, page }) => {
               </div>
 
               <div
-                className={`${page == 'offers' ? 'bg-primary rounded py-3 px-3' : 'py-3 px-3'}`}
+                className={`${page == 'contacts' ? 'bg-primary rounded py-3 px-3' : 'py-3 px-3'}`}
               >
-                <p>Offers</p>
+                <p>Contacts</p>
+              </div>
+
+              <div
+                className={`${page == 'messages' ? 'bg-primary rounded py-3 px-3' : 'py-3 px-3'}`}
+              >
+                <p>Messages</p>
               </div>
 
               <div
@@ -60,7 +66,7 @@ export const DashboardLayout: React.FC<Props> = ({ children, page }) => {
             </div>
           </div>
 
-          <div className="pl-64 pt-[100px] flex justify-center items-center w-full min-h-[100vh]">
+          <div className="ml-64 pl-10 pr-10 pt-[100px] pb-[40px] flex justify-end items-center w-full min-h-[100vh]">
             {children}
           </div>
         </div>

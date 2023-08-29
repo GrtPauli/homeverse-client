@@ -12,10 +12,13 @@ const apolloClient = new GraphQLClient(environment.Uri.Graphql, {
 const LOGIN = gql`
   mutation Login($user: LoginInput!) {
     login(user: $user){
-        access_token,
-        email,
-        username,
         _id
+        email
+        access_token
+        profileId
+        userType
+        lastname
+        firstname
     }
   }
 `;
@@ -24,8 +27,11 @@ const GET_USER = gql`
     query GetUser($id: String!) {
         getUser(id: $id) {
             _id
-            username
+            firstname
+            lastname
             email
+            userType
+            profileId
         }
     }
 `;
@@ -94,7 +100,11 @@ export default NextAuth({
             
             session.id = token.sub;
             session.token = encodedToken;
-            session.user = { _id: user.getUser._id, name: user.getUser.username, email: user.getUser.email };
+            session.user = { 
+                _id: user.getUser._id, 
+                name: user.getUser.firstname + " " + user.getUser.lastname , 
+                email: user.getUser.email 
+            };
 
             return Promise.resolve(session);
         },
@@ -113,16 +123,15 @@ export default NextAuth({
                         email: credentials.email,
                         password: credentials.password
                     }
-                }
+                }                
 
                 return await apolloClient
                 .request(LOGIN, payload)
                 .then((res: any) => {
-                    const { username, _id, email } = res.login
-                    // console.log(res.login);
-                    
+                    const { firstname, lastname, _id, email } = res.login
+
                     return {
-                        name: username,
+                        name: firstname + " " + lastname,
                         id: _id,
                         email,
                         user: res.login,

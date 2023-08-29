@@ -1,9 +1,12 @@
 import { ErrorMessage, Field, useField } from 'formik'
-import React, { useEffect } from 'react'
+import React, { HTMLInputTypeAttribute, useEffect } from 'react'
 
 interface IProps {
+  labelSmall?: boolean
+  textarea?: boolean
+  textAreaRows?: number
   label?: string
-  type?: string
+  type?: HTMLInputTypeAttribute
   name: string
   className?: string
   placeHolder?: string
@@ -16,8 +19,11 @@ interface IProps {
 }
 
 export const TextInput: React.FC<IProps> = ({
+  labelSmall = false,
   label,
+  textAreaRows,
   type,
+  textarea = false,
   name,
   className,
   placeHolder,
@@ -32,18 +38,21 @@ export const TextInput: React.FC<IProps> = ({
   }, [field])
 
   return (
-    <div style={{ marginBottom: 10, display: '', flexDirection: 'column' }} className="w-full">
-      {label && <p className="text-dark-prussian-blue font-medium mb-3">{label}</p>}
+    <div className="w-full">
+      {label && <p 
+      className={`text-dark-prussian-blue font-semibold mb-2 ${labelSmall == true ? "text-[13px]" : "text-[15px]"}`}>
+        {label}
+      </p>}
 
-      {type == 'textarea' ? (
+      {textarea ? (
         <textarea
           className={`
-            text-sm border border-colors-opal/40 w-full rounded py-3 outline-none px-5 resize-none     
+            text-sm leading-7 border border-colors-opal/40 w-full rounded py-3 outline-none px-5 resize-none     
           ${className}`}
           {...field}
           {...props}
           name={name}
-          rows={8}
+          rows={textAreaRows || 8}
           placeholder={placeHolder}
         ></textarea>
       ) : (
@@ -54,7 +63,7 @@ export const TextInput: React.FC<IProps> = ({
           name={name}
           disabled={disabled || false}
           className={`
-            text-sm border border-colors-opal/40 w-full rounded py-3 outline-none px-5        
+            text-[13px] border border-colors-opal/40 w-full rounded py-3 outline-none px-5        
           ${className}`}
           placeholder={placeHolder}
         />

@@ -2,7 +2,7 @@ import React from 'react'
 
 export const CTA = () => {
   return (
-    <section className="cta">
+    <section className="cta translate-y-14">
       <div className="container">
         <div className="cta-card">
           <div className="card-content">

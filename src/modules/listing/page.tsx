@@ -1,29 +1,43 @@
-import { DashboardLayout } from '@/components'
-import { CreateListing, NoListing } from './components'
-import { useState } from 'react'
+import { AgentHubLayout } from '@/components/layout/hub'
+import React, { useEffect } from 'react'
+import { ConfigProvider, Tabs } from 'antd'
+import type { TabsProps } from 'antd'
+import { useListingContext } from './context'
+import { AppLoader, Button, Footer, Header } from '@/components'
+import { Image } from 'antd'
+import NoHome from '../../assets/images/no-home (1).png'
+import { CTA } from '../home/components'
+import { Content, Hero } from './components'
 
+export const ListingsPage = () => {
+  const { getListings, loading } = useListingContext()
 
-const skills = [
-  { value: 'React JS', label: 'React JS' },
-  { value: 'Vue JS', label: 'Vue JS' },
-  { value: 'Angular', label: 'Angular' },
-  { value: 'Javascript', label: 'Javascript' },
-  { value: 'Typescript', label: 'Typescript' },
-  { value: 'Ghost Writing', label: 'Ghost Writing' },
-  { value: 'UI/UX Design', label: 'UI/UX Design' },
-]
-
-export const MyListingsPage = () => {
-  const [showCreate, setShowCreate] = useState<boolean>(false)
+  useEffect(() => {
+    getListings()
+  },[])
 
   return (
-    <DashboardLayout page="listings">
-      <div className="px-10 w-full">
-        {
-          showCreate ? <CreateListing setShowCreate={setShowCreate}/>
-          : <NoListing setShowCreate={setShowCreate}/>
-        }
-      </div>
-    </DashboardLayout>
+    <>
+      {loading && (
+        <div className="flex h-screen w-full justify-center items-center">
+          <AppLoader loading={loading} size="lg" />
+        </div>
+      )}
+      {!loading && (
+        <div className="w-full bg-light-cultured-3 relative">
+          <Header />
+
+          <div className="pt-[100px]">
+            <Hero />
+            <Content />
+          </div>
+
+          <div>
+            <CTA />
+            <Footer />
+          </div>
+        </div>
+      )}
+    </>
   )
 }

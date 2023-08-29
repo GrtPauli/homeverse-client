@@ -125,7 +125,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
   height: 8px;
 }
 
@@ -1026,7 +1026,8 @@ body {
   \*-----------------------------------*/
 
 .cta {
-  background: linear-gradient(to bottom, var(--white) 50%, var(--raisin-black-1) 50%);
+  
+  /* background: linear-gradient(to bottom, var(t) 50%, var(--raisin-black-1) 50%); */
 }
 
 .cta-card {
@@ -1093,8 +1094,8 @@ body {
 }
 
 .footer-top {
-  padding-top: 80px;
-  padding-bottom: 40px;
+  padding-top: 100px;
+  padding-bottom: 20px;
 }
 
 .footer-brand {
@@ -1165,7 +1166,8 @@ body {
 
 .footer-bottom {
   background: var(--raisin-black-2);
-  padding-block: 25px;
+  padding-top: 22px;
+  padding-bottom: 18px;
 }
 
 .copyright {

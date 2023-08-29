@@ -1,52 +1,81 @@
-import { ErrorMessage, useField } from 'formik'
-import React from 'react'
-import Select from 'react-select'
-import { StateManagerProps } from 'react-select/dist/declarations/src/useStateManager'
-import CreateableSelect from 'react-select/creatable'
+import { ErrorMessage, useField } from "formik";
+import React, { ReactNode } from "react";
 
-interface IProps extends StateManagerProps {
-  label?: string
-  name: string
-  isMulti?: boolean
-  isCreatable?: boolean
+interface IProps {
+  enumOption?: any
+  options?: (string | number)[]
+  label?: string;
+  type?: string;
+  name: string;
+  className?: string;
+  placeholder?: string;
+  ref?: any;
   props?: {
-    [x: string]: StateManagerProps
-  }
+    [x: string]: any;
+  };
+  disabled?: boolean,
+  value?: any
+  children?: ReactNode
+  defaultSelect?: string
 }
 
-export const SelectInput: React.FC<IProps> = (props) => {
-  const { label, options, isMulti, name, isCreatable } = props
-  const [field, meta, { setValue }] = useField(name)
+
+export const AppSelectInput: React.FC<IProps> = ({
+    label,
+    type,
+    name,
+    className,
+    placeholder,
+    options,
+    disabled,
+    children,
+    defaultSelect,
+    enumOption,
+    ...props
+}) => {
+  const [field] = useField(name);
 
   return (
-    <div className="">
-      {label && (
-        <label className="text-colors-cadet font-semibold mb-3">
-          {label}
-          <ErrorMessage className="text-red-500 text-cusf3" name={name} component="p" />
-        </label>
-      )}
-      {isCreatable ? (
-        <CreateableSelect {...props} name={name} onChange={(newVal) => setValue(newVal)} />
-      ) : (
-        <Select
-          classNames={{ control: (state) => 'py-1 rounded-md border border-skin-border' }}
-          {...field}
-          {...props}
-          isMulti={isMulti}
-          options={options}
-          name={name}
-          onChange={(val: any) => setValue(val)}
-        />
-      )}
+    <div className="w-full">
+      {label && <p className="text-dark-prussian-blue font-medium mb-3 text-[15px]">{label}</p>}
 
-      {!label && (
+      {/* <ErrorMessage
+            className="text-red-500 text-cusf3"
+            name={name}
+            component="p"
+        /> */}
+
+        <select
+            {...field}
+            {...props}
+            name={name}
+            disabled={disabled || false}
+            className={className ? className : `text-sm border border-colors-opal/40 w-full rounded py-3 outline-none px-5`}
+        >
+            <option selected disabled>{defaultSelect || "Select Option"}</option>
+            {
+              enumOption ? (
+                Object.values(enumOption).map(((item: any, i) => (
+                    <option key={i} value={Object.keys(enumOption)[Object.values(enumOption).indexOf(item)]}>
+                      {item}
+                    </option>
+                ))) 
+              ) : (
+                  options.map(((item, i) => (
+                    <option key={i} value={item}>{item}</option>
+                ))) 
+              )
+            }
+        </select>
+
+      {/* {
+        !label &&
         <ErrorMessage
           className="text-red-500 text-cusf3 text-left mt-3"
           name={name}
           component="div"
         />
-      )}
+      } */}
     </div>
-  )
-}
+  );
+};
