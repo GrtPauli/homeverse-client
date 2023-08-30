@@ -32,13 +32,13 @@ export const MessagesPage = () => {
           </div>
 
             {conversationList?.map((item, i) => (
-                <ConversationItem item={item} key={i}/>
+                <ConversationItem item={item} key={i} setShowIntroBox={setShowIntroBox} setUserId={setUserId}/>
             ))}
         </div>
 
         <div className="h-full w-[75%] pt-[60px] relative">
           {showIntroBox && <IntroBox />}
-          {/* {!showIntroBox && <ChatRoom userId={recipientId}/>} */}
+          {!showIntroBox && <ChatRoom db={firestoreDb} currentUser={auth.currentUser} recepientId={userId} />}
         </div>
       </div>
     </AgentHubLayout>

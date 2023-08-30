@@ -4,9 +4,9 @@ import moment from 'moment'
 import { APP_DATE_TIME_FORMAT } from '@/constants/Helper'
 import User from '../../../assets/images/user.png'
 
-export const ConversationItem = ({ item }: any) => {
+export const ConversationItem = ({ item, setShowIntroBox, setUserId }: any) => {
   return (
-    <button className="flex w-full cursor-pointer items-center gap-3 py-3 px-5 hover:bg-primary/10 transition-all ease-in duration-150">
+    <button onClick={() => {setUserId(item?.id); setShowIntroBox(false)}} className="flex w-full cursor-pointer items-center gap-3 py-3 px-5 hover:bg-primary/10 transition-all ease-in duration-150">
     <Image
       className="rounded-full object-cover"
       width="55px"
