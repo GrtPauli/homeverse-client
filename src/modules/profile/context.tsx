@@ -78,6 +78,7 @@ const ProfileContextProvider: FC<IProps> = ({ children }) => {
   const getMyProfileQuery = useGetMyProfile((rs: any) => {})
   const getMyProfilePicQuery = useGetMyProfilePic((rs: any) => {})
   
+
   const [loading, setLoading] = useState<boolean>(true)
   const [updateLoading, setUpdateLoading] = useState<boolean>(true)
   const [profilePicLoading, setProfilePicLoading] = useState<boolean>(false)
@@ -150,14 +151,14 @@ const ProfileContextProvider: FC<IProps> = ({ children }) => {
             variables: {
                 id,
             },
-        }).then(async (rs) => {
-            if (rs?.data?.getUserProfile) {
-                setProfile(rs?.data?.getUserProfile)
-                resolve()
-            }
-            reject()
-        })
-        .finally(() => setLoading(false))
+      }).then(async (rs) => {
+          if (rs?.data?.getUserProfile) {
+              setProfile(rs?.data?.getUserProfile)
+              resolve()
+          }
+          reject()
+      })
+      .finally(() => setTimeout(() => {setLoading(false)}, 3000))
     })
   }
 

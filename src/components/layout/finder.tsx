@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import { Header } from '../navbar'
+import { Header } from '../navbar/regular'
 import { Footer } from '../footer'
 
 interface IProps {

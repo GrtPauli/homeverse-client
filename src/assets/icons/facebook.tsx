@@ -4,15 +4,13 @@ interface IProps {
   className?: string
 }
 
-export const FacebookIcon: React.FC<IProps> = ({ className }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-    fill="currentColor"
-    width="22"
-    height="22"
-    viewBox="0 0 24 24"
-  >
-    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3 8h-1.35c-.538 0-.65.221-.65.778v1.222h2l-.209 2h-1.791v7h-3v-7h-2v-2h2v-2.308c0-1.769.931-2.692 3.029-2.692h1.971v3z" />
+export const HvFacebookIcon: React.FC<IProps> = ({ className }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill='currentColor' width="24" height="24" viewBox="0 0 24 24" className={className}>
+    <path d="M0,0H24V24H0Z" fill="none" opacity="0.58" />
+    <path
+      d="M20,14.19C20,17.83,17.83,20,14.19,20H13a1,1,0,0,1-1-1V13.23a.5.5,0,0,1,.49-.5l1.76-.03a.319.319,0,0,0,.29-.25l.35-1.91a.3.3,0,0,0-.3-.35l-2.13.03a.508.508,0,0,1-.51-.49l-.04-2.45a.3.3,0,0,1,.3-.3l2.4-.04a.3.3,0,0,0,.3-.3l-.04-2.4a.3.3,0,0,0-.3-.3l-2.7.04A3,3,0,0,0,8.92,7.03l.05,2.75a.5.5,0,0,1-.49.51l-1.2.02a.3.3,0,0,0-.3.3l.03,1.9a.3.3,0,0,0,.3.3l1.2-.02a.508.508,0,0,1,.51.49l.09,5.7a1,1,0,0,1-1,1.02H5.81C2.17,20,0,17.83,0,14.18V5.81C0,2.17,2.17,0,5.81,0h8.38C17.83,0,20,2.17,20,5.81v8.38Z"
+      transform="translate(2 2)"
+    />
+    <path d="M0,0H24V24H0Z" fill="none" opacity="0" />
   </svg>
 )

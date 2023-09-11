@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { ConfigProvider, MenuProps, Popover } from 'antd'
 import { useProfileContext } from '@/modules/profile/context'
 import { useHvFirebaseContext } from '@/modules/firebase/context'
+import { useAuthContext } from '@/modules/auth/context'
 
 const UserProfile = ({ content }: any) => {
   // const session = useSession()
@@ -14,13 +15,13 @@ const UserProfile = ({ content }: any) => {
   // useEffect(() => {
   //     profile?.photo === undefined && getMyProfilePic()
   // }, [])
-  const { loading, auth } = useHvFirebaseContext()
+  const { firebaseInitLoading, firebaseAuth } = useAuthContext()
 
   return (
     <div>
-      {!loading && (
+      {!firebaseInitLoading && (
         <>
-          {!auth?.currentUser ? (
+          {!firebaseAuth?.currentUser ? (
             <div className="flex items-center gap-5">
               <Link href="/signin">
                 <button className="bg-primary py-2.5 text-sm px-5 rounded text-light-white font-bold">
@@ -52,7 +53,7 @@ const UserProfile = ({ content }: any) => {
               >
                 <button className="flex items-center gap-3">
                   <Image
-                    src={auth?.currentUser?.photoURL || UserImg}
+                    src={firebaseAuth?.currentUser?.photoURL || UserImg}
                     alt="user"
                     width={40}
                     height={40}

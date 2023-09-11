@@ -15,18 +15,19 @@ export const ProfileFragment = gql`
   fragment Profile on Profile {
     _id
     userId
+    phone
     about
-    photo
-    contacts {
-      contactId
-      createdAt
-      status
-      messageRoomId
-    }    
-    contactRequests {
-      contactId
-      position
-    }    
+    userType
+    # contacts {
+    #   contactId
+    #   createdAt
+    #   status
+    #   messageRoomId
+    # }    
+    # contactRequests {
+    #   contactId
+    #   position
+    # }    
     reviews
     country
     countryFlag

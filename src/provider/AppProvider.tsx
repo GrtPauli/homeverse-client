@@ -12,11 +12,11 @@ const AppProvider: React.FC<IProps> = ({ children }) => {
     return (
         // <SessionProvider>
         <ApolloProvider client={AppClient}>
-            <HvFirebaseContextProvider>
+            {/* <HvFirebaseContextProvider> */}
                 <AppContextProvider>
                     {children}
                 </AppContextProvider>
-            </HvFirebaseContextProvider>
+            {/* </HvFirebaseContextProvider> */}
         </ApolloProvider>
         // </SessionProvider>
     )

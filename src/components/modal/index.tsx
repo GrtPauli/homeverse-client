@@ -10,7 +10,7 @@ interface IProps extends ModalProps {
   children: ReactNode;
 }
 
-export const AppModal: FC<IProps> = ({
+export const HvModal: FC<IProps> = ({
   open,
   title,
   children,
@@ -27,16 +27,22 @@ export const AppModal: FC<IProps> = ({
         },
       }}
     >
-      <Modal
+      <Modal 
         {...props}
         open={open}
         centered={centered}
         width={width}
-        title={title}
+        // title={title}
         onCancel={onDismiss}
         footer={null}
+        wrapClassName="p-0"
       >
-        {children}
+        <div className="bg-dark-prussian-blue w-full px-5 py-4 text-light-white ">
+          <h1 className='font-bold text-lg -mt-0.5'>{title}</h1>
+        </div>
+        <div className="px-5 py-5">
+          {children}
+        </div>
       </Modal>
     </ConfigProvider>
   );

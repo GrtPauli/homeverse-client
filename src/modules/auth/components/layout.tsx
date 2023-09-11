@@ -4,8 +4,6 @@ import Slide1 from '../../../assets/images/slide-1.jpg'
 import Slide2 from '../../../assets/images/slide-2.jpg'
 import Slide3 from '../../../assets/images/slide-3.jpg'
 import { ConfigProvider, Carousel } from 'antd'
-import Logo from '../../../assets/images/logo2.png'
-import Image from 'next/image'
 
 interface AuthLayoutProps {
   children: ReactNode

@@ -1,4 +1,4 @@
-import { ApFileInput, AppSelectInput, Button, LocationSelector, TextInput } from '@/components'
+import { ApFileInput, AppSelectInput, HvButton, LocationSelector, HvTextInput } from '@/components'
 import { Form, Formik, FormikProps } from 'formik'
 import React, { useState } from 'react'
 import { Photos } from './components/form/photos'
@@ -8,6 +8,7 @@ import { AdditionalInfo } from './components/form/additionalInfo'
 import { HomeType, IListingImage } from '@/modules/listing/model'
 import { AgentHubLayout } from '@/components/layout/hub'
 import { useListingContext } from '../context'
+import { useAuthContext } from '@/modules/auth/context'
 
 export const CreateListingPage = ({ handleCreate }: any) => {
   const [country, setCountry] = useState<any>(null)
@@ -16,6 +17,7 @@ export const CreateListingPage = ({ handleCreate }: any) => {
   const [city, setCity] = useState<any>(null)
   const [photos, setPhotos] = useState<IListingImage[]>([])
   const {createListing, loading} = useListingContext()
+  const {firebaseAuth} = useAuthContext()
 
   const handleUpdatePhotos = async (res: any) => {
     const fls = photos
@@ -35,7 +37,7 @@ export const CreateListingPage = ({ handleCreate }: any) => {
   }
 
   const handleSubmit = (val: any) => {
-    createListing({
+    createListing(firebaseAuth?.currentUser?.uid, {
       photos: photos.length > 0 ? photos : null,
       country: country?.name || null,
       countryFlag: country?.label?.props?.children[0]?.props?.src || null,
@@ -93,7 +95,7 @@ export const CreateListingPage = ({ handleCreate }: any) => {
                   <div className="mb-10">
                     <h1 className="font-bold text-lg border-b pb-3 mb-5">Primary Info</h1>
                     <div className="flex justify-between gap-8 mb-5">
-                      <TextInput
+                      <HvTextInput
                         label="Set Your Price"
                         name="price"
                         placeHolder="Enter Property Price"
@@ -105,7 +107,7 @@ export const CreateListingPage = ({ handleCreate }: any) => {
                         label="Home Type"
                       />
                     </div>
-                    <TextInput
+                    <HvTextInput
                       label="Describe Your Home"
                       name="description"
                       placeHolder="Enter a well detailed description of the property"
@@ -152,15 +154,15 @@ export const CreateListingPage = ({ handleCreate }: any) => {
                   {/* <ContactInfo/> */}
 
                   <div className="flex justify-end items-center gap-5 mt-10">
-                    <Button
+                    <HvButton
                       type="button"
                       onClick={() => props.handleSubmit()}
                       title="Post Listing"
                       fullWidth={false}
                     />
-                    <Button type="button" fullWidth={false}>
+                    <HvButton type="button" fullWidth={false}>
                       <Link href="/dashboard/listings">Cancel Listing</Link>
-                    </Button>
+                    </HvButton>
                   </div>
                 </Form>
               )}

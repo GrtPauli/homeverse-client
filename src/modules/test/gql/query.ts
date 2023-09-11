@@ -15,6 +15,12 @@ export const GET_RECIPE = gql`
     }
 `
 
+export const GENERATE_ZEGO_TOKEN = gql`
+    mutation GenerateZegoToken($generateZegoTokenInput: GenerateZegoTokenInput!) {
+        generateZegoToken(generateZegoTokenInput: $generateZegoTokenInput)
+    }
+`
+
 export const CREATE_COMMENT = gql`
     mutation AddNewComment($comment: CommentInput!) {
         addNewComment(comment: $comment)

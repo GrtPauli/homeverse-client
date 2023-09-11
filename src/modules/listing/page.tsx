@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { ConfigProvider, Tabs } from 'antd'
 import type { TabsProps } from 'antd'
 import { useListingContext } from './context'
-import { AppLoader, Button, Footer, Header } from '@/components'
+import { HvLoader, HvButton, Footer, Header } from '@/components'
 import { Image } from 'antd'
 import NoHome from '../../assets/images/no-home (1).png'
 import { CTA } from '../home/components'
@@ -20,7 +20,7 @@ export const ListingsPage = () => {
     <>
       {loading && (
         <div className="flex h-screen w-full justify-center items-center">
-          <AppLoader loading={loading} size="lg" />
+          <HvLoader loading={loading} size="lg" />
         </div>
       )}
       {!loading && (

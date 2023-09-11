@@ -1,11 +1,11 @@
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons'
 import { notification } from 'antd'
 
-export default function useNotification() {
+export default function useHvNotification() {
   const [api, contextHolder] = notification.useNotification()
   const show = (title: string, message: React.ReactNode, isError?: boolean) => {
     api.info({
-      duration: 5000,
+      // duration: 1000,
       icon: isError ? (
         <CloseCircleFilled className="text-red-500" />
       ) : (

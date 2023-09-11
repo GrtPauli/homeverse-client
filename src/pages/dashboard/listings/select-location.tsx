@@ -1,4 +1,4 @@
-import { SelectLocationPage } from '@/modules/listing/create/select-location'
+import { SelectLocationPage } from '@/modules/listing/create/components/select-location'
 import React from 'react'
 
 const SelectLocation = () => {

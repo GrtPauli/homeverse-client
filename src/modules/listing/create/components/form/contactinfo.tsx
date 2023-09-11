@@ -1,4 +1,4 @@
-import { TextInput } from '@/components'
+import { HvTextInput } from '@/components'
 import Image from 'next/image'
 import React from 'react'
 import PhoneImg from '../../../../../assets/images/phone.png'
@@ -18,7 +18,7 @@ export const ContactInfo = () => {
     on Zillow. You must also add your phone number to the listing here.
     </p>
 
-    <TextInput label="Phone Number" name="description" />
+    <HvTextInput label="Phone Number" name="description" />
 </div>
   )
 }

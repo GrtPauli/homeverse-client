@@ -8,7 +8,7 @@ interface IProps {
     size?: "sm" | "lg"
 }
 
-export const AppLoader: FC<IProps> = ({ 
+export const HvLoader: FC<IProps> = ({ 
     loading, 
     color = "primary",
     size = "sm"
@@ -18,7 +18,7 @@ export const AppLoader: FC<IProps> = ({
     <div className='flex justify-center items-center w-full h-full'>
       {/* <LoadingOutlined className='text-primary text-4xl'/> */}
       <HashLoader 
-        size={ size == "lg" ? 50 : 30 }
+        size={ size == "lg" ? 50 : 25 }
         loading={loading}
         color={ color == "primary" ? "#FF5A3D" : "#ffffff" }
       />

@@ -1,6 +1,7 @@
 export * from './mail'
 export * from './location'
 export * from './facebook'
+export * from "./apple"
 export * from './twitter'
 export * from './instagram'
 export * from './pinterest'
@@ -22,3 +23,5 @@ export * from "./video"
 export * from "./delete"
 export * from "./check"
 export * from "./chevron-left"
+export * from "./send-mail"
+export * from "./hub"

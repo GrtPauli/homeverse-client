@@ -10,8 +10,10 @@ export interface IUser {
 export interface IProfile {
     _id: string
     userId: string
+    phone: string
     about: string
-    photo: string
+    userType: UserType
+    // photo: string
     contacts: Contact[]
     contactRequests: ContactRequest[]
     reviews: string[]

@@ -1,3 +1,4 @@
+import { AgentContextProvider } from '@/modules/agent/context'
 import { AuthContextProvider } from '@/modules/auth/context'
 import { ChatContextProvider } from '@/modules/chat/context'
 import { ContactContextProvider } from '@/modules/contacts/context'
@@ -30,6 +31,7 @@ const providers = [
   FinderContextProvider,
   ContactContextProvider,
   ChatContextProvider,
+  AgentContextProvider,
   MessageContextProvider
 ] as any
 const AppContextProvider = CombineContext(...providers)

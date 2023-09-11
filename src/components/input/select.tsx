@@ -37,7 +37,7 @@ export const AppSelectInput: React.FC<IProps> = ({
 
   return (
     <div className="w-full">
-      {label && <p className="text-dark-prussian-blue font-medium mb-3 text-[15px]">{label}</p>}
+      {label && <p className="text-dark-prussian-blue font-semibold mb-2 text-[15px]">{label}</p>}
 
       {/* <ErrorMessage
             className="text-red-500 text-cusf3"
@@ -50,7 +50,7 @@ export const AppSelectInput: React.FC<IProps> = ({
             {...props}
             name={name}
             disabled={disabled || false}
-            className={className ? className : `text-sm border border-colors-opal/40 w-full rounded py-3 outline-none px-5`}
+            className={className ? className : `text-sm border border-colors-opal/40 w-full rounded-lg py-3 outline-none px-5`}
         >
             <option selected disabled>{defaultSelect || "Select Option"}</option>
             {

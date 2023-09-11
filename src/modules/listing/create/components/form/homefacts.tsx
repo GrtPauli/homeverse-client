@@ -1,4 +1,4 @@
-import { AppSelectInput, TextInput } from '@/components'
+import { AppSelectInput, HvTextInput } from '@/components'
 import Image from 'next/image'
 import React from 'react'
 import HouseInfo from '../../../../../assets/images/house-info.png'
@@ -28,37 +28,37 @@ export const HomeFacts = () => {
 
         <div className="flex justify-between gap-8 mb-5 items-start">
           <AppSelectInput options={years} name="yearBuilt" label='Year Built'/>
-          <TextInput label="Total Number of Bedrooms" name="bedrooms" placeHolder="Enter total number of bedrooms" type='number' />
+          <HvTextInput label="Total Number of Bedrooms" name="bedrooms" placeHolder="Enter total number of bedrooms" type='number' />
         </div>
 
         <div className="flex justify-between gap-8 mb-5 items-start">
-          <TextInput label="Total Number of Rooms" name="totalRooms" placeHolder="Enter total number of rooms" type='number' />
-          <TextInput label="Total Number of Garages" name="totalGarages" placeHolder="Enter total number of garages" type='number'/>
+          <HvTextInput label="Total Number of Rooms" name="totalRooms" placeHolder="Enter total number of rooms" type='number' />
+          <HvTextInput label="Total Number of Garages" name="totalGarages" placeHolder="Enter total number of garages" type='number'/>
         </div>
 
         <div className="flex justify-between gap-8 mb-5">
-          <TextInput label="Full Bathrooms" name="fullBathrooms" placeHolder="Enter total number of full bathrooms" type='number'/>
-          <TextInput label="3 / 4 Bathrooms" name="threeFourBathrooms" placeHolder="Enter total number of 3 / 4 bathrooms" type='number'/>
+          <HvTextInput label="Full Bathrooms" name="fullBathrooms" placeHolder="Enter total number of full bathrooms" type='number'/>
+          <HvTextInput label="3 / 4 Bathrooms" name="threeFourBathrooms" placeHolder="Enter total number of 3 / 4 bathrooms" type='number'/>
         </div>
 
         <div className="flex justify-between gap-8 mb-5">
-          <TextInput label="1 / 2 Bathrooms" name="oneTwoBathrooms" placeHolder="Enter total number of 1 / 2 bathrooms" type='number' />
-          <TextInput label="1 / 4 Bathrooms" name="oneFourBathrooms" placeHolder="Enter total number of 1 / 4 bathrooms" type='number' />
+          <HvTextInput label="1 / 2 Bathrooms" name="oneTwoBathrooms" placeHolder="Enter total number of 1 / 2 bathrooms" type='number' />
+          <HvTextInput label="1 / 4 Bathrooms" name="oneFourBathrooms" placeHolder="Enter total number of 1 / 4 bathrooms" type='number' />
         </div>
 
         <div className="flex justify-between gap-8 mb-5">
-            <TextInput label="Property Size" name="propertySize" placeHolder="Enter property size" type='number' />
+            <HvTextInput label="Property Size" name="propertySize" placeHolder="Enter property size" type='number' />
             <AppSelectInput options={PropertySizeUnit} name="propertySizeUnit" label='Property Size Unit'/>
         </div>
 
         <div className="flex justify-between gap-8 mb-5">
-          <TextInput label="Basement sq. ft." name="basementSqFt" placeHolder="Enter basement size" type='number' />
-          <TextInput label="Garage sq. ft." name="garageSqFt" placeHolder="Enter garage size" type='number'/>
+          <HvTextInput label="Basement sq. ft." name="basementSqFt" placeHolder="Enter basement size" type='number' />
+          <HvTextInput label="Garage sq. ft." name="garageSqFt" placeHolder="Enter garage size" type='number'/>
         </div>
 
         <div className="flex justify-between gap-8 mb-5">
-          <TextInput label="Related Website" name="relatedWebsite" placeHolder="www.sample.com"/>
-          <TextInput label="Virtual Tour URL" name="virtualTourURL" placeHolder="www.sample.com"/>
+          <HvTextInput label="Related Website" name="relatedWebsite" placeHolder="www.sample.com"/>
+          <HvTextInput label="Virtual Tour URL" name="virtualTourURL" placeHolder="www.sample.com"/>
         </div>
     </div>
   )

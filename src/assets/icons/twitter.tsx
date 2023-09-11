@@ -4,7 +4,7 @@ interface IProps {
   className?: string
 }
 
-export const TwitterIcon: React.FC<IProps> = ({ className }) => (
+export const HvTwitterIcon: React.FC<IProps> = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className={className}

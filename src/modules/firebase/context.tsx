@@ -76,26 +76,26 @@ const HvFirebaseContextProvider: FC<HvFirebaseContextProviderProps> = ({ childre
     const conversationsRef = collection(firestoreDb, 'conversations')  
 
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        updateProfile(auth.currentUser, { displayName }).then(() => {
-          addDoc(conversationsRef, {
-            userId: userCredential.user.uid,
-            list: [],
-            createdAt: serverTimestamp(),
-          }).then(async (rs) => {
-            const docSnap = await getDoc(rs)
-            createProfileQuery[0]({ variables: { userId: userCredential.user.uid, conversationListId: docSnap.id } })
-            .then((rs) => {
-                if (rs?.data?.createProfile) {
-                    router.push('/')
-                }
-            })
+    .then((userCredential) => {
+      updateProfile(auth.currentUser, { displayName }).then(() => {
+        addDoc(conversationsRef, {
+          userId: userCredential.user.uid,
+          list: [],
+          createdAt: serverTimestamp(),
+        }).then(async (rs) => {
+          const docSnap = await getDoc(rs)
+          createProfileQuery[0]({ variables: { userId: userCredential.user.uid, conversationListId: docSnap.id } })
+          .then((rs) => {
+              if (rs?.data?.createProfile) {
+                  router.push('/')
+              }
           })
         })
       })
-      .catch((error) => {
-        console.log(error);
-      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   }
 
   const fbsignInWithEmailAndPassword = (email: string, password: string) => {

@@ -61,18 +61,47 @@ const GET_USER_PROFILE = gql`
   }
   ${ProfileFragment}
 `
+const GET_USER_TYPE = gql`
+  query GetUserProfile($id: String!) {
+    getUserProfile(id: $id) {
+      userType
+    }
+  }
+`
+
 const UPDATE_PROFILE = gql`
-  mutation UpdateProfile($profile: UpdateProfileInput!) {
-    updateProfile(profile: $profile)
+  mutation UpdateProfile($id: String!, $profile: UpdateProfileInput!) {
+    updateProfile(id: $id, profile: $profile)
   }
 `
 const CREATE_PROFILE = gql`
-  mutation CreateProfile($userId: String!, $conversationListId: String!) {
-    createProfile(userId: $userId, conversationListId: $conversationListId){
+  mutation CreateProfile($userId: String!) {
+    createProfile(userId: $userId){
       _id
     }
   }
 `
+// const CREATE_PROFILE = gql`
+//   mutation CreateProfile($userId: String!, $conversationListId: String!) {
+//     createProfile(userId: $userId, conversationListId: $conversationListId){
+//       _id
+//     }
+//   }
+// `
+export const useGetUserType = (callback: any) => {
+  return useLazyQuery(GET_USER_TYPE, {
+    fetchPolicy: "no-cache",
+    onCompleted: (res) => {
+      if(res.getUserProfile){
+        callback(res.getUserProfile)
+      }
+    },
+    onError: (err) => {
+      console.log(err)
+    }
+  })
+}
+
 export const useCreateProfile = (callback: any) => {
   return useMutation(CREATE_PROFILE, {
     onCompleted: (res: any) => {

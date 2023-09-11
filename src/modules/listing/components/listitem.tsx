@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { Image } from 'antd'
 import { CameraIcon, LocationIcon, VideoIcon } from '@/assets/icons'
-import { Button } from '@/components'
+import { HvButton } from '@/components'
 import CurrencyFormat from 'react-currency-format';
 import HouseImg from "../../../assets/images/slide-3.jpg"
 import { IListing } from '../model';
@@ -83,7 +83,7 @@ export const ListItem: FC<IProps> = ({ item }) => {
                 </p>
             </div>
 
-            <Button
+            <HvButton
                 paddingY='py-3.5'
                 title="View Details"
                 onClick={() => router.push(`/marketplace/property/${item._id}`)}

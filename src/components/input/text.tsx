@@ -18,7 +18,7 @@ interface IProps {
   containerClassName?: string | undefined
 }
 
-export const TextInput: React.FC<IProps> = ({
+export const HvTextInput: React.FC<IProps> = ({
   labelSmall = false,
   label,
   textAreaRows,
@@ -63,7 +63,7 @@ export const TextInput: React.FC<IProps> = ({
           name={name}
           disabled={disabled || false}
           className={`
-            text-[13px] border border-colors-opal/40 w-full rounded py-3 outline-none px-5        
+            text-[13px] border border-colors-opal/40 w-full rounded-lg py-3 outline-none px-5        
           ${className}`}
           placeholder={placeHolder}
         />

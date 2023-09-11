@@ -4,9 +4,11 @@ import { ConfigProvider, Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import { SaleListings } from './components/sale';
 import { useListingContext } from '../context';
-import { AppLoader, Button } from '@/components';
+import { HvLoader, HvButton } from '@/components';
 import { Image } from 'antd'
 import NoHome from "../../../assets/images/no-home (1).png"
+import { useAuthContext } from '@/modules/auth/context';
+import { NoListing } from '../components';
 
 export const MyListingsPage = () => {
     const items: TabsProps['items'] = [
@@ -18,40 +20,24 @@ export const MyListingsPage = () => {
         {
             key: '2',
             label: <p className='font-medium'>For Rent</p>,
-            children: 
-            <div className='flex flex-col gap-5 justify-center items-center py-20'>
-                <div className='h-[150px] w-[150px]'>
-                    <Image
-                        preview={false}
-                        className='object-cover'
-                        width="100%"
-                        height="100%" 
-                        src={NoHome.src}
-                    />
-                </div>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi, soluta.</p>
-
-                <div className='w-[200px]'>
-                    <Button
-                        title="Create New Listing"
-                    />
-                </div>
-            </div>,
+            children: <NoListing/>,
         },
     ];
 
     const {getUserListings, loading, userListings} = useListingContext()
-    useEffect(() => {
-      getUserListings()
-    }, [])
+    const { firebaseInitLoading, firebaseAuth } = useAuthContext()
 
-    console.log(userListings);
+    useEffect(() => {
+        if(firebaseInitLoading == false){            
+            getUserListings(firebaseAuth?.currentUser?.uid)
+        }
+    }, [firebaseInitLoading])
     
     return(
         <>
             {loading && (
                 <div className='flex h-screen w-full justify-center items-center'>
-                    <AppLoader loading={loading} size='lg'/>
+                    <HvLoader loading={loading} size='lg'/>
                 </div>
             )}
 

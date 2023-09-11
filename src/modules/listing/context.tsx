@@ -2,11 +2,12 @@ import { FC, ReactNode, createContext, useContext, useState } from 'react'
 import { useRouter } from 'next/router'
 import { IListing } from './model'
 import { useCreateListing, useGetListing, useGetListings, useGetUserListings } from './gql/query'
+import useHvNotification from '@/hooks/notification'
 
 interface IListingState {
   loading: boolean
-  createListing: (listing: IListing) => Promise<void>
-  getUserListings: () => Promise<void>
+  createListing: (userId: string, listing: IListing) => Promise<void>
+  getUserListings: (userId: string) => Promise<void>
   getListings: () => Promise<void>
   getListing: (id: string) => Promise<void>
   listing: Partial<IListing>
@@ -57,30 +58,39 @@ const ListingContextProvider: FC<IProps> = ({ children }) => {
   const getListingsQuery = useGetListings((rs: any) => {})
 
   const router = useRouter()
+  const {errorMsg, notificationContext, successMsg} = useHvNotification()
 
-  const createListing = (listing: IListing): Promise<void> => {
+
+  const createListing = (userId: string, listing: IListing): Promise<void> => {
     setLoading(true)
     return new Promise((resolve, reject) => {
       createListingQuery[0]({
         variables: {
+          userId,
           listing,
         },
       })
-        .then(async (rs) => {
-          if (rs?.data?.createListing) {
-            console.log(rs?.data?.createListing)
-            resolve()
-          }
-          reject()
-        })
-        .finally(() => setLoading(false))
+      .then(async (rs) => {
+        if (rs?.data?.createListing) {
+          successMsg("Success", "Listing created successfully")
+          router.push("/dashboard/listings")
+          resolve()
+        }
+        else{
+          errorMsg("Error", "Creation of listing was not successful")
+          reject()    
+        }
+      })
+      .finally(() => setLoading(false))
     })
   }
 
-  const getUserListings = (): Promise<void> => {
+  const getUserListings = (userId: string): Promise<void> => {
     setLoading(true)
-    return new Promise((resolve, reject) => {
-      getUserListingsQuery[0]()
+    return new Promise((resolve, reject) => {      
+      getUserListingsQuery[0]({
+        variables: {userId}
+      })
       .then(async(rs) => { 
         if (rs?.data?.getUserListings) {
           setUserListings(rs?.data?.getUserListings)
@@ -135,7 +145,10 @@ const ListingContextProvider: FC<IProps> = ({ children }) => {
         listing
       }}
     >
-      {children}
+      <>
+          {notificationContext}
+          {children}
+      </>
     </ListingContext.Provider>
   )
 }

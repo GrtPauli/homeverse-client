@@ -3,16 +3,16 @@ import { ListingFragment } from './fragment'
 
 
 const CREATE_LISTING = gql`
-    mutation CreateListing($listing: CreateListingInput!) {
-        createListing(listing: $listing) {
+    mutation CreateListing($userId: String!, $listing: CreateListingInput!) {
+        createListing(userId: $userId, listing: $listing) {
             _id
         }
     }
 `
 
 const GET_USER_LISTINGS = gql`
-  query GetUserListings{
-    getUserListings{
+  query GetUserListings($userId: String!){
+    getUserListings(userId: $userId){
       ...Listing
     }
   }
