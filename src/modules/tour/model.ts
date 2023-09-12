@@ -31,6 +31,18 @@ export interface ICreateTourInput {
     tourScheduledTime: string
 }
 
+export interface IUpdateTourInput {
+    vcUrl?: string
+    requestStatus?: TourRequestStatus
+    tourStatus?: TourStatus
+    tourReview?: IReview
+}
+
+export interface IGetToursInput {
+    tourist?: string
+    agent?: string
+}
+
 export interface IReview {
     rating: number
     review: string
