@@ -2,6 +2,7 @@ import React from 'react'
 import { ConfigProvider, Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import { RegTours } from './tours';
+import { RegTourRequests } from './tour-requests';
 
 export const RegTourTab = () => {
     const items: TabsProps['items'] = [
@@ -13,7 +14,7 @@ export const RegTourTab = () => {
         {
             key: '2',
             label: <p className='font-medium'>Tour Requests</p>,
-            children: <></>,
+            children: <RegTourRequests/>,
         },
     ];
 

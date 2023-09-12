@@ -6,6 +6,7 @@ import { FinderContextProvider } from '@/modules/finder/context'
 import { ListingContextProvider } from '@/modules/listing/context'
 import { MessageContextProvider } from '@/modules/messages/context'
 import { ProfileContextProvider } from '@/modules/profile/context'
+import { TourContextProvider } from '@/modules/tour/context'
 import React, { ComponentProps, FC } from 'react'
 
 const CombineContext = (...components: FC[]): FC<any> => {
@@ -32,6 +33,7 @@ const providers = [
   ContactContextProvider,
   ChatContextProvider,
   AgentContextProvider,
+  TourContextProvider,
   MessageContextProvider
 ] as any
 const AppContextProvider = CombineContext(...providers)
