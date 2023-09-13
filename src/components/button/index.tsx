@@ -1,6 +1,6 @@
 import React, { FC, ReactNode, useEffect, useState } from 'react'
 import { LoadingOutlined } from '@ant-design/icons'
-import { HvLoader } from '../loader'
+import { HvLoader, HvLoader2 } from '../loader'
 
 interface IProps {
   children?: ReactNode
@@ -42,7 +42,7 @@ export const HvButton: FC<IProps> = ({
 
   const regClassName = `${paddingY ? paddingY : "py-3.5"} ${fullWidth ? 'w-full' : ''} 
   ${outline ? "border-primary text-primary border" : "bg-primary text-light-white"}
-  rounded-full ${paddingX ? paddingX : 'px-5'} gap-3 ${textLg ? "text-base" : "text-sm"} flex justify-center items-center font-bold`
+  rounded-full ${paddingX ? paddingX : 'px-8'} gap-3 ${textLg ? "text-base" : "text-sm"} flex justify-center items-center font-bold`
 
   const loadingClassName = `${paddingY ? paddingY : "py-3"} ${fullWidth ? 'w-full' : ''} 
   ${outline ? "border-primary text-primary border" : "bg-light-cultured-1"}
@@ -57,7 +57,7 @@ export const HvButton: FC<IProps> = ({
     >
       {loading ? (
         <div className="flex gap-3 items-center">
-          <HvLoader color='primary' loading={loading} size='sm'/>
+          <HvLoader2 color='primary' loading={loading} size='sm'/>
           {/* <LoadingOutlined style={{ fontSize: 25 }} spin />
           {loadingText ? loadingText : ''} */}
         </div>

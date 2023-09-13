@@ -1,21 +1,38 @@
 import { gql, useLazyQuery, useMutation } from '@apollo/client'
-import { TourFragment } from './fragment'
+import { TourFragment, TourRequestFragment } from './fragment'
 
 
 const CREATE_TOUR_REQUEST = gql`
-    mutation CreateTourRequest($tour: CreateTourInput!) {
-        createTourRequest(tour: $tour) {
-            _id
-        }
+  mutation CreateTourRequest($request: CreateTourRequestInput!) {
+    createTourRequest(request: $request) {
+          _id
     }
+  }
 `
 
 const UPDATE_TOUR = gql`
-    mutation UpdateTour( $id: String!, $tour: UpdateTourInput!) {
-        updateTour(id: $id, tour: $tour) {
-            _id
-        }
+  mutation UpdateTour( $id: String!, $tour: UpdateTourInput!) {
+      updateTour(id: $id, tour: $tour) {
+          _id
+      }
+  }
+`
+
+const UPDATE_TOUR_REQUEST_STATUS = gql`
+  mutation updateTourRequestStatus( $id: String!, $request: UpdateTourRequestStatusInput!) {
+    updateTourRequestStatus(id: $id, request: $request) {
+        _id
     }
+  }
+`
+
+const GET_TOUR_REQUESTS = gql`
+    query GetTourRequests($input: GetTourInfoInput!) {
+      getTourRequests(input: $input) {
+          ...TourRequest
+      }
+    }
+    ${TourRequestFragment}
 `
 
 const GET_TOURS = gql`
@@ -40,6 +57,19 @@ export const useCreateTourRequest = (callback: any) => {
     })
 }
 
+export const useUpdateTourRequestStatus = (callback: any) => {
+  return useMutation(UPDATE_TOUR_REQUEST_STATUS, {
+    onCompleted: (res: any) => {
+      if (res.updateTourRequestStatus) {
+        callback(res.updateTourRequestStatus)
+      }
+    },
+    onError: (err: any) => {
+      console.log(err)
+    },
+  })
+}
+
 export const useUpdateTour = (callback: any) => {
     return useMutation(UPDATE_TOUR, {
       onCompleted: (res: any) => {
@@ -51,6 +81,20 @@ export const useUpdateTour = (callback: any) => {
         console.log(err)
       },
     })
+}
+
+export const useGetTourRequests = (callback: any) => {
+  return useLazyQuery(GET_TOUR_REQUESTS, {
+    fetchPolicy: "no-cache",
+    onCompleted: (res) => {
+      if(res.getTourRequests){
+        callback(res.getTourRequests)
+      }
+    },
+    onError: (err) => {
+      console.log(err)
+    }
+  })
 }
 
 export const useGetTours = (callback: any) => {

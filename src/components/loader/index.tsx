@@ -25,3 +25,16 @@ export const HvLoader: FC<IProps> = ({
     </div>
   )
 }
+
+export const HvLoader2: FC<IProps> = ({ 
+  loading, 
+  color = "primary",
+  size = "sm"
+}) => {
+
+return (
+  <div className='flex justify-center items-center w-full h-full'>
+    <LoadingOutlined className='text-primary text-3xl'/>
+  </div>
+)
+}

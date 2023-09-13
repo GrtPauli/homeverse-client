@@ -86,7 +86,7 @@ export const ListItem: FC<IProps> = ({ item }) => {
             <HvButton
                 paddingY='py-3.5'
                 title="View Details"
-                onClick={() => router.push(`/marketplace/property/${item._id}`)}
+                onClick={() => router.push(`/browse/listing/${item._id}`)}
             />
         </div>
     </div>

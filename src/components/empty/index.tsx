@@ -8,7 +8,7 @@ interface IProps {
 
 export const HvEmpty: FC<IProps> = ({ className }) => {
   return (
-    <div className={`${className} flex w-full items-center justify-center flex-col gap-5 pt-5 pb-10`}>
+    <div className={`${className} flex w-full items-center justify-center flex-col gap-5 pt-10 pb-20`}>
         <Image
             src={Empty}
             alt='Empty Image'

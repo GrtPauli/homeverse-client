@@ -2,9 +2,7 @@ import React from 'react'
 import BuyImg from '../../../../assets/images/buy.jpg'
 import { RegTourTab } from './components'
 
-
 export const RegularPageContent = () => {
-
 
   return (
     <div>

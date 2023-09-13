@@ -1,3 +1,18 @@
+export interface ITourRequest {
+    _id: string
+    touristName: string
+    touristId: string
+    agentName: string
+    agentId: string
+    tourScheduledDate: number
+    method: TourMethod
+    propertyId: string
+    propertyListingDate: number
+    requestStatus: TourRequestStatus
+    createdAt: number
+    updatedAt: number
+}
+
 export interface ITour {
     _id: string
     propertyImg: IImage
@@ -11,11 +26,21 @@ export interface ITour {
     method: TourMethod
     requestStatus: TourRequestStatus
     tourStatus: TourStatus
-    tourScheduledDay: string
-    tourScheduledTime: string
+    tourScheduledDate: number
     tourReview: IReview
     createdAt: number
     updatedAt: number 
+}
+
+export interface ICreateTourRequestInput{
+    touristName: string
+    touristId: string
+    agentName: string
+    agentId: string
+    tourScheduledDate: number
+    method: string
+    propertyId: string
+    propertyListingDate: number
 }
 
 export interface ICreateTourInput {
@@ -26,9 +51,8 @@ export interface ICreateTourInput {
     listedAt: number
     tourist: string
     agent: string
-    method: TourMethod
-    tourScheduledDay: string
-    tourScheduledTime: string
+    method: string
+    tourScheduledDate: number
 }
 
 export interface IUpdateTourInput {
@@ -36,6 +60,11 @@ export interface IUpdateTourInput {
     requestStatus?: TourRequestStatus
     tourStatus?: TourStatus
     tourReview?: IReview
+}
+
+export interface IGetTourInfoInput {
+    touristId?: string
+    agentId?: string
 }
 
 export interface IGetToursInput {

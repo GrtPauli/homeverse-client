@@ -5,13 +5,13 @@ import HvSwitchInput from '@/components/input/switch'
 import TourDetails from './details'
 import { useTourContext } from '@/modules/tour/context'
 
-export const RegTours = () => {
+export const Tours = () => {
   const [showModal, setShowModal] = useState<boolean>(false)
   const { tours } = useTourContext()  
 
   return (
     <>
-      <div>
+      {/* <div>
         {tours.length > 0 && <Filter/>}
         {tours.length > 0 ? tours.map((item, i) => (
           <RegTourItem key={i} item={item} setDetailModal={setShowModal}/>
@@ -25,7 +25,7 @@ export const RegTours = () => {
         onDismiss={() => setShowModal(false)}
       >
         <TourDetails/>
-      </HvModal>
+      </HvModal> */}
     </>
   )
 }

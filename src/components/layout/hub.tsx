@@ -21,7 +21,7 @@ export const AgentHubLayout: React.FC<IProps> = ({
         className={
           containerClassName
             ? containerClassName
-            : 'bg-light-cultured-3 h-full pt-[150px] pb-[100px] px-12'
+            : 'bg-light-cultured-3 h-full pt-[140px] pb-[100px] px-12'
         }
       >
         {children}

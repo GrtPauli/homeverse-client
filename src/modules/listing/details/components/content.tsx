@@ -17,6 +17,7 @@ interface IProps {
 
 interface IModalData {
   open: boolean
+  data?: Partial<IListing>
   content?: "date-picker" | "time-picker" | "confirm"
 }
 
@@ -117,7 +118,7 @@ export const DetailsContent: FC<IProps> = ({listing, agent = false}) => {
                         </p>
 
                         <div className="flex flex-col gap-5 px-5 py-5">
-                            <HvButton onClick={() => setShowModal({ open: true, content: "date-picker" })} paddingY="py-3.5" title="Request a Tour" />
+                            <HvButton onClick={() => setShowModal({ open: true, data: listing, content: "date-picker" })} paddingY="py-3.5" title="Request a Tour" />
                             <HvButton paddingY="py-3.5" title="Contact Agent" />
                             <HvButton paddingY="py-3.5" title="Save Property" />
                         </div>

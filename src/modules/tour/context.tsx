@@ -1,27 +1,39 @@
 import { FC, ReactNode, createContext, useContext, useState } from "react";
-import { ICreateTourInput, IGetToursInput, ITour, IUpdateTourInput } from "./model";
-import { useCreateTourRequest, useGetTours, useUpdateTour } from "./gql/query";
+import { ICreateTourInput, ICreateTourRequestInput, IGetTourInfoInput, IGetToursInput, ITour, ITourRequest, IUpdateTourInput, TourRequestStatus, TourStatus } from "./model";
+import { useCreateTourRequest, useGetTourRequests, useGetTours, useUpdateTour, useUpdateTourRequestStatus } from "./gql/query";
 import { useRouter } from "next/router";
 import useHvNotification from "@/hooks/notification";
 
 interface ITourState {
     loading: boolean
     initLoading: boolean
-    createTourRequest: (tour: ICreateTourInput) => Promise<void>
+    tourRequests: ITourRequest[]
+    tours: ITour[]
+    createTourRequest: (request: ICreateTourRequestInput) => Promise<void>
     getTours: (input: IGetToursInput) => Promise<void>
+    getTourInfo: (input: IGetTourInfoInput) => Promise<void>
+    updateTourRequest: (id: string, requestStatus: TourRequestStatus) => Promise<void>
     updateTour: (tour: IUpdateTourInput) => Promise<void>
 }
 
 const TourContext = createContext<ITourState>({
     loading: false,
     initLoading: true,
+    tourRequests: [],
+    tours: [],
     createTourRequest(){
         return null as any
     },
     getTours(){
         return null as any
     },
+    getTourInfo(){
+        return null as any
+    },
     updateTour(){
+        return null as any
+    },
+    updateTourRequest(){
         return null as any
     },
 })
@@ -41,19 +53,23 @@ interface IProps {
 const TourContextProvider: FC<IProps> = ({ children }) => {
     const [loading, setLoading] = useState<boolean>(false)
     const [initLoading, setInitLoading] = useState<boolean>(true)
+    const [tourRequests, setTourRequests] = useState<ITourRequest[]>([])
+    const [tours, setTours] = useState<ITour[]>([])
 
     const createTourRequestQuery = useCreateTourRequest((rs: any) => {})
     const getToursQuery = useGetTours((rs: any) => {})
+    const getTourRequestsQuery = useGetTourRequests((rs: any) => {})
     const updateTourQuery = useUpdateTour((rs: any) => {})
+    const updateTourRequestQuery = useUpdateTourRequestStatus((rs: any) => {})
     const {errorMsg, notificationContext, successMsg} = useHvNotification()
     const router = useRouter()
 
-    const createTourRequest = (tour: ICreateTourInput): Promise<void> => {
+    const createTourRequest = (request: ICreateTourRequestInput): Promise<void> => {
         setLoading(true)
         return new Promise((resolve, reject) => {
             createTourRequestQuery[0]({
                 variables: {
-                    tour,
+                    request,
                 },
             }).then(async (rs) => {
                 if (rs?.data?.createTourRequest) {
@@ -67,6 +83,17 @@ const TourContextProvider: FC<IProps> = ({ children }) => {
         })
     } 
 
+    const getTourInfo = (input: IGetTourInfoInput): Promise<void> => {
+        setInitLoading(true)
+        return new Promise((resolve, reject) => {
+            getTourRequests(input)
+            .then(() => {
+                resolve()
+            })
+            .finally(() => setInitLoading(false))
+        })
+    }
+
     const getTours = (input: IGetToursInput): Promise<void> => {
         setInitLoading(true)
         return new Promise((resolve, reject) => {
@@ -76,6 +103,9 @@ const TourContextProvider: FC<IProps> = ({ children }) => {
                 },
             }).then(async (rs) => {
                 if (rs?.data?.getTours) {
+                    setTours(rs?.data?.getTours.filter((item: ITour) => item.tourStatus !== (TourStatus[0] as any)))
+                    setTourRequests(rs?.data?.getTours.filter((item: ITour) => item.tourStatus == (TourStatus[0] as any)))
+
                     resolve()
                 }
                 else {
@@ -83,6 +113,26 @@ const TourContextProvider: FC<IProps> = ({ children }) => {
                 }
             })
             .finally(() => setInitLoading(false))
+        })
+    }
+
+    const getTourRequests = (input: IGetTourInfoInput): Promise<void> => {
+        // setInitLoading(true)
+        return new Promise((resolve, reject) => {
+            getTourRequestsQuery[0]({
+                variables: {
+                    input,
+                },
+            }).then(async (rs) => {
+                if (rs?.data?.getTourRequests) {
+                    setTourRequests(rs?.data?.getTourRequests)
+                    resolve()
+                }
+                else {
+                    reject()
+                }
+            })
+            // .finally(() => setInitLoading(false))
         })
     }
 
@@ -105,11 +155,35 @@ const TourContextProvider: FC<IProps> = ({ children }) => {
         })
     } 
 
+    const updateTourRequest = (id: string, requestStatus: TourRequestStatus): Promise<void> => {
+        setLoading(true)
+        return new Promise((resolve, reject) => {
+            updateTourRequestQuery[0]({
+                variables: {
+                    id,
+                    request: {requestStatus},
+                },
+            }).then(async (rs) => {
+                if (rs?.data?.updateTourRequestStatus) {
+                    resolve()
+                }
+                else {
+                    reject()
+                }
+            })
+            .finally(() => setLoading(false))
+        })
+    } 
+
     return (
         <TourContext.Provider
             value={{
+                updateTourRequest,
+                getTourInfo,
                 loading,
                 initLoading,
+                tourRequests,
+                tours,
                 getTours,
                 updateTour,
                 createTourRequest

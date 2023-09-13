@@ -1,20 +1,20 @@
 import React from 'react'
 import { ConfigProvider, Tabs } from 'antd';
 import type { TabsProps } from 'antd';
-import { RegTours } from './tours';
-import { RegTourRequests } from './tour-requests';
+import { Tours } from './tours';
+import { TourRequests } from './tour-requests';
 
-export const RegTourTab = () => {
+export const TourTab = () => {
     const items: TabsProps['items'] = [
         {
             key: '1',
             label: <p className='font-medium'>Tour Requests</p>,
-            children: <RegTourRequests/>,
+            children: <TourRequests/>,
         },
         {
             key: '2',
             label: <p className='font-medium'>Tours</p>,
-            children: <RegTours/>,
+            children: <Tours/>,
         }
     ];
 

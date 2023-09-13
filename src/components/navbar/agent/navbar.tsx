@@ -52,6 +52,9 @@ export const AgentNavbar = () => {
                     <Link href="">
                         <p className='font-regular text-[15px]'>Listings</p>
                     </Link>
+                    <Link href="/dashboard/tours">
+                        <p className='font-regular text-[15px]'>Tours</p>
+                    </Link>
                     <Link href="">
                         <p className='font-regular text-[15px]'>Contacts</p>
                     </Link>

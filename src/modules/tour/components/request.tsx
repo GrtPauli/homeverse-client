@@ -11,6 +11,10 @@ import 'react-clock/dist/Clock.css';
 import Clock from 'react-clock';
 import 'react-time-picker/dist/TimePicker.css';
 import TimePicker from 'react-time-picker';
+import { useTourContext } from '../context'
+import { useAuthContext } from '@/modules/auth/context'
+import { IListing } from '@/modules/listing/model'
+import { TourMethod } from '../model'
 
 type ValuePiece = Date | string | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -22,6 +26,7 @@ interface IProps {
 
 interface IModalData {
   open: boolean
+  data?: Partial<IListing>
   content?: "date-picker" | "time-picker" | "confirm"
 }
 
@@ -29,6 +34,21 @@ export const RequestTour: FC<IProps> = ({ showModal, setShowModal }) => {
   const [day, setDay] = useState<Date>()
   const [method, setMethod] = useState<"in-person" | "video-call">("in-person")
   const [time, setTime] = useState('10:00');
+  const { loading, createTourRequest } = useTourContext()
+  const { firebaseAuth } = useAuthContext()
+
+  const handleSubmit = () => {  
+    createTourRequest({
+        agentId: showModal.data.agent,
+        agentName: "Paul Andrew",
+        method: method == "in-person" ? TourMethod[0] : TourMethod[1],
+        propertyId: showModal.data._id,
+        propertyListingDate: showModal.data.createdAt,
+        touristId: firebaseAuth.currentUser.uid,
+        touristName: "John Terry",
+        tourScheduledDate: day.setHours(parseInt(time.split(":")[0]), parseInt(time.split(":")[1]))
+    })
+  }
 
   return (
     <div>
@@ -56,9 +76,11 @@ export const RequestTour: FC<IProps> = ({ showModal, setShowModal }) => {
         </div>
 
         <HvButton 
+            loading={loading}
             onClick={() => {
-                showModal.content == "date-picker" && setShowModal({ open: true, content: "time-picker" })
-                showModal.content == "time-picker" && setShowModal({ open: true, content: "confirm" })
+                showModal.content == "date-picker" && setShowModal({ open: true, ...showModal, content: "time-picker" })
+                showModal.content == "time-picker" && setShowModal({ open: true, ...showModal, content: "confirm" })
+                showModal.content == "confirm" && handleSubmit()
             }}
             title={
                 showModal.content == "date-picker" ? "Proceed with this date" :
@@ -72,8 +94,8 @@ export const RequestTour: FC<IProps> = ({ showModal, setShowModal }) => {
                     outline
                     title="Go Back" 
                     onClick={() => {
-                        showModal.content == "time-picker" && setShowModal({ open: true, content: "date-picker" })
-                        showModal.content == "confirm" && setShowModal({ open: true, content: "time-picker" })
+                        showModal.content == "time-picker" && setShowModal({ open: true, ...showModal, content: "date-picker" })
+                        showModal.content == "confirm" && setShowModal({ open: true, ...showModal, content: "time-picker" })
                     }}
                 />
             </div>
@@ -87,7 +109,13 @@ const ConfirmSelection = ({ method, day, time }: any) => {
         <div className='pt-3 pb-5 w-full text-center'>
             <h1 className='font-bold text-lg'>Confirm Selection</h1>
             <p className='mb-1'>{method == "in-person" ? "In Person" : "Video Call"}</p>
-            <p>{format(day, 'PP')}, {time}</p>
+            {/* <p>{format(day, 'PP')}, {time}</p> */}
+            <p>
+                {
+                    moment(day.setHours(parseInt(time.split(":")[0]), parseInt(time.split(":")[1])))
+                    .format(APP_DATE_TIME_FORMAT)
+                }
+            </p>
             <p className='mt-3 leading-7'>
                 Click on "Proceed" button to send <br/>your tour request
             </p>
@@ -98,7 +126,7 @@ const ConfirmSelection = ({ method, day, time }: any) => {
 const HvDayPicker = ({ day, setDay }: any) => {
     let footer = <p className='text-center mt-3'>Please pick a day.</p>
     if (day) {
-      footer = <p className='text-center mt-3'>You picked {format(day, 'PP')}.</p>
+      footer = <p className='text-center mt-3'>You picked {moment(day).format(APP_DATE_FORMAT)}.</p>
     }
 
     return (
