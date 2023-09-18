@@ -11,10 +11,10 @@ export const Tours = () => {
 
   return (
     <>
-      {/* <div>
+      <div>
         {tours.length > 0 && <Filter/>}
         {tours.length > 0 ? tours.map((item, i) => (
-          <RegTourItem key={i} item={item} setDetailModal={setShowModal}/>
+          <RegTourItem noBorder={tours.length == i+1 ? true : false} key={i} item={item} setDetailModal={setShowModal}/>
         )) : (<HvEmpty/>)}
       </div>
 
@@ -25,7 +25,7 @@ export const Tours = () => {
         onDismiss={() => setShowModal(false)}
       >
         <TourDetails/>
-      </HvModal> */}
+      </HvModal>
     </>
   )
 }

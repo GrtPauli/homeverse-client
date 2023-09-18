@@ -1,6 +1,6 @@
-import { Footer, Header, HvLoader } from '@/components'
+import { Footer, Header, HvLoader, RegularLayout } from '@/components'
 import React, { useEffect } from 'react'
-import { CTA, Hero, Services } from './components'
+import { CTA, Hero, RecentlyViewed, Services } from './components'
 import { useAuthContext } from '../auth/context'
 
 export const HomePage = () => {
@@ -21,15 +21,13 @@ export const HomePage = () => {
         )}
 
         {!loading && (
-          <div className="w-full">
-            <Header />
-            <div className="pt-[100px]">
+          <RegularLayout>
+            <div>
               <Hero />
+              <RecentlyViewed/>
               <Services />
-              <CTA />
             </div>
-            <Footer />
-          </div>
+          </RegularLayout>
         )}
     </>
   )

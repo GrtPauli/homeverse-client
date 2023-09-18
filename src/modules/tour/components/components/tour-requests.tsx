@@ -16,7 +16,7 @@ interface IModalData {
 }
 
 export const TourRequests = () => {
-  const { tourRequests } = useTourContext()  
+  const { tourRequests, updateTourRequest } = useTourContext()  
   const [showModal, setShowModal] = useState<IModalData>({open: false, data: null})
 
   const columns: ColumnsType<ITourRequest> = [
@@ -87,7 +87,16 @@ export const TourRequests = () => {
         </div>
       ),
     },
-];
+  ];
+
+  const handleUpdate = () => {
+    if(showModal?.data?.method == (TourMethod[1] as any)){
+      updateTourRequest(showModal?.data?._id, (TourRequestStatus[0] as any), true)
+    }
+    else{
+      updateTourRequest(showModal?.data?._id, (TourRequestStatus[0] as any))
+    }
+  }
 
   return (
     <div>      
@@ -105,7 +114,7 @@ export const TourRequests = () => {
           open={showModal.open}
           onDismiss={() => setShowModal({ open: false })}
         >
-          <div>
+          <div className='pt-2'>
             <div className='text-center'>
               <p className='font-bold text-lg mb-2'>{showModal?.data?.touristName}</p>
               <p className='mb-3'>Scheduled Date : {moment(showModal?.data?.tourScheduledDate).format(APP_DATE_TIME_FORMAT)}</p>
@@ -114,7 +123,9 @@ export const TourRequests = () => {
             
             <div className='flex justify-end gap-5 mt-10'>
               <HvButton paddingY='py-3' fullWidth={false} outline title="Cancel" onClick={() => setShowModal({ open: false })}/>
-              <HvButton paddingY='py-3' fullWidth={false} title="Proceed"/>
+              <HvButton paddingY='py-3' fullWidth={false} title="Proceed"
+                onClick={() => handleUpdate()}
+              />
             </div>
           </div>
         </HvModal>

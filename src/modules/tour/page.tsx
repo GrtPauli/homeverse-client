@@ -12,7 +12,7 @@ interface IProps {
 
 const ToursPage: FC<IProps> = ({ agent = false }) => {
 
-  const { initLoading, getTours, getTourInfo } = useTourContext()
+  const { initLoading, getTourInfo, tours, tourRequests } = useTourContext()
   const { firebaseInitLoading, firebaseAuth } = useAuthContext()
 
   useEffect(() => {
@@ -21,6 +21,10 @@ const ToursPage: FC<IProps> = ({ agent = false }) => {
       : getTourInfo({ touristId: firebaseAuth?.currentUser?.uid })
     }
   },[firebaseInitLoading])
+
+  console.log(tours);
+  console.log(tourRequests);
+  
 
   return (
     <>

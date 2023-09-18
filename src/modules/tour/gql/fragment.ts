@@ -21,37 +21,38 @@ export const TourFragment = gql`
   fragment Tour on Tour {
     _id
     propertyImg {
-        id
-        name
-        uri
+      id
+      name
+      uri
     }
-    listingId
+    propertyId
     price
     propertyLocation {
-        country
-        countryFlag
-        state
-        city
+      country
+      countryFlag
+      state
+      city
     }
-    listedAt
-    tourist
-    agent
-    vcUrl
+    propertyListingDate
+    touristName
+    touristId
+    agentName
+    agentId
+    vcRoomId
     method
-    requestStatus
     tourStatus
     tourScheduledDate
     tourReview {
-        rating
-        review
+      rating
+      review
+      name
+      image {
+        id
         name
-        image {
-          id
-          name
-          uri
-        }
-        createdAt
-        updatedAt
+        uri
+      }
+      createdAt
+      updatedAt
     }
     createdAt
     updatedAt

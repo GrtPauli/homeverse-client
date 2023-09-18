@@ -6,14 +6,14 @@ import Image from 'next/image'
 
 export const Services = () => {
   return (
-    <div className="py-20 bg-light-cultured-3 flex-col flex justify-center items-center px-16">
-      <h1 className="text-dark-jungle-green font-extrabold text-4xl">Our Services</h1>
-      <p className="mt-4 text-colors-cadet">
+    <div className="py-16 bg-light-cultured-3 px-14">
+      <h1 className="text-dark-jungle-green font-extrabold text-3xl">Our Services</h1>
+      <p className="mt-2 text-colors-cadet text-sm">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, error!
       </p>
       <ul className="service-list flex mt-10 gap-8">
         <li>
-          <div className="service-card">
+          <div className="service-card shadow-lg rounded">
             <div className="card-icon">
               <Image alt="service" height={400} width={180} src={Service1} />
             </div>
@@ -36,7 +36,7 @@ export const Services = () => {
         </li>
 
         <li>
-          <div className="service-card">
+          <div className="service-card shadow-lg rounded">
             <div className="card-icon">
               <Image alt="service" height={400} width={180} src={Service2} />
             </div>
@@ -59,7 +59,7 @@ export const Services = () => {
         </li>
 
         <li>
-          <div className="service-card">
+          <div className="service-card shadow-lg rounded">
             <div className="card-icon">
               <Image alt="service" height={400} width={180} src={Service3} />
             </div>

@@ -10,9 +10,9 @@ interface ITourState {
     tourRequests: ITourRequest[]
     tours: ITour[]
     createTourRequest: (request: ICreateTourRequestInput) => Promise<void>
-    getTours: (input: IGetToursInput) => Promise<void>
+    getTours: (input: IGetTourInfoInput) => Promise<void>
     getTourInfo: (input: IGetTourInfoInput) => Promise<void>
-    updateTourRequest: (id: string, requestStatus: TourRequestStatus) => Promise<void>
+    updateTourRequest: (id: string, requestStatus: TourRequestStatus, vc?: boolean) => Promise<void>
     updateTour: (tour: IUpdateTourInput) => Promise<void>
 }
 
@@ -88,14 +88,15 @@ const TourContextProvider: FC<IProps> = ({ children }) => {
         return new Promise((resolve, reject) => {
             getTourRequests(input)
             .then(() => {
-                resolve()
+                getTours(input)
+                .then(() => resolve())
+                .finally(() => setInitLoading(false))
             })
-            .finally(() => setInitLoading(false))
         })
     }
 
-    const getTours = (input: IGetToursInput): Promise<void> => {
-        setInitLoading(true)
+    const getTours = (input: IGetTourInfoInput): Promise<void> => {
+        // setInitLoading(true)
         return new Promise((resolve, reject) => {
             getToursQuery[0]({
                 variables: {
@@ -103,16 +104,14 @@ const TourContextProvider: FC<IProps> = ({ children }) => {
                 },
             }).then(async (rs) => {
                 if (rs?.data?.getTours) {
-                    setTours(rs?.data?.getTours.filter((item: ITour) => item.tourStatus !== (TourStatus[0] as any)))
-                    setTourRequests(rs?.data?.getTours.filter((item: ITour) => item.tourStatus == (TourStatus[0] as any)))
-
+                    setTours(rs?.data?.getTours)
                     resolve()
                 }
                 else {
                     reject()
                 }
             })
-            .finally(() => setInitLoading(false))
+            // .finally(() => setInitLoading(false))
         })
     }
 
@@ -155,14 +154,32 @@ const TourContextProvider: FC<IProps> = ({ children }) => {
         })
     } 
 
-    const updateTourRequest = (id: string, requestStatus: TourRequestStatus): Promise<void> => {
+    function randomID(len: number) {
+        let result = '';
+        if (result) return result;
+        var chars = '12345qwertyuiopasdfgh67890jklmnbvcxzMNBVCZXASDQWERTYHGFUIOLKJP',
+          maxPos = chars.length,
+          i;
+        len = len || 5;
+        for (i = 0; i < len; i++) {
+          result += chars.charAt(Math.floor(Math.random() * maxPos));
+        }
+        return result;
+    }
+
+    const updateTourRequest = (id: string, requestStatus: TourRequestStatus, vc?: boolean): Promise<void> => {
+        let variables: any
+        if(vc){
+            variables={id, request: {requestStatus}, vcRoomId: randomID(5)}
+        }
+        else{
+            variables={id, request: {requestStatus}}
+        }
+        
         setLoading(true)
         return new Promise((resolve, reject) => {
             updateTourRequestQuery[0]({
-                variables: {
-                    id,
-                    request: {requestStatus},
-                },
+                variables
             }).then(async (rs) => {
                 if (rs?.data?.updateTourRequestStatus) {
                     resolve()

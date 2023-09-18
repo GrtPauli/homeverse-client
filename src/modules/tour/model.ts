@@ -13,18 +13,19 @@ export interface ITourRequest {
     updatedAt: number
 }
 
-export interface ITour {
+export interface ITour { 
     _id: string
     propertyImg: IImage
-    listingId: string
     price: number
     propertyLocation: ILocation
-    listedAt: number
-    tourist: string
-    agent: string
-    vcUrl: string
+    propertyId: string
+    propertyListingDate: number
+    touristName: string
+    touristId: string
+    agentName: string
+    agentId: string
+    vcRoomId: string
     method: TourMethod
-    requestStatus: TourRequestStatus
     tourStatus: TourStatus
     tourScheduledDate: number
     tourReview: IReview
@@ -106,7 +107,6 @@ export enum TourRequestStatus {
 }
 
 export enum TourStatus {
-    REQUEST_NOT_ACCEPTED,
     COMPLETED,
     PENDING,
     CANCELLED

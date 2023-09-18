@@ -19,8 +19,8 @@ const UPDATE_TOUR = gql`
 `
 
 const UPDATE_TOUR_REQUEST_STATUS = gql`
-  mutation updateTourRequestStatus( $id: String!, $request: UpdateTourRequestStatusInput!) {
-    updateTourRequestStatus(id: $id, request: $request) {
+  mutation updateTourRequestStatus( $id: String!, $request: UpdateTourRequestStatusInput!, $vcRoomId: String) {
+    updateTourRequestStatus(id: $id, request: $request, vcRoomId: $vcRoomId) {
         _id
     }
   }
@@ -36,7 +36,7 @@ const GET_TOUR_REQUESTS = gql`
 `
 
 const GET_TOURS = gql`
-    query GetTours($input: GetToursInput!) {
+    query GetTours($input: GetTourInfoInput!) {
         getTours(input: $input) {
             ...Tour
         }

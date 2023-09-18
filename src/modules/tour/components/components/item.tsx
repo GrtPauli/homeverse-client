@@ -1,22 +1,25 @@
 import React, { FC } from 'react'
 import HouseImg from "../../../../../assets/images/slide-3.jpg"
 import { Image } from 'antd'
-import { HvButton } from '@/components'
-import { ITour, TourMethod } from '@/modules/tour/model'
+import { HvButton, HvPopover } from '@/components'
+import { ITour, TourMethod, TourStatus } from '@/modules/tour/model'
 import moment from 'moment'
 import { APP_DATE_TIME_FORMAT } from '@/constants/Helper'
 import CurrencyFormat from 'react-currency-format';
 import { MoreOutlined } from '@ant-design/icons'
+import { TourItemMenu } from './menu'
+import Link from 'next/link'
 
 interface IProps {
     request?: boolean
     setDetailModal?: any
     item: ITour
+    noBorder: boolean
 }
 
-export const RegTourItem: FC<IProps> = ({ setDetailModal, item,  request = false }) => {
+export const RegTourItem: FC<IProps> = ({ setDetailModal, item, request = false, noBorder = false }) => {
   return (
-    <div className='pb-8 border-b pt-8'>
+    <div className={`${noBorder ? 'pb-5' : 'border-b pb-8'} pt-8`}>
         <div className='w-full flex justify-between'>
             <div className='flex gap-5'>
                 <Image
@@ -47,27 +50,42 @@ export const RegTourItem: FC<IProps> = ({ setDetailModal, item,  request = false
                     </div>
 
                     <div>
-                        <div className='flex items-center gap-2 mb-2'>
+                        <div className='flex items-center gap-2 mb-3'>
                             <Image src={item.propertyLocation.countryFlag} width='18px' height='18px'/>
                             <p className='leading-none'>
                                 {item.propertyLocation.country} {" , "} {item.propertyLocation.state} {" , "} {item.propertyLocation.city}
                             </p>
                         </div>
-                        <p className='leading-none'>House Listed On : {moment(item.listedAt).format(APP_DATE_TIME_FORMAT)}</p>
+                        <p className='leading-none mb-3'>House Listed On : {moment(item.propertyListingDate).format(APP_DATE_TIME_FORMAT)}</p>
+                        <p className='leading-none'>Tour Scheduled Date : {moment(item.tourScheduledDate).format(APP_DATE_TIME_FORMAT)}</p>
                     </div>
                 </div>
             </div>
 
             <div className='flex flex-col justify-between h-[150px] items-end'>
-                <button>
-                  <MoreOutlined className='text-2xl'/>
-                </button>
+                <HvPopover
+                    wrapper={(
+                        <button>
+                            <MoreOutlined className='text-2xl'/>
+                        </button>
+                    )}
+                    placement='topRight'
+                    trigger='click'
+                    children={<TourItemMenu/>}
+                />
+ 
                 {/* <HvButton onClick={() => setDetailModal(true)} title="View Details"/> */}
 
                 <div className='flex flex-col items-end gap-3'>
+                    {item.tourStatus == (TourStatus[1] as any) && <p className='leading-none'>Tour Status : <span className='inline-block text-primary font-bold'>{item.tourStatus}</span></p>}
+                    {item.tourStatus == (TourStatus[0] as any) && <p className='leading-none'>Tour Status : <span className='inline-block text-green-500 font-bold'>{item.tourStatus}</span></p>}
+                    {item.tourStatus == (TourStatus[2] as any) && <p className='leading-none'>Tour Status : <span className='inline-block text-red-500 font-bold'>{item.tourStatus}</span></p>}
                     <p className='leading-none'>Tour Method : {item.method == (TourMethod[0] as any) ? "In Person" : "Video Call"}</p>
-                    <p className='leading-none'>Request Status : {item.requestStatus}</p>
-                    <p className='leading-none'>Tour Scheduled Date : {moment(item.tourScheduledDate).format(APP_DATE_TIME_FORMAT)}</p>
+                    {item.method == (TourMethod[1] as any) && (
+                        <Link href="" className='leading-none text-colors-cadet hover:text-primary'>
+                            Enter Video Call
+                        </Link>
+                    )}
                 </div>
             </div>
         </div>
