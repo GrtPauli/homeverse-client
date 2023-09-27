@@ -2,7 +2,7 @@ import { SelectLocationPage } from '@/modules/listing/create/components/select-l
 import React from 'react'
 
 const SelectLocation = () => {
-  return <SelectLocationPage/>
+  return <SelectLocationPage />
 }
 
 export default SelectLocation

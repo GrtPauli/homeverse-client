@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client'
 
 export const ListingFragment = gql`
   fragment Listing on Listing {
@@ -6,10 +6,12 @@ export const ListingFragment = gql`
     price
     homeType
     description
-    country
-    countryFlag
-    state
-    city
+    location {
+      state
+      city
+      address
+      zip
+    }
     photos {
       id
       name
@@ -21,11 +23,8 @@ export const ListingFragment = gql`
     status
     bedrooms
     totalRooms
-    totalGarages
-    fullBathrooms
-    threeFourBathrooms
-    oneTwoBathrooms
-    oneFourBathrooms
+    garages
+    bathrooms
     propertySize
     propertySizeUnit
     basementSqFt
@@ -50,4 +49,4 @@ export const ListingFragment = gql`
     createdAt
     updatedAt
   }
-`;
+`

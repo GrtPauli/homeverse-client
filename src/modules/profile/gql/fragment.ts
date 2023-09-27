@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client'
 
 export const UserFragment = gql`
   fragment User on User {
@@ -15,24 +15,28 @@ export const ProfileFragment = gql`
   fragment Profile on Profile {
     _id
     userId
+    displayName
     phone
     about
     userType
+    photo
+    address
+    languages
     # contacts {
     #   contactId
     #   createdAt
     #   status
     #   messageRoomId
-    # }    
+    # }
     # contactRequests {
     #   contactId
     #   position
-    # }    
+    # }
     reviews
     country
     countryFlag
     state
-    city   
+    city
     professionalTitle
     brokerageName
     brokerageAddress

@@ -5,7 +5,14 @@ interface IProps {
 }
 
 export const HvAppleIcon: React.FC<IProps> = ({ className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" fill='currentColor' width="24" height="24" viewBox="0 0 24 24" className={className}>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    className={className}
+  >
     <path d="M0,0H24V24H0Z" fill="none" opacity="0.58" />
     <path
       d="M15.479,12.16a13.735,13.735,0,0,0,1.26-2.37,4.32,4.32,0,0,1-.57-7.8A4.946,4.946,0,0,0,12.429,0a5.619,5.619,0,0,0-2.21.48,4.079,4.079,0,0,1-1.51.36A4.957,4.957,0,0,1,7.019.45,5.778,5.778,0,0,0,4.969,0,5.086,5.086,0,0,0,.879,2.47C-.541,4.67-.291,8.79,2,12.31c.82,1.26,1.92,2.67,3.35,2.69a3.069,3.069,0,0,0,1.42-.36,4.222,4.222,0,0,1,1.95-.46,4.056,4.056,0,0,1,1.94.46,2.943,2.943,0,0,0,1.39.36C13.5,14.98,14.659,13.42,15.479,12.16Z"

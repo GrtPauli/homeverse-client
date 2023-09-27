@@ -4,10 +4,23 @@ import { useRouter } from 'next/router'
 import { environment } from '@/constants/Environment'
 import { Analytics, getAnalytics } from 'firebase/analytics'
 import { FirebaseApp, initializeApp } from 'firebase/app'
-import { sendEmailVerification, Auth, FacebookAuthProvider, GoogleAuthProvider, TwitterAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
+import {
+  sendEmailVerification,
+  Auth,
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+  TwitterAuthProvider,
+  createUserWithEmailAndPassword,
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+} from 'firebase/auth'
 import { Firestore, getFirestore } from 'firebase/firestore'
 import { useCreateProfile, useGetUserType } from '../profile/gql/query'
 import { UserType } from '../profile/model'
+import useHvNotification from '@/hooks/notification'
 
 interface IAuthState {
   loading: boolean
@@ -17,16 +30,20 @@ interface IAuthState {
   firebaseAnalytics: Analytics
   firestoreDb: Firestore
   userType: UserType
-  authenticateWithEmailAndPassword: (user: IAuthUserInput, type: "signup" | "signin") => Promise<void>
-  authenticateWithGoogle: (type: "signup" | "signin") => Promise<void>
-  authenticateWithTwitter: (type: "signup" | "signin") => Promise<void>
+  authenticateWithEmailAndPassword: (
+    user: IAuthUserInput,
+    type: 'signup' | 'signin',
+  ) => Promise<void>
+  authenticateWithGoogle: (type: 'signup' | 'signin') => Promise<void>
+  authenticateWithTwitter: (type: 'signup' | 'signin') => Promise<void>
   authenticateWithFacebook: () => Promise<void>
   verifyEmail: () => Promise<void>
-  getUserType: (id: string) => Promise<void> 
+  getUserType: (id: string) => Promise<void>
+  signUserOut: () => void
 }
 
 const AuthContext = createContext<IAuthState>({
-  loading: true,
+  loading: false,
   userType: null,
   firebaseInitLoading: true,
   firebaseApp: null,
@@ -51,6 +68,7 @@ const AuthContext = createContext<IAuthState>({
   authenticateWithFacebook() {
     return null as any
   },
+  signUserOut() {},
 })
 
 const useAuthContext = () => {
@@ -66,26 +84,26 @@ interface IProps {
 }
 
 const AuthContextProvider: FC<IProps> = ({ children }) => {
-  const [loading, setLoading] = useState<boolean>(true)
+  const [loading, setLoading] = useState<boolean>(false)
   const [firebaseInitLoading, setFirebaseInitLoading] = useState<boolean>(true)
   const [firebaseApp, setFirebaseApp] = useState<FirebaseApp>(null)
   const [firebaseAuth, setFirebaseAuth] = useState<Auth>(null)
   const [firebaseAnalytics, setFirebaseAnalytics] = useState<Analytics>(null)
   const [firestoreDb, setFirestoreDb] = useState<Firestore>(null)
   const [userType, setUserType] = useState<UserType>(null)
-
   const createProfileQuery = useCreateProfile((rs: any) => {})
   const getUserTypeQuery = useGetUserType((rs: any) => {})
   const router = useRouter()
+  const { errorMsg, notificationContext, successMsg } = useHvNotification()
 
   useEffect(() => {
     setFirebaseInitLoading(true)
-    if(typeof window !== undefined){
+    if (typeof window !== undefined) {
       let app = initializeApp(environment.FirebaseConfig)
       let auth = getAuth()
-      let analytics = getAnalytics(app);
-      let firestoreDb = getFirestore(app);
-      
+      let analytics = getAnalytics(app)
+      let firestoreDb = getFirestore(app)
+
       setFirebaseApp(app)
       setFirebaseAuth(auth)
       setFirebaseAnalytics(analytics)
@@ -96,84 +114,98 @@ const AuthContextProvider: FC<IProps> = ({ children }) => {
           setFirebaseInitLoading(false)
           // console.log(user)
         } else {
-          console.log("Signed Out")
+          console.log('Signed Out')
         }
-      });
+      })
     }
-  },[])
+  }, [])
 
-  const authenticateWithEmailAndPassword = (user: IAuthUserInput, type: "signup" | "signin"): Promise<void> => {
+  const authenticateWithEmailAndPassword = (
+    user: IAuthUserInput,
+    type: 'signup' | 'signin',
+  ): Promise<void> => {
     setLoading(true)
-    return new Promise((resolve, reject) => { 
-      if(type == "signup"){
+    return new Promise((resolve, reject) => {
+      if (type == 'signup') {
         createUserWithEmailAndPassword(firebaseAuth, user.email, user.password)
-        .then((userCredential) => {
-          createProfileQuery[0]({ variables: { userId: userCredential.user.uid } })
-          .then((rs) => {
-              if (rs?.data?.createProfile) {
+          .then((userCredential) => {
+            createProfileQuery[0]({ variables: { userId: userCredential.user.uid } }).then(
+              (rs) => {
+                if (rs?.data?.createProfile) {
                   resolve()
                   router.push('/')
-              }
+                }
+              },
+            )
           })
-        })
-        .catch((error) => {
-          reject()
-          console.log(error);
-        }).finally(() => setTimeout(() => {setLoading(false)}, 3000))
+          .catch((error) => {
+            reject()
+            console.log(error)
+          })
+          .finally(() =>
+            setTimeout(() => {
+              setLoading(false)
+            }, 3000),
+          )
       } else {
         signInWithEmailAndPassword(firebaseAuth, user.email, user.password)
-        .then((userCredential) => {
-          resolve()
-          console.log(userCredential)
-          router.push('/')
-        })
-        .catch((error) => {
-          reject()
-          console.log(error);
-        }).finally(() => setTimeout(() => {setLoading(false)}, 3000))
+          .then((userCredential) => {
+            resolve()
+            console.log(userCredential)
+            router.push('/')
+          })
+          .catch((error) => {
+            reject()
+            console.log(error)
+          })
+          .finally(() =>
+            setTimeout(() => {
+              setLoading(false)
+            }, 3000),
+          )
       }
     })
   }
 
   const authenticateWithFacebook = (): Promise<void> => {
-    return new Promise((resolve, reject) => { 
-      const provider = new FacebookAuthProvider();
+    return new Promise((resolve, reject) => {
+      const provider = new FacebookAuthProvider()
       signInWithPopup(firebaseAuth, provider)
-      .then(rs => {
-        console.log(rs)
-      })
-      .catch((error) => {
-        console.log(error);
-      })
+        .then((rs) => {
+          console.log(rs)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     })
   }
 
-  const authenticateWithTwitter = (type: "signup" | "signin"): Promise<void> => {
-    return new Promise((resolve, reject) => { 
-      if(type == "signup"){
-        const provider = new TwitterAuthProvider();
+  const authenticateWithTwitter = (type: 'signup' | 'signin'): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      if (type == 'signup') {
+        const provider = new TwitterAuthProvider()
         signInWithPopup(firebaseAuth, provider)
-        .then(rs => {
-          console.log(rs)
-        })
-        .catch((error) => {
-          console.log(error);
-        })
+          .then((rs) => {
+            console.log(rs)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
       }
     })
   }
-  
-  const authenticateWithGoogle = (type: "signup" | "signin"): Promise<void> => {
-    return new Promise((resolve, reject) => { 
-      if(type == "signup"){
-        const provider = new GoogleAuthProvider();
+
+  const authenticateWithGoogle = (type: 'signup' | 'signin'): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      if (type == 'signup') {
+        const provider = new GoogleAuthProvider()
         signInWithPopup(firebaseAuth, provider)
-        .then(rs => {
-          console.log(rs)
-        })
-        .catch((error) => {
-          console.log(error);
-        })
+          .then((rs) => {
+            console.log(rs)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
       }
     })
   }
@@ -182,34 +214,52 @@ const AuthContextProvider: FC<IProps> = ({ children }) => {
     setLoading(true)
     return new Promise((resolve, reject) => {
       getUserTypeQuery[0]({
-            variables: {
-                id,
-            },
-        }).then(async (rs) => {
-            if (rs?.data?.getUserProfile) {
-              setUserType(rs?.data?.getUserProfile.userType)
-              resolve()
-            }
+        variables: {
+          id,
+        },
+      })
+        .then(async (rs) => {
+          if (rs?.data?.getUserProfile) {
+            setUserType(rs?.data?.getUserProfile.userType)
+            resolve()
+          } else {
             reject()
+          }
         })
-        .finally(() => setTimeout(() => {setLoading(false)}, 3000))
+        .finally(() => setLoading(false))
     })
   }
 
   const verifyEmail = (): Promise<void> => {
-    return new Promise((resolve, reject) => { 
+    setLoading(true)
+    return new Promise<void>((resolve, reject) => {
       sendEmailVerification(firebaseAuth.currentUser)
-      .then(() => {
-        console.log("yh");
-      }).catch(() => {
-        console.log("nah");
-      })
+        .then(() => {
+          successMsg('Success', 'Email sent successfully')
+          resolve()
+        })
+        .catch((error) => {
+          errorMsg('Error', error.message)
+          reject()
+        })
+        .finally(() => setLoading(false))
     })
+  }
+
+  const signUserOut = () => {
+    signOut(firebaseAuth)
+      .then(() => {
+        router.push('/auth/signin')
+      })
+      .catch((error) => {
+        // An error happened.
+      })
   }
 
   return (
     <AuthContext.Provider
       value={{
+        signUserOut,
         verifyEmail,
         userType,
         getUserType,
@@ -222,10 +272,13 @@ const AuthContextProvider: FC<IProps> = ({ children }) => {
         firebaseApp,
         firebaseAuth,
         firebaseInitLoading,
-        firestoreDb
+        firestoreDb,
       }}
     >
-      {children}
+      <>
+        {notificationContext}
+        {children}
+      </>
     </AuthContext.Provider>
   )
 }

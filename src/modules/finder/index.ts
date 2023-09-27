@@ -1,1 +1,1 @@
-export * from "./agent/page"
+export * from './agent/page'

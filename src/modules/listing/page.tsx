@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { ConfigProvider, Tabs } from 'antd'
 import type { TabsProps } from 'antd'
 import { useListingContext } from './context'
-import { HvLoader, HvButton, Footer, Header } from '@/components'
+import { HvLoader, HvButton, Footer, Header, RegularLayout } from '@/components'
 import { Image } from 'antd'
 import NoHome from '../../assets/images/no-home (1).png'
 import { CTA } from '../home/components'
@@ -14,7 +14,7 @@ export const ListingsPage = () => {
 
   useEffect(() => {
     getListings()
-  },[])
+  }, [])
 
   return (
     <>
@@ -24,19 +24,10 @@ export const ListingsPage = () => {
         </div>
       )}
       {!loading && (
-        <div className="w-full bg-light-cultured-3 relative">
-          <Header />
-
-          <div className="pt-[100px]">
-            <Hero />
-            <Content />
-          </div>
-
-          <div>
-            <CTA />
-            <Footer />
-          </div>
-        </div>
+        <RegularLayout className="pt-[100px]">
+          <Hero />
+          <Content />
+        </RegularLayout>
       )}
     </>
   )

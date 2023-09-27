@@ -9,7 +9,7 @@ interface Props {
 export const AgentHeader: React.FC<Props> = ({ noBanner = false }) => {
   return (
     <header className="header fixed w-full shadow-md z-50">
-      {noBanner == false && <AgentTopBanner />}
+      {/* {noBanner == false && <AgentTopBanner />} */}
       <AgentNavbar />
     </header>
   )

@@ -12,11 +12,15 @@ import moment from 'moment'
 import { APP_DATE_TIME_FORMAT } from '@/constants/Helper'
 
 export const MessagesPage = () => {
-//   const [showIntroBox, setShowIntroBox] = useState<boolean>(true)
+  //   const [showIntroBox, setShowIntroBox] = useState<boolean>(true)
   const [userId, setUserId] = useState<string>(null)
 
   const {
-    setShowIntroBox, showIntroBox, setRecipientId, recipientId, closeIntroBox,
+    setShowIntroBox,
+    showIntroBox,
+    setRecipientId,
+    recipientId,
+    closeIntroBox,
     createAgoraConn,
     agoraConn,
     setAgoraEventHandler,
@@ -50,9 +54,9 @@ export const MessagesPage = () => {
           </div>
 
           {conversationList?.channel_infos?.map((item, i) => (
-            <button 
-                onClick={() => closeIntroBox(item) } 
-                className="flex w-full cursor-pointer items-center gap-3 py-3 px-5 hover:bg-primary/10 transition-all ease-in duration-150"
+            <button
+              onClick={() => closeIntroBox(item)}
+              className="flex w-full cursor-pointer items-center gap-3 py-3 px-5 hover:bg-primary/10 transition-all ease-in duration-150"
             >
               <Image
                 className="rounded-full object-cover"
@@ -64,7 +68,9 @@ export const MessagesPage = () => {
               <div className="flex flex-col gap-1 justify-between w-full">
                 <div className="flex justify-between items-start">
                   <p className="font-bold text-sm">{item?.lastMessage?.ext?.nickname}</p>
-                  <p className="text-[12px] text-colors-cadet">{moment(item?.lastMessage?.time).format(APP_DATE_TIME_FORMAT)}</p>
+                  <p className="text-[12px] text-colors-cadet">
+                    {moment(item?.lastMessage?.time).format(APP_DATE_TIME_FORMAT)}
+                  </p>
                 </div>
 
                 <div className="flex justify-between items-end">
@@ -83,8 +89,8 @@ export const MessagesPage = () => {
         </div>
 
         <div className="h-full w-[75%] pt-[60px] relative">
-            {showIntroBox && <IntroBox/>}
-            {!showIntroBox && <ChatRoom userId={recipientId}/>}
+          {showIntroBox && <IntroBox />}
+          {!showIntroBox && <ChatRoom userId={recipientId} />}
         </div>
       </div>
     </AgentHubLayout>
@@ -124,10 +130,10 @@ export const MessagesPage = () => {
     //                         </div>
     //                     </div>
 
-                        // <div className='flex flex-col gap-3'>
-                        //     {messageRoom.messages?.map((item: any, i: number) => (
-                        //         <ChatBox key={i} message={item}/>
-                        //     ))}
+    // <div className='flex flex-col gap-3'>
+    //     {messageRoom.messages?.map((item: any, i: number) => (
+    //         <ChatBox key={i} message={item}/>
+    //     ))}
 
     //                         <div className='flex gap-3'>
     //                             <div className='bg-light-cultured-2 py-2 px-4 gap-3 max-w-[80%] rounded-tr-xl rounded-b-xl flex justify-between items-end'>

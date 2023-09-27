@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client'
 
 export const TourRequestFragment = gql`
   fragment TourRequest on TourRequest {
@@ -20,37 +20,23 @@ export const TourRequestFragment = gql`
 export const TourFragment = gql`
   fragment Tour on Tour {
     _id
-    propertyImg {
-      id
-      name
-      uri
-    }
     propertyId
-    price
-    propertyLocation {
-      country
-      countryFlag
-      state
-      city
-    }
     propertyListingDate
     touristName
     touristId
+    touristPhoto
     agentName
     agentId
+    agentPhoto
     vcRoomId
     method
     tourStatus
     tourScheduledDate
     tourReview {
       rating
-      review
+      comment
       name
-      image {
-        id
-        name
-        uri
-      }
+      photo
       createdAt
       updatedAt
     }

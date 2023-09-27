@@ -1,16 +1,16 @@
-import { ErrorMessage, Field, useField } from "formik";
-import React, { useEffect, useState } from "react";
+import { ErrorMessage, Field, useField } from 'formik'
+import React, { useEffect, useState } from 'react'
 
 interface IProps {
-  label?: string;
+  label?: string
   value?: string
-  labelClassName?: string;
-  className?: string;
-  name: string;
-  onChange?: (val: boolean) => void;
+  labelClassName?: string
+  className?: string
+  name: string
+  onChange?: (val: boolean) => void
   props?: {
-    [x: string]: any;
-  };
+    [x: string]: any
+  }
 }
 
 export const AppCheckInput: React.FC<IProps> = ({
@@ -18,7 +18,7 @@ export const AppCheckInput: React.FC<IProps> = ({
   value,
   name,
   className,
-  labelClassName = "text-xl bold",
+  labelClassName = 'text-xl bold',
   onChange,
   ...props
 }) => {
@@ -26,16 +26,18 @@ export const AppCheckInput: React.FC<IProps> = ({
 
   return (
     <div
-      style={{
-        // marginBottom: 10,
-        // display: "flex",
-        // flexDirection: "column",
-      }}
+      style={
+        {
+          // marginBottom: 10,
+          // display: "flex",
+          // flexDirection: "column",
+        }
+      }
     >
       <div className="flex items-center">
         <Field
-          className="border-colors-cadet checked:text-primary" 
-          type="checkbox" 
+          className="border-colors-cadet checked:text-primary"
+          type="checkbox"
           name={name}
           value={value}
         />
@@ -53,5 +55,5 @@ export const AppCheckInput: React.FC<IProps> = ({
 
       {/* <ErrorMessage className="text-red-500" name={name} component="div" /> */}
     </div>
-  );
-};
+  )
+}

@@ -5,13 +5,13 @@ import { Header } from '@/components'
 
 interface IProps {
   children: React.ReactNode
-  page?: 'listings' | 'contacts' | 'transactions' | 'profile' | "messages"
+  page?: 'listings' | 'contacts' | 'transactions' | 'profile' | 'messages'
 }
 
 export const DashboardLayout: React.FC<IProps> = ({ children, page }) => {
   return (
     <div>
-      <Header noBanner/>
+      <Header noBanner />
       {/* <DashboardHeader/> */}
       <div className="bg-light-cultured-3 min-h-[100vh]">
         <div className="flex w-full">

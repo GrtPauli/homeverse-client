@@ -5,7 +5,13 @@ interface IProps {
 }
 
 export const HvTickCircleIcon: React.FC<IProps> = ({ className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={className}> 
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    className={className}
+  >
     <g transform="translate(-748 -188)">
       <path
         d="M10,20.75A10.738,10.738,0,0,1,2.407,2.407,10.738,10.738,0,1,1,17.593,17.593,10.674,10.674,0,0,1,10,20.75Zm0-20A9.25,9.25,0,1,0,19.25,10,9.26,9.26,0,0,0,10,.75Z"

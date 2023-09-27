@@ -34,14 +34,14 @@ export const useSignUp = (callback: any) => {
 
 export const useSendOtp = (callback: any) => {
   return useLazyQuery(SEND_OTP, {
-    fetchPolicy: "no-cache",
+    fetchPolicy: 'no-cache',
     onCompleted: (res) => {
-      if(res.sendOTP){
+      if (res.sendOTP) {
         callback(res.sendOTP)
       }
     },
     onError: (err) => {
       console.log(err)
-    }
+    },
   })
 }

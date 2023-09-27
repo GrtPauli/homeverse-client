@@ -16,10 +16,9 @@ export const MessagesPage = () => {
 
   useEffect(() => {
     if (authLoading == false) {
-       getConversationListId(firestoreDb, auth?.currentUser?.uid)
-       .then((ref) => {
-            getConversationList(ref)
-       })
+      getConversationListId(firestoreDb, auth?.currentUser?.uid).then((ref) => {
+        getConversationList(ref)
+      })
     }
   }, [authLoading])
 
@@ -31,14 +30,21 @@ export const MessagesPage = () => {
             <h1>Messages</h1>
           </div>
 
-            {conversationList?.map((item, i) => (
-                <ConversationItem item={item} key={i} setShowIntroBox={setShowIntroBox} setUserId={setUserId}/>
-            ))}
+          {conversationList?.map((item, i) => (
+            <ConversationItem
+              item={item}
+              key={i}
+              setShowIntroBox={setShowIntroBox}
+              setUserId={setUserId}
+            />
+          ))}
         </div>
 
         <div className="h-full w-[75%] pt-[60px] relative">
           {showIntroBox && <IntroBox />}
-          {!showIntroBox && <ChatRoom db={firestoreDb} currentUser={auth.currentUser} recepientId={userId} />}
+          {!showIntroBox && (
+            <ChatRoom db={firestoreDb} currentUser={auth.currentUser} recepientId={userId} />
+          )}
         </div>
       </div>
     </AgentHubLayout>

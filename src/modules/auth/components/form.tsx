@@ -6,7 +6,7 @@ import { useAuthContext } from '../context'
 import { IAuthUserInput } from '../model'
 
 export const EmailAndPasswordForm = ({ id }: any) => {
-  const {authenticateWithEmailAndPassword, loading} = useAuthContext()
+  const { authenticateWithEmailAndPassword, loading } = useAuthContext()
 
   const handleSubmit = (val: IAuthUserInput) => {
     authenticateWithEmailAndPassword(val, id)
@@ -32,7 +32,7 @@ export const EmailAndPasswordForm = ({ id }: any) => {
 
             <div className="mt-8">
               <HvButton
-                type='button'
+                type="button"
                 // loading={loading}
                 onClick={() => props.handleSubmit()}
                 title={id == 'signin' ? 'Sign In' : 'Create New Account'}

@@ -1,19 +1,18 @@
 import { FC, ReactNode, createContext, useContext, useEffect, useState } from 'react'
-import { DocumentData, DocumentReference, Firestore, doc, getDoc } from "firebase/firestore"
-
+import { DocumentData, DocumentReference, Firestore, doc, getDoc } from 'firebase/firestore'
 
 interface IChatState {
-    loading: boolean
-    conversationList: any[]
-    getConversationList: (ref: DocumentReference<DocumentData, DocumentData>) => Promise<void>
+  loading: boolean
+  conversationList: any[]
+  getConversationList: (ref: DocumentReference<DocumentData, DocumentData>) => Promise<void>
 }
 
 const ChatContext = createContext<IChatState>({
-    loading: true,
-    conversationList: [],
-    getConversationList(){
-        return null as any
-    }
+  loading: true,
+  conversationList: [],
+  getConversationList() {
+    return null as any
+  },
 })
 
 const useChatContext = () => {
@@ -38,13 +37,16 @@ const ChatContextProvider: FC<ChatContextProviderProps> = ({ children }) => {
   }
 
   return (
-    <ChatContext.Provider value={{
-      loading, getConversationList, conversationList
-    }}>
-        {children}
+    <ChatContext.Provider
+      value={{
+        loading,
+        getConversationList,
+        conversationList,
+      }}
+    >
+      {children}
     </ChatContext.Provider>
   )
 }
 
-
-export {ChatContextProvider, useChatContext}
+export { ChatContextProvider, useChatContext }

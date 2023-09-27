@@ -8,9 +8,9 @@ export const ContactRequests = () => {
   const { contactRequests } = useContactContext()
 
   return (
-    <div className='flex flex-col'>
+    <div className="flex flex-col">
       {contactRequests.map((contactRequest, i) => (
-          <RequestItem key={i} contactRequest={contactRequest} index={i}/>
+        <RequestItem key={i} contactRequest={contactRequest} index={i} />
       ))}
     </div>
   )

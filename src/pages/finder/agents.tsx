@@ -2,7 +2,7 @@ import { AgentFinderPage } from '@/modules'
 import React from 'react'
 
 const AgentFinder = () => {
-  return <AgentFinderPage/>
+  return <AgentFinderPage />
 }
 
 export default AgentFinder

@@ -11,7 +11,7 @@ interface IProps {
 }
 
 export const ListingDetailPage: FC<IProps> = ({ id, agent = false }) => {
-  const { loading, getListing, listing } = useListingContext()
+  const { initLoading, getListing, listing } = useListingContext()
 
   useEffect(() => {
     getListing(id)
@@ -19,28 +19,26 @@ export const ListingDetailPage: FC<IProps> = ({ id, agent = false }) => {
 
   return (
     <>
-      {loading && (
+      {initLoading && (
         <div className="flex h-screen w-full justify-center items-center">
-          <HvLoader loading={loading} size="lg" />
+          <HvLoader loading={initLoading} size="lg" />
         </div>
       )}
 
-      {!loading && (
+      {!initLoading && (
         <>
           {agent ? (
-            <AgentHubLayout containerClassName="bg-light-cultured-3 h-full pt-[60px] pb-[100px]">
-              <div className="pt-[100px]">
-                <DetailsContent listing={listing}/>
-              </div>
+            <AgentHubLayout containerClassName="pt-[100px]">
+              <DetailsContent listing={listing} agent />
             </AgentHubLayout>
           ) : (
             <div className="w-full bg-light-cultured-3 relative">
               <Header />
 
               <div className="pt-[100px]">
-                <DetailsContent listing={listing}/>
+                <DetailsContent listing={listing} />
               </div>
-              
+
               <div>
                 <CTA />
                 <Footer />

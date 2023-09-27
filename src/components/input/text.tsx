@@ -11,7 +11,7 @@ interface IProps {
   className?: string
   placeHolder?: string
   disabled?: boolean
-  // onChange?:(value:string)=>void;
+  onChange?: (value: any) => void
   props?: {
     [x: string]: any
   }
@@ -29,6 +29,7 @@ export const HvTextInput: React.FC<IProps> = ({
   placeHolder,
   containerClassName,
   disabled,
+  onChange,
   ...props
 }) => {
   const [field, meta] = useField(name)
@@ -39,15 +40,20 @@ export const HvTextInput: React.FC<IProps> = ({
 
   return (
     <div className="w-full">
-      {label && <p 
-      className={`text-dark-prussian-blue font-semibold mb-2 ${labelSmall == true ? "text-[13px]" : "text-[15px]"}`}>
-        {label}
-      </p>}
+      {label && (
+        <p
+          className={`text-dark-prussian-blue font-semibold mb-2 ${
+            labelSmall == true ? 'labelSmalltext-[13px]' : 'text-[15px]'
+          }`}
+        >
+          {label}
+        </p>
+      )}
 
       {textarea ? (
         <textarea
           className={`
-            text-sm leading-7 border border-colors-opal/40 w-full rounded py-3 outline-none px-5 resize-none     
+            text-sm leading-7 border border-colors-opal/40 w-full rounded-lg py-3 outline-none px-5 resize-none     
           ${className}`}
           {...field}
           {...props}
@@ -57,6 +63,10 @@ export const HvTextInput: React.FC<IProps> = ({
         ></textarea>
       ) : (
         <Field
+          onInput={(val: any) => {
+            onChange && onChange(val.target.value)
+          }}
+          // onKeyUp={(val) => console.log(val.target.value)}
           type={type}
           {...field}
           {...props}

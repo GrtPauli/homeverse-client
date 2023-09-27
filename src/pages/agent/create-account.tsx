@@ -6,18 +6,17 @@ import { useAgentContext } from '@/modules/agent/context'
 import { useAuthContext } from '@/modules/auth/context'
 
 const CreateAccount = () => {
-    const {loading, updateUserType} = useAgentContext()
-    const {firebaseAuth, firebaseInitLoading} = useAuthContext()
+  const { loading, updateUserType } = useAgentContext()
+  const { firebaseAuth, firebaseInitLoading } = useAuthContext()
 
-    const handleSubmit = (val: any) => {
-        updateUserType(
-            firebaseAuth.currentUser.uid,
-            firebaseAuth.currentUser,
-            val.firstName + " " + val.lastName,
-            val.phone
-        )
-    }
-    
+  const handleSubmit = (val: any) => {
+    updateUserType(
+      firebaseAuth.currentUser.uid,
+      firebaseAuth.currentUser,
+      val.firstName + ' ' + val.lastName,
+      val.phone,
+    )
+  }
 
   return (
     <div
@@ -30,7 +29,9 @@ const CreateAccount = () => {
             <h1 className="text-xl font-extrabold mb-1">Convert Your Account</h1>
             <h1 className="text-sm text-colors-cadet">
               Currently signed in as
-              <span className="inline-block font-bold ml-1">{firebaseAuth?.currentUser?.email}</span>
+              <span className="inline-block font-bold ml-1">
+                {firebaseAuth?.currentUser?.email}
+              </span>
             </h1>
           </div>
 
@@ -42,7 +43,11 @@ const CreateAccount = () => {
                 <HvTextInput labelSmall name="phone" label="Phone Number" />
 
                 <div className="flex flex-col gap-5 mt-8">
-                  <HvButton type='button' onClick={() => props.handleSubmit()} title="Convert to an Agent Account" />
+                  <HvButton
+                    type="button"
+                    onClick={() => props.handleSubmit()}
+                    title="Convert to an Agent Account"
+                  />
                   {/* <HvButton outline title="Go Back"/> */}
                 </div>
               </div>

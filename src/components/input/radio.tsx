@@ -1,16 +1,16 @@
-import { ErrorMessage, Field, useField } from "formik";
-import React, { useEffect, useState } from "react";
+import { ErrorMessage, Field, useField } from 'formik'
+import React, { useEffect, useState } from 'react'
 
 interface IProps {
   value?: string
-  label?: string;
-  labelClassName?: string;
-  className?: string;
-  name: string;
-  onChange?: (val: boolean) => void;
+  label?: string
+  labelClassName?: string
+  className?: string
+  name: string
+  onChange?: (val: boolean) => void
   props?: {
-    [x: string]: any;
-  };
+    [x: string]: any
+  }
 }
 
 export const AppRadioInput: React.FC<IProps> = ({
@@ -18,7 +18,7 @@ export const AppRadioInput: React.FC<IProps> = ({
   value,
   name,
   className,
-  labelClassName = "text-xl bold",
+  labelClassName = 'text-xl bold',
   onChange,
   ...props
 }) => {
@@ -29,18 +29,20 @@ export const AppRadioInput: React.FC<IProps> = ({
 
   return (
     <div
-      style={{
-        // marginBottom: 10,
-        // display: "flex",
-        // flexDirection: "column",
-      }}
+      style={
+        {
+          // marginBottom: 10,
+          // display: "flex",
+          // flexDirection: "column",
+        }
+      }
     >
       <div className="flex items-center">
         <Field
-          className="border-colors-cadet checked:text-primary" 
-          type="radio" 
-          name={name} 
-          value={value} 
+          className="border-colors-cadet checked:text-primary"
+          type="radio"
+          name={name}
+          value={value}
         />
 
         {/* <Field
@@ -58,5 +60,5 @@ export const AppRadioInput: React.FC<IProps> = ({
 
       {/* <ErrorMessage className="text-red-500" name={name} component="div" /> */}
     </div>
-  );
-};
+  )
+}

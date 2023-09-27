@@ -12,7 +12,7 @@ interface AuthLayoutProps {
 export const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
   return (
     <div className="relative flex h-screen">
-      <div className='w-[70%] h-full bg-black'>
+      <div className="w-[70%] h-full bg-black">
         <ConfigProvider
           theme={{
             token: {
@@ -31,19 +31,31 @@ export const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
               pauseOnHover={false}
             >
               <div className="h-[100vh]">
-                <div className="parallax h-full" style={{ backgroundImage: `url(${Slide4.src})` }} />
+                <div
+                  className="parallax h-full"
+                  style={{ backgroundImage: `url(${Slide4.src})` }}
+                />
               </div>
 
               <div className="h-[100vh]">
-                <div className="parallax h-full" style={{ backgroundImage: `url(${Slide2.src})` }} />
+                <div
+                  className="parallax h-full"
+                  style={{ backgroundImage: `url(${Slide2.src})` }}
+                />
               </div>
 
               <div className="h-[100vh]">
-                <div className="parallax h-full" style={{ backgroundImage: `url(${Slide3.src})` }} />
+                <div
+                  className="parallax h-full"
+                  style={{ backgroundImage: `url(${Slide3.src})` }}
+                />
               </div>
 
               <div className="h-[100vh]">
-                <div className="parallax h-full" style={{ backgroundImage: `url(${Slide1.src})` }} />
+                <div
+                  className="parallax h-full"
+                  style={{ backgroundImage: `url(${Slide1.src})` }}
+                />
               </div>
             </Carousel>
 
@@ -54,9 +66,7 @@ export const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
         </ConfigProvider>
       </div>
 
-      <div className="w-[30%] h-full overflow-auto">
-        {children}
-      </div>
+      <div className="w-[30%] h-full overflow-auto">{children}</div>
     </div>
   )
 }

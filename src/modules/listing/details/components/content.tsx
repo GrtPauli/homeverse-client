@@ -2,39 +2,50 @@ import React, { FC, useState } from 'react'
 import CurrencyFormat from 'react-currency-format'
 import moment from 'moment'
 import { APP_DATE_TIME_FORMAT } from '@/constants/Helper'
-import { EListingStatus, IListing } from '../../model'
+import { ListingStatus, IListing } from '../../model'
 import { Carousel, ConfigProvider, Tabs, TabsProps } from 'antd'
 import { Image } from 'antd'
 import { ListingOverview } from './overview'
 import { ListingFeatures } from './features'
 import { HvButton, HvModal } from '@/components'
+import { HvConfirmModal } from '@/components/modal/confirm'
+import { useListingContext } from '../../context'
+import Link from 'next/link'
 import { RequestTour } from '@/modules/tour/components'
 
 interface IProps {
-    listing: Partial<IListing>
-    agent?: boolean
+  listing: Partial<IListing>
+  agent?: boolean
 }
 
 interface IModalData {
   open: boolean
   data?: Partial<IListing>
-  content?: "date-picker" | "time-picker" | "confirm"
+  content?: 'date-picker' | 'time-picker' | 'confirm'
 }
 
-export const DetailsContent: FC<IProps> = ({listing, agent = false}) => {
-    const [showModal, setShowModal] = useState<IModalData>(null)
-    const items: TabsProps['items'] = [
-        {
-          key: '1',
-          label: <p className="font-medium">Overview</p>,
-          children: <ListingOverview listing={listing} />,
-        },
-        {
-          key: '2',
-          label: <p className="font-medium">Facts and Features</p>,
-          children: <ListingFeatures listing={listing}/>,
-        },
-    ]
+export const DetailsContent: FC<IProps> = ({ listing, agent = false }) => {
+  const [showModal, setShowModal] = useState<IModalData>(null)
+  const [confirmModal, setConfirmModal] = useState<boolean>(false)
+  const { updateListing, loading, getListing } = useListingContext()
+
+  const items: TabsProps['items'] = [
+    {
+      key: '1',
+      label: <p className="font-medium">Overview</p>,
+      children: <ListingOverview listing={listing} />,
+    },
+    {
+      key: '2',
+      label: <p className="font-medium">Facts and Features</p>,
+      children: <ListingFeatures listing={listing} />,
+    },
+    {
+      key: '3',
+      label: <p className="font-medium">Tour Reviews</p>,
+      children: <ListingFeatures listing={listing} />,
+    },
+  ]
 
   return (
     <>
@@ -75,9 +86,17 @@ export const DetailsContent: FC<IProps> = ({listing, agent = false}) => {
             </div>
 
             <div className="flex gap-3 items-center mb-5">
-              <div className="flex gap-1 items-center">
-                <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                <p className="text-sm">{EListingStatus[(listing.status as never)]}</p>
+              <div className="flex gap-2 items-center">
+                <div
+                  className={`w-2 h-2 rounded-full 
+                   ${listing.status == (ListingStatus[0] as any) && 'bg-green-500'} 
+                   ${listing.status == (ListingStatus[1] as any) && 'bg-blue-500'} 
+                  `}
+                />
+                <p className="text-sm capitalize">
+                  {listing.status == (ListingStatus[0] as any) && 'Active'}
+                  {listing.status == (ListingStatus[1] as any) && 'Sold'}
+                </p>
               </div>
 
               <div className="w-0.5 h-4 bg-gray-300"></div>
@@ -92,38 +111,60 @@ export const DetailsContent: FC<IProps> = ({listing, agent = false}) => {
 
           <div className="w-[30%] sticky top-28">
             {agent ? (
-                <div className='bg-light-white rounded shadow-lg'>
-                    <h1 className="border-b px-5 py-3 font-bold text-dark-prussian-blue text-lg">
-                        Manage Listing
-                    </h1>
-                    
-                    <p className="mx-5 text-sm mt-3 leading-7 text-colors-cadet">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum, odit.
-                    </p>
+              <div className="bg-light-white rounded shadow-lg">
+                <h1 className="border-b px-5 py-3 font-bold text-dark-prussian-blue text-lg">
+                  Manage Listing
+                </h1>
 
-                    <div className="flex flex-col gap-5 px-5 py-5">
-                        <HvButton paddingY="py-3.5" title="Edit Listing" />
-                        <HvButton paddingY="py-3.5" title="Mark as Sold" />
-                        <HvButton paddingY="py-3.5" title="Unlist Property" />
-                    </div>
+                <p className="mx-5 text-sm mt-3 leading-7 text-colors-cadet">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum, odit.
+                </p>
+
+                <div className="flex flex-col gap-5 px-5 py-5">
+                  {listing.status == (ListingStatus[1] as any) ? (
+                    <HvButton disabled paddingY="py-3.5" title="Edit Listing" />
+                  ) : (
+                    <Link href={`/dashboard/listings/edit/${listing._id}`}>
+                      <HvButton paddingY="py-3.5" title="Edit Listing" />
+                    </Link>
+                  )}
+
+                  <HvButton
+                    disabled={listing.status == (ListingStatus[1] as any) && true}
+                    onClick={() => setConfirmModal(true)}
+                    paddingY="py-3.5"
+                    title="Mark as Sold"
+                  />
+                  <HvButton
+                    disabled={listing.status == (ListingStatus[1] as any) && true}
+                    paddingY="py-3.5"
+                    title="Unlist Property"
+                  />
                 </div>
+              </div>
             ) : (
-                <div className='flex flex-col gap-5'>
-                    <div className='bg-light-white rounded shadow-lg'>
-                        <h1 className="border-b px-5 py-3 font-bold text-dark-prussian-blue text-lg">
-                            Actions
-                        </h1>
-                        <p className="mx-5 text-sm mt-3 leading-7 text-colors-cadet">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum, odit.
-                        </p>
+              <div className="flex flex-col gap-5">
+                <div className="bg-light-white rounded shadow-lg">
+                  <h1 className="border-b px-5 py-3 font-bold text-dark-prussian-blue text-lg">
+                    Actions
+                  </h1>
+                  <p className="mx-5 text-sm mt-3 leading-7 text-colors-cadet">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum, odit.
+                  </p>
 
-                        <div className="flex flex-col gap-5 px-5 py-5">
-                            <HvButton onClick={() => setShowModal({ open: true, data: listing, content: "date-picker" })} paddingY="py-3.5" title="Request a Tour" />
-                            <HvButton paddingY="py-3.5" title="Contact Agent" />
-                            <HvButton paddingY="py-3.5" title="Save Property" />
-                        </div>
-                    </div>
+                  <div className="flex flex-col gap-5 px-5 py-5">
+                    <HvButton
+                      onClick={() =>
+                        setShowModal({ open: true, data: listing, content: 'date-picker' })
+                      }
+                      paddingY="py-3.5"
+                      title="Request a Tour"
+                    />
+                    <HvButton paddingY="py-3.5" title="Contact Agent" />
+                    <HvButton paddingY="py-3.5" title="Save Property" />
+                  </div>
                 </div>
+              </div>
             )}
           </div>
         </div>
@@ -133,10 +174,23 @@ export const DetailsContent: FC<IProps> = ({listing, agent = false}) => {
         width={400}
         open={showModal?.open}
         onDismiss={() => setShowModal({ open: false })}
-        title='Request Tour With Agent'
+        title="Request Tour With Agent"
       >
-        <RequestTour showModal={showModal} setShowModal={setShowModal}/>
+        <RequestTour showModal={showModal} setShowModal={setShowModal} />
       </HvModal>
+
+      <HvConfirmModal
+        open={confirmModal}
+        onProceed={() => {
+          updateListing(listing._id, { status: ListingStatus[1] as any }).then(() => {
+            getListing(listing._id, true)
+          })
+        }}
+        proceedLoading={loading}
+        title="Mark as Sold"
+        subTitle="Are you sure want to mark this listing as sold ?"
+        onDismiss={() => setConfirmModal(false)}
+      />
     </>
   )
 }

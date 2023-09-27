@@ -1,6 +1,6 @@
 export interface IUser {}
 
-export interface IAuthUserInput{
-    email: string
-    password: string
+export interface IAuthUserInput {
+  email: string
+  password: string
 }

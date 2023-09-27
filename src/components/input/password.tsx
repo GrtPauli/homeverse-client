@@ -24,7 +24,7 @@ export const PasswordInput: React.FC<IProps> = ({ labelSmall }) => {
         className="absolute right-5 top-[41px] text-colors-cadet"
         onClick={() => setTogglePassword(!togglePassword)}
       >
-        {togglePassword ? <EyeSlashIcon className='h-5 w-5'/> : <EyeIcon className='h-5 w-5'/>}
+        {togglePassword ? <EyeSlashIcon className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
       </button>
     </div>
   )

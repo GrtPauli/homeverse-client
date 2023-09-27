@@ -3,6 +3,7 @@ import { AuthContextProvider } from '@/modules/auth/context'
 import { ChatContextProvider } from '@/modules/chat/context'
 import { ContactContextProvider } from '@/modules/contacts/context'
 import { FinderContextProvider } from '@/modules/finder/context'
+import { HomeContextProvider } from '@/modules/home/context'
 import { ListingContextProvider } from '@/modules/listing/context'
 import { MessageContextProvider } from '@/modules/messages/context'
 import { ProfileContextProvider } from '@/modules/profile/context'
@@ -26,15 +27,16 @@ const CombineContext = (...components: FC[]): FC<any> => {
 }
 
 const providers = [
-  AuthContextProvider, 
-  ListingContextProvider, 
-  ProfileContextProvider, 
+  AuthContextProvider,
+  ListingContextProvider,
+  HomeContextProvider,
+  ProfileContextProvider,
   FinderContextProvider,
   ContactContextProvider,
   ChatContextProvider,
   AgentContextProvider,
   TourContextProvider,
-  MessageContextProvider
+  MessageContextProvider,
 ] as any
 const AppContextProvider = CombineContext(...providers)
 

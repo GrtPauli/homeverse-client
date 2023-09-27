@@ -1,8 +1,8 @@
-import { EditProfilePage } from '@/modules/profile/my/edit'
+import { EditProfilePage } from '@/modules/profile/edit'
 import React from 'react'
 
 const EditProfile = () => {
-  return <EditProfilePage/>
+  return <EditProfilePage />
 }
 
 export default EditProfile

@@ -1,52 +1,50 @@
 import { ErrorMessage, useField } from 'formik'
-import React from 'react'
+import React, { memo } from 'react'
 import Select from 'react-select'
 import { StateManagerProps } from 'react-select/dist/declarations/src/useStateManager'
-import CreateableSelect from 'react-select/creatable'
 
 interface IProps extends StateManagerProps {
   label?: string
   name: string
   isMulti?: boolean
-  isCreatable?: boolean
-  props?: {
-    [x: string]: StateManagerProps
-  }
+  containerClassName?: string | undefined
+  options: Array<{ value: string; label: string }> | any
+  addOnChange?: (value: any) => void
 }
 
-export const AppSelectInput2: React.FC<IProps> = (props) => {
-  const { label, options, isMulti, name, isCreatable } = props
+export const HvSelectInput: React.FC<IProps> = (props) => {
+  const { label, options, isMulti, name, containerClassName, addOnChange } = props
   const [field, meta, { setValue }] = useField(name)
 
   return (
-    <div className="">
-      {label && (
-        <label className="text-colors-cadet font-semibold mb-3">
-          {label}
-          <ErrorMessage className="text-red-500 text-cusf3" name={name} component="p" />
-        </label>
-      )}
-      {isCreatable ? (
-        <CreateableSelect {...props} name={name} onChange={(newVal) => setValue(newVal)} />
-      ) : (
-        <Select
-          classNames={{ control: (state) => 'py-1 rounded-md border border-skin-border' }}
-          {...field}
-          {...props}
-          isMulti={isMulti}
-          options={options}
-          name={name}
-          onChange={(val: any) => setValue(val)}
-        />
-      )}
+    <div className={`w-full ${containerClassName}`}>
+      {label && <p className="text-dark-prussian-blue font-semibold text-[15px] mb-2">{label}</p>}
 
-      {!label && (
-        <ErrorMessage
-          className="text-red-500 text-cusf3 text-left mt-3"
-          name={name}
-          component="div"
-        />
-      )}
+      <Select
+        {...field}
+        {...props}
+        isMulti={isMulti}
+        options={options}
+        name={name}
+        styles={{
+          control: (baseStyles, state) => ({
+            ...baseStyles,
+            height: '45px',
+            borderWidth: 1,
+            paddingLeft: '10px',
+            borderRadius: '8px',
+            fontSize: '13px',
+            borderColor: state.isFocused ? '#E9E9E9' : 'rgb(139 177 177 / 0.4)',
+          }),
+        }}
+        onChange={(val: any) => {
+          setValue(val)
+          if (addOnChange) addOnChange(val)
+        }}
+      />
+
+      {meta.error && <div className="text-red-500">{(meta.error as any)?.value}</div>}
+      {/* <ErrorMessage className="text-red-500"  name={name} component="div" /> */}
     </div>
   )
 }

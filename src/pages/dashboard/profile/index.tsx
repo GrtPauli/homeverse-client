@@ -1,8 +1,8 @@
-import { MyProfilePage } from '@/modules/profile/my/page'
+import { ProfilePage } from '@/modules'
 import React from 'react'
 
 const MyProfile = () => {
-  return <MyProfilePage/>
+  return <ProfilePage />
 }
 
 export default MyProfile

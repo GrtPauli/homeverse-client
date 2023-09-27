@@ -33,13 +33,13 @@ export const environment: Environment = {
     Ws: '',
   },
   FirebaseConfig: {
-    apiKey: "AIzaSyDFV0VfkgwNxSmnodSI0qgqnCWuMLKZUQQ",
-    authDomain: "homeverse-397119.firebaseapp.com",
-    projectId: "homeverse-397119",
-    storageBucket: "homeverse-397119.appspot.com",
-    messagingSenderId: "977679557725",
-    appId: "1:977679557725:web:8e03dcfc8c113d0c55d9b4",
-    measurementId: "G-WN3WQTMTKE"
+    apiKey: 'AIzaSyDFV0VfkgwNxSmnodSI0qgqnCWuMLKZUQQ',
+    authDomain: 'homeverse-397119.firebaseapp.com',
+    projectId: 'homeverse-397119',
+    storageBucket: 'homeverse-397119.appspot.com',
+    messagingSenderId: '977679557725',
+    appId: '1:977679557725:web:8e03dcfc8c113d0c55d9b4',
+    measurementId: 'G-WN3WQTMTKE',
   },
   OneSignal: {
     AppId: 'xxxx',

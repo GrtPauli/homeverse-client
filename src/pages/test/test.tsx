@@ -72,10 +72,8 @@
 //   // ))
 //   const filter = query(messagesRef, where(roomIds, 'array-contains-any', [uid, "kCjhnPn4BjOc65kRoeJTl1vwuIQ2"]))
 
-  
 //   const [messages] = useCollectionData(filter, { idField: 'id' });
 //   const [formValue, setFormValue] = useState('');
-
 
 //   const sendMessage = async (e) => {
 //     e.preventDefault();
@@ -123,6 +121,5 @@
 //     </div>
 //   </>)
 // }
-
 
 // export default App;

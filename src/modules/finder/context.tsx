@@ -1,7 +1,7 @@
 import { FC, ReactNode, createContext, useContext, useState } from 'react'
 import { useRouter } from 'next/router'
-import { QueryResult, OperationVariables } from "@apollo/client";
-import { useGetAgents } from './gql/query';
+import { QueryResult, OperationVariables } from '@apollo/client'
+import { useGetAgents } from './gql/query'
 
 interface IFinderState {
   loading: boolean
@@ -12,9 +12,9 @@ interface IFinderState {
 const FinderContext = createContext<IFinderState>({
   loading: false,
   getAgents() {
-      return null as any
+    return null as any
   },
-  agents: []
+  agents: [],
 })
 
 const useFinderContext = () => {
@@ -36,20 +36,23 @@ const FinderContextProvider: FC<IProps> = ({ children }) => {
   const getAgentsQuery = useGetAgents((rs: any) => {})
   const router = useRouter()
 
-
   const getAgents = (): Promise<void> => {
     setLoading(true)
     return new Promise((resolve, reject) => {
-        getAgentsQuery[0]({})
+      getAgentsQuery[0]({})
         .then(async (rs) => {
-            if (rs?.data?.getAgents) {
-                setAgents(rs?.data?.getAgents)
-                resolve()
-            }
-            reject()
+          if (rs?.data?.getAgents) {
+            setAgents(rs?.data?.getAgents)
+            resolve()
+          }
+          reject()
         })
-        .finally(() => setTimeout(() => {setLoading(false)}, 3000))
-    }) 
+        .finally(() =>
+          setTimeout(() => {
+            setLoading(false)
+          }, 3000),
+        )
+    })
   }
 
   return (
@@ -57,7 +60,7 @@ const FinderContextProvider: FC<IProps> = ({ children }) => {
       value={{
         loading,
         getAgents,
-        agents
+        agents,
       }}
     >
       {children}

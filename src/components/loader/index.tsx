@@ -1,40 +1,30 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import React, { FC } from 'react'
-import HashLoader from "react-spinners/HashLoader"
+import HashLoader from 'react-spinners/HashLoader'
 
 interface IProps {
-    loading: boolean
-    color?: "primary" | "white"
-    size?: "sm" | "lg"
+  loading: boolean
+  color?: 'primary' | 'white'
+  size?: 'sm' | 'lg'
 }
 
-export const HvLoader: FC<IProps> = ({ 
-    loading, 
-    color = "primary",
-    size = "sm"
-}) => {
-
+export const HvLoader: FC<IProps> = ({ loading, color = 'primary', size = 'sm' }) => {
   return (
-    <div className='flex justify-center items-center w-full h-full'>
+    <div className="flex justify-center items-center w-full h-full">
       {/* <LoadingOutlined className='text-primary text-4xl'/> */}
-      <HashLoader 
-        size={ size == "lg" ? 50 : 25 }
+      <HashLoader
+        size={size == 'lg' ? 50 : 25}
         loading={loading}
-        color={ color == "primary" ? "#FF5A3D" : "#ffffff" }
+        color={color == 'primary' ? '#FF5A3D' : '#ffffff'}
       />
     </div>
   )
 }
 
-export const HvLoader2: FC<IProps> = ({ 
-  loading, 
-  color = "primary",
-  size = "sm"
-}) => {
-
-return (
-  <div className='flex justify-center items-center w-full h-full'>
-    <LoadingOutlined className='text-primary text-3xl'/>
-  </div>
-)
+export const HvLoader2: FC<IProps> = ({ loading, color = 'primary', size = 'sm' }) => {
+  return (
+    <div className="flex justify-center items-center w-full h-full">
+      <LoadingOutlined className="text-primary text-3xl" />
+    </div>
+  )
 }

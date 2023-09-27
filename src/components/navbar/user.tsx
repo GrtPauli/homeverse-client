@@ -3,8 +3,7 @@ import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import UserImg from '../../assets/images/user.png'
 import { ChevronDownIcon } from '@/assets/icons'
-import Image from 'next/image'
-import { ConfigProvider, MenuProps, Popover } from 'antd'
+import { Image, ConfigProvider, MenuProps, Popover } from 'antd'
 import { useProfileContext } from '@/modules/profile/context'
 import { useHvFirebaseContext } from '@/modules/firebase/context'
 import { useAuthContext } from '@/modules/auth/context'
@@ -53,9 +52,10 @@ const UserProfile = ({ content }: any) => {
               >
                 <button className="flex items-center gap-3">
                   <Image
-                    src={firebaseAuth?.currentUser?.photoURL || UserImg}
+                    src={firebaseAuth?.currentUser?.photoURL || UserImg.src}
                     alt="user"
                     width={40}
+                    preview={false}
                     height={40}
                     className="rounded-full"
                   />

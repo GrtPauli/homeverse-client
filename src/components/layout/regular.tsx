@@ -3,37 +3,22 @@ import { Header } from '../navbar/regular'
 import { Footer } from '../footer'
 
 interface IProps {
-    children: ReactNode
+  children: ReactNode
+  className?: string
 }
 
-export const RegularLayout: FC<IProps> = ({ children }) => {
+export const RegularLayout: FC<IProps> = ({ children, className }) => {
   return (
     <div className="w-full">
-        <Header />
-
-        <div className="pt-[100px]">
-            {children}
-            
-            <section className="cta translate-y-14">
-                <div className="container">
-                    <div className="cta-card">
-                    <div className="card-content">
-                        <h2 className="h2 card-title">Looking for a dream home?</h2>
-
-                        <p className="card-text">We can help you realize your dream of a new home</p>
-                    </div>
-
-                    <button className="btn cta-btn">
-                        <span>Explore Properties</span>
-
-                        {/* <ion-icon name="arrow-forward-outline"></ion-icon> */}
-                    </button>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <Footer />
+      <Header />
+      <div
+        className={
+          className ? className : 'bg-light-cultured-3 h-full pt-[140px] pb-[100px] px-12'
+        }
+      >
+        {children}
+      </div>
+      <Footer />
     </div>
   )
 }

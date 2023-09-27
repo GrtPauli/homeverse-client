@@ -9,33 +9,40 @@ const Test = () => {
   //   }
   // })
   // console.log(data, error);
-  
-  const [mutateFunction, { data: newCommentData, error: newCommentError }] = useMutation(CREATE_COMMENT)
 
-  const {data, loading, error} = useSubscription(COMMENTS_SUBSCRIPTION, {
-    variables : {
-      recipeId: "1"
-    }
+  const [mutateFunction, { data: newCommentData, error: newCommentError }] =
+    useMutation(CREATE_COMMENT)
+
+  const { data, loading, error } = useSubscription(COMMENTS_SUBSCRIPTION, {
+    variables: {
+      recipeId: '1',
+    },
   })
-  console.log(data, error);
+  console.log(data, error)
 
   const handleCreateComment = () => {
-    mutateFunction({ variables: {comment: {
-      content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti, aut saepe. Aliquid eum illo officia excepturi libero pariatur architecto sequi.",
-      nickname: "GrtPauli",
-      recipeId: "1"
-    }}}).finally(() => {
-      console.log(newCommentData);
+    mutateFunction({
+      variables: {
+        comment: {
+          content:
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti, aut saepe. Aliquid eum illo officia excepturi libero pariatur architecto sequi.',
+          nickname: 'GrtPauli',
+          recipeId: '1',
+        },
+      },
+    }).finally(() => {
+      console.log(newCommentData)
       console.log(newCommentError)
     })
   }
 
   return (
     <div>
-        <h4>New comment: {!loading && data?.newComments?.nickname} : {!loading && data?.newComments?.content}</h4>
-        <button onClick={handleCreateComment}>
-          Create Comment
-        </button>
+      <h4>
+        New comment: {!loading && data?.newComments?.nickname} :{' '}
+        {!loading && data?.newComments?.content}
+      </h4>
+      <button onClick={handleCreateComment}>Create Comment</button>
     </div>
   )
 }

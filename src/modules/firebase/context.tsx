@@ -1,30 +1,45 @@
 import { FC, ReactNode, createContext, useContext, useEffect, useState } from 'react'
-import { FirebaseApp, initializeApp } from "firebase/app";
-import { Analytics, getAnalytics } from "firebase/analytics";
-import { environment } from '@/constants/Environment';
-import { signOut, Auth, getAuth, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged, signInWithEmailAndPassword  } from 'firebase/auth';
-import { getDoc, Firestore, getFirestore, addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import { useCreateProfile } from '../profile/gql/query';
-import { useRouter } from 'next/router';
+import { FirebaseApp, initializeApp } from 'firebase/app'
+import { Analytics, getAnalytics } from 'firebase/analytics'
+import { environment } from '@/constants/Environment'
+import {
+  signOut,
+  Auth,
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+} from 'firebase/auth'
+import {
+  getDoc,
+  Firestore,
+  getFirestore,
+  addDoc,
+  collection,
+  serverTimestamp,
+} from 'firebase/firestore'
+import { useCreateProfile } from '../profile/gql/query'
+import { useRouter } from 'next/router'
 
 interface IHvFirebaseState {
-    loading: boolean
-    app: FirebaseApp
-    auth: Auth
-    analytics: Analytics
-    firestoreDb: Firestore
-    fbCreateUserWithEmailAndPassword: (displayName: string, email: string, password: string) => void
-    fbsignInWithEmailAndPassword: (email: string, password: string) => void
+  loading: boolean
+  app: FirebaseApp
+  auth: Auth
+  analytics: Analytics
+  firestoreDb: Firestore
+  fbCreateUserWithEmailAndPassword: (displayName: string, email: string, password: string) => void
+  fbsignInWithEmailAndPassword: (email: string, password: string) => void
 }
 
 const HvFirebaseContext = createContext<IHvFirebaseState>({
-    loading: true,
-    app: null,
-    analytics: null,
-    auth: null,
-    firestoreDb: null,
-    fbCreateUserWithEmailAndPassword(){},
-    fbsignInWithEmailAndPassword(){}
+  loading: true,
+  app: null,
+  analytics: null,
+  auth: null,
+  firestoreDb: null,
+  fbCreateUserWithEmailAndPassword() {},
+  fbsignInWithEmailAndPassword() {},
 })
 
 const useHvFirebaseContext = () => {
@@ -50,12 +65,12 @@ const HvFirebaseContextProvider: FC<HvFirebaseContextProviderProps> = ({ childre
 
   useEffect(() => {
     setLoading(true)
-    if(typeof window !== undefined){
+    if (typeof window !== undefined) {
       let app = initializeApp(environment.FirebaseConfig)
       let auth = getAuth()
-      let analytics = getAnalytics(app);
-      let firestoreDb = getFirestore(app);
-      
+      let analytics = getAnalytics(app)
+      let firestoreDb = getFirestore(app)
+
       setApp(app)
       setAuth(auth)
       setAnalytics(analytics)
@@ -66,72 +81,88 @@ const HvFirebaseContextProvider: FC<HvFirebaseContextProviderProps> = ({ childre
           setLoading(false)
           // console.log(user)
         } else {
-          console.log("Signed Out")
+          console.log('Signed Out')
         }
-      });
+      })
     }
-  },[])
+  }, [])
 
-  const fbCreateUserWithEmailAndPassword = (displayName: string, email: string, password: string) => {    
-    const conversationsRef = collection(firestoreDb, 'conversations')  
+  const fbCreateUserWithEmailAndPassword = (
+    displayName: string,
+    email: string,
+    password: string,
+  ) => {
+    const conversationsRef = collection(firestoreDb, 'conversations')
 
     createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      updateProfile(auth.currentUser, { displayName }).then(() => {
-        addDoc(conversationsRef, {
-          userId: userCredential.user.uid,
-          list: [],
-          createdAt: serverTimestamp(),
-        }).then(async (rs) => {
-          const docSnap = await getDoc(rs)
-          createProfileQuery[0]({ variables: { userId: userCredential.user.uid, conversationListId: docSnap.id } })
-          .then((rs) => {
+      .then((userCredential) => {
+        updateProfile(auth.currentUser, { displayName }).then(() => {
+          addDoc(conversationsRef, {
+            userId: userCredential.user.uid,
+            list: [],
+            createdAt: serverTimestamp(),
+          }).then(async (rs) => {
+            const docSnap = await getDoc(rs)
+            createProfileQuery[0]({
+              variables: { userId: userCredential.user.uid, conversationListId: docSnap.id },
+            }).then((rs) => {
               if (rs?.data?.createProfile) {
-                  router.push('/')
+                router.push('/')
               }
+            })
           })
         })
       })
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   const fbsignInWithEmailAndPassword = (email: string, password: string) => {
     signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      router.push('/')
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      .then((userCredential) => {
+        router.push('/')
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   const fbUpdateProfile = (payload: any) => {
-    updateProfile(auth.currentUser, payload).then(() => {
-      console.log("User Updated")
-    }).catch((error) => {
-      console.log(error)
-    });
+    updateProfile(auth.currentUser, payload)
+      .then(() => {
+        console.log('User Updated')
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   const fbSignOut = () => {
-    signOut(auth).then(() => {
-      // Sign-out successful.
-    }).catch((error) => {
-      // An error happened.
-    });
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        // An error happened.
+      })
   }
 
   return (
-    <HvFirebaseContext.Provider value={{
-      loading, analytics, app, auth, firestoreDb, fbCreateUserWithEmailAndPassword, fbsignInWithEmailAndPassword
-    }}>
-        {children}
+    <HvFirebaseContext.Provider
+      value={{
+        loading,
+        analytics,
+        app,
+        auth,
+        firestoreDb,
+        fbCreateUserWithEmailAndPassword,
+        fbsignInWithEmailAndPassword,
+      }}
+    >
+      {children}
     </HvFirebaseContext.Provider>
   )
 }
 
-
-export {HvFirebaseContextProvider, useHvFirebaseContext}
+export { HvFirebaseContextProvider, useHvFirebaseContext }

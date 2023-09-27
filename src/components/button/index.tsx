@@ -26,38 +26,46 @@ export const HvButton: FC<IProps> = ({
   children,
   onClick,
   type,
-  disabled,
+  disabled = false,
   title,
   loading,
   loadingText,
   fullWidth = true,
   textLg = false,
   paddingY,
-  paddingX
+  paddingX,
 }) => {
   // const [isLoading, setLoading] = useState(loading)
   // useEffect(() => {
   //   setLoading(loading)
   // }, [loading])
 
-  const regClassName = `${paddingY ? paddingY : "py-3.5"} ${fullWidth ? 'w-full' : ''} 
-  ${outline ? "border-primary text-primary border" : "bg-primary text-light-white"}
-  rounded-full ${paddingX ? paddingX : 'px-8'} gap-3 ${textLg ? "text-base" : "text-sm"} flex justify-center items-center font-bold`
+  const regClassName = `${paddingY ? paddingY : 'py-3.5'} ${fullWidth ? 'w-full' : ''} 
+  ${
+    disabled
+      ? 'bg-colors-cadet cursor-not-allowed text-light-white'
+      : outline
+      ? 'border-primary text-primary border'
+      : 'bg-primary text-light-white hover:bg-white hover:shadow-lg hover:text-primary duration-150 ease-in'
+  }
+  rounded-full ${paddingX ? paddingX : 'px-8'} gap-3 ${
+    textLg ? 'text-base' : 'text-sm'
+  } flex justify-center items-center font-bold`
 
-  const loadingClassName = `${paddingY ? paddingY : "py-3"} ${fullWidth ? 'w-full' : ''} 
-  ${outline ? "border-primary text-primary border" : "bg-light-cultured-1"}
+  const loadingClassName = `${paddingY ? paddingY : 'py-3'} ${fullWidth ? 'w-full' : ''} 
+  ${outline ? 'border-primary text-primary border' : 'bg-light-cultured-1'}
   rounded-full px-5 flex justify-center items-center cursor-not-allowed`
 
   return (
     <button
       className={loading ? loadingClassName : regClassName}
-      type={type ? type : 'submit'}
+      type={type ? type : 'button'}
       onClick={onClick}
       disabled={loading}
     >
       {loading ? (
         <div className="flex gap-3 items-center">
-          <HvLoader2 color='primary' loading={loading} size='sm'/>
+          <HvLoader2 color="primary" loading={loading} size="sm" />
           {/* <LoadingOutlined style={{ fontSize: 25 }} spin />
           {loadingText ? loadingText : ''} */}
         </div>

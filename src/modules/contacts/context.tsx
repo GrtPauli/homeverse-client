@@ -1,16 +1,36 @@
-import { Dispatch, FC, ReactNode, SetStateAction, createContext, useContext, useState } from 'react'
+import {
+  Dispatch,
+  FC,
+  ReactNode,
+  SetStateAction,
+  createContext,
+  useContext,
+  useState,
+} from 'react'
 import { useRouter } from 'next/router'
 import { useAcceptContactRequest, useGetContactInfo, useGetConversationListId } from './gql/query'
 import { useGetUser } from '../profile/gql/query'
-import { serverTimestamp, DocumentData, DocumentReference, Firestore, doc, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore"
+import {
+  serverTimestamp,
+  DocumentData,
+  DocumentReference,
+  Firestore,
+  doc,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+} from 'firebase/firestore'
 import { User } from 'firebase/auth'
-
 
 interface IContactState {
   loading: boolean
   getContactInfo: (firestoreDb: Firestore, id: string) => Promise<void>
   acceptContactRequest: (firestoreDb: Firestore, sender: any, receiver: User) => Promise<void>
-  getConversationListId: (firestoreDb: Firestore, id: string) => Promise<DocumentReference<DocumentData, DocumentData>>
+  getConversationListId: (
+    firestoreDb: Firestore,
+    id: string,
+  ) => Promise<DocumentReference<DocumentData, DocumentData>>
   contactRequests: any[]
   contacts: any[]
   contact: any
@@ -23,7 +43,7 @@ const ContactContext = createContext<IContactState>({
     return null as any
   },
   acceptContactRequest() {
-    return null as any 
+    return null as any
   },
   getConversationListId() {
     return null as any
@@ -31,7 +51,7 @@ const ContactContext = createContext<IContactState>({
   contactRequests: [],
   contacts: [],
   contact: {},
-  setContact(){}
+  setContact() {},
 })
 
 const useContactContext = () => {
@@ -51,7 +71,8 @@ const ContactContextProvider: FC<IProps> = ({ children }) => {
   const [contactRequests, setContactRequests] = useState<any[]>([])
   const [contacts, setContacts] = useState<any[]>([])
   const [contact, setContact] = useState<any>({})
-  const [converstionListRef, setConverstionListRef] = useState<DocumentReference<DocumentData, DocumentData>>(null)
+  const [converstionListRef, setConverstionListRef] =
+    useState<DocumentReference<DocumentData, DocumentData>>(null)
 
   const router = useRouter()
   const getContactInfoQuery = useGetContactInfo((rs: any) => {})
@@ -59,36 +80,49 @@ const ContactContextProvider: FC<IProps> = ({ children }) => {
   const getUserQuery = useGetUser((rs: any) => {})
   const acceptContactRequestQuery = useAcceptContactRequest((rs: any) => {})
 
-  const getContactInfo = (firestoreDb: Firestore, id: string): Promise<void> => {    
+  const getContactInfo = (firestoreDb: Firestore, id: string): Promise<void> => {
     setLoading(true)
     return new Promise((resolve, reject) => {
       getContactInfoQuery[0]({ variables: { id } })
-      .then(async(rs) => { 
-        if (rs?.data?.getUserProfile) {
+        .then(async (rs) => {
+          if (rs?.data?.getUserProfile) {
             setContactRequests(rs?.data?.getUserProfile.contactRequests)
             setContacts(rs?.data?.getUserProfile.contacts)
-            const docRef = doc(firestoreDb, "conversations", rs?.data?.getUserProfile.conversationListId)
+            const docRef = doc(
+              firestoreDb,
+              'conversations',
+              rs?.data?.getUserProfile.conversationListId,
+            )
             setConverstionListRef(docRef)
 
             // getContactRequests(rs?.data?.getMyProfile.contactRequests)
-            // getContacts(rs?.data?.getMyProfile.contacts)          
+            // getContacts(rs?.data?.getMyProfile.contacts)
             resolve()
-        }
-        reject()
-      })
-      .finally(() => setTimeout(() => {setLoading(false)}, 3000))
+          }
+          reject()
+        })
+        .finally(() =>
+          setTimeout(() => {
+            setLoading(false)
+          }, 3000),
+        )
     })
   }
 
-  const getConversationListId = (firestoreDb: Firestore, id: string): Promise<DocumentReference<DocumentData, DocumentData>> => {
+  const getConversationListId = (
+    firestoreDb: Firestore,
+    id: string,
+  ): Promise<DocumentReference<DocumentData, DocumentData>> => {
     return new Promise((resolve, reject) => {
-      getConversationListIdQuery[0]({ variables: { id } })
-      .then(async(rs) => { 
+      getConversationListIdQuery[0]({ variables: { id } }).then(async (rs) => {
         if (rs?.data?.getUserProfile) {
-            const docRef = doc(firestoreDb, "conversations", rs?.data?.getUserProfile.conversationListId)
-            resolve(docRef)
-        }
-        else{
+          const docRef = doc(
+            firestoreDb,
+            'conversations',
+            rs?.data?.getUserProfile.conversationListId,
+          )
+          resolve(docRef)
+        } else {
           reject()
         }
       })
@@ -96,14 +130,14 @@ const ContactContextProvider: FC<IProps> = ({ children }) => {
   }
 
   const getConversationList = async (firestoreDb: Firestore, id: string) => {
-    const docRef = doc(firestoreDb, "conversations", id)
-    const docSnap = await getDoc(docRef);
-    
+    const docRef = doc(firestoreDb, 'conversations', id)
+    const docSnap = await getDoc(docRef)
+
     if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
+      console.log('Document data:', docSnap.data())
     } else {
       // docSnap.data() will be undefined in this case
-      console.log("No such document!");
+      console.log('No such document!')
     }
   }
 
@@ -112,14 +146,14 @@ const ContactContextProvider: FC<IProps> = ({ children }) => {
     setLoading(true)
 
     contactRequestIds.forEach((item: any) => {
-        getUserQuery[0]({
-          variables: {
-              id: item.contactId,
-          },
+      getUserQuery[0]({
+        variables: {
+          id: item.contactId,
+        },
       }).then(async (rs) => {
-          if (rs?.data?.getUser) {
-              requests.push(rs?.data?.getUser)
-          }
+        if (rs?.data?.getUser) {
+          requests.push(rs?.data?.getUser)
+        }
       })
     })
     setLoading(false)
@@ -132,67 +166,76 @@ const ContactContextProvider: FC<IProps> = ({ children }) => {
     setLoading(true)
 
     contactIds.forEach((item: any) => {
-        getUserQuery[0]({
-          variables: {
-              id: item.contactId,
-          },
+      getUserQuery[0]({
+        variables: {
+          id: item.contactId,
+        },
       }).then(async (rs) => {
-          if (rs?.data?.getUser) {
-              contact = {
-                ...rs?.data?.getUser,
-                ...item,
-                key: rs?.data?.getUser._id
-              }
-              requests.push(contact)
+        if (rs?.data?.getUser) {
+          contact = {
+            ...rs?.data?.getUser,
+            ...item,
+            key: rs?.data?.getUser._id,
           }
-          if(requests.length == contactIds.length){
-            setLoading(false)
-            // setTimeout(() => {setLoading(false)}, 3000)
-          }
+          requests.push(contact)
+        }
+        if (requests.length == contactIds.length) {
+          setLoading(false)
+          // setTimeout(() => {setLoading(false)}, 3000)
+        }
       })
     })
     setContacts(requests)
   }
 
-  const acceptContactRequest = (firestoreDb: Firestore, sender: any, receiver: User): Promise<void> => {    
+  const acceptContactRequest = (
+    firestoreDb: Firestore,
+    sender: any,
+    receiver: User,
+  ): Promise<void> => {
     return new Promise((resolve, reject) => {
-      getConversationListId(firestoreDb, sender.id).then(ref => {
-          acceptContactRequestQuery[0]({
-            variables: {
-              senderId: sender.id, receiverId: receiver.uid
+      getConversationListId(firestoreDb, sender.id).then((ref) => {
+        acceptContactRequestQuery[0]({
+          variables: {
+            senderId: sender.id,
+            receiverId: receiver.uid,
           },
-          })
-          .then(async(rs) => { 
+        })
+          .then(async (rs) => {
             if (rs?.data?.acceptContactRequest) {
-                let senderConversation = {
-                  id: receiver.uid,
-                  photo: receiver.photoURL,
-                  name: receiver.displayName,
-                  message: "CTSC",
-                  unread: 0,
-                  updatedAt: Date.now()
-                }
+              let senderConversation = {
+                id: receiver.uid,
+                photo: receiver.photoURL,
+                name: receiver.displayName,
+                message: 'CTSC',
+                unread: 0,
+                updatedAt: Date.now(),
+              }
 
-                let receiverConversation = {
-                  id: sender.id,
-                  photo: sender.photo,
-                  name: sender.name,
-                  message: "CTSC",
-                  unread: 0,
-                  updatedAt: Date.now()
-                }
-                await updateDoc(converstionListRef, {
-                    list: arrayUnion(receiverConversation)
-                });
+              let receiverConversation = {
+                id: sender.id,
+                photo: sender.photo,
+                name: sender.name,
+                message: 'CTSC',
+                unread: 0,
+                updatedAt: Date.now(),
+              }
+              await updateDoc(converstionListRef, {
+                list: arrayUnion(receiverConversation),
+              })
 
-                await updateDoc(ref, {
-                    list: arrayUnion(senderConversation)
-                });
-                resolve()
+              await updateDoc(ref, {
+                list: arrayUnion(senderConversation),
+              })
+              resolve()
             }
             reject()
           })
-          .finally(() => setTimeout(() => {setLoading(false)}, 3000))
+          .finally(() =>
+            setTimeout(() => {
+              setLoading(false)
+            }, 3000),
+          )
       })
     })
   }
@@ -207,7 +250,7 @@ const ContactContextProvider: FC<IProps> = ({ children }) => {
         acceptContactRequest,
         contact,
         setContact,
-        getConversationListId
+        getConversationListId,
       }}
     >
       {children}
