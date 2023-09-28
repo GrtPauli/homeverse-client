@@ -2,8 +2,8 @@ import { gql, useLazyQuery, useMutation } from '@apollo/client'
 import { ListingFragment } from './fragment'
 
 const CREATE_LISTING = gql`
-  mutation CreateListing($userId: String!, $listing: CreateListingInput!) {
-    createListing(userId: $userId, listing: $listing) {
+  mutation CreateListing($listing: CreateListingInput!) {
+    createListing(listing: $listing) {
       _id
     }
   }
@@ -17,8 +17,8 @@ const UPDATE_LISTING = gql`
 `
 
 const GET_USER_LISTINGS = gql`
-  query GetUserListings($userId: String!) {
-    getUserListings(userId: $userId) {
+  query GetUserListings($filter: UserListingFilter!) {
+    getUserListings(filter: $filter) {
       ...Listing
     }
   }

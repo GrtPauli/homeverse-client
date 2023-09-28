@@ -5,11 +5,16 @@ export interface IListing {
   price: number
   homeType: string
   description: string
-  location: ILocation
+  state: string
+  city: string
+  address: string
+  zip: number
   photos: IListingImage[]
   yearBuilt: number
-  owner: string
-  agent: string
+  owner: ListingParticipant
+  agent: ListingParticipant
+  ownerId: string
+  agentId: string
   status: ListingStatus
   bedrooms: number
   totalRooms: number
@@ -40,17 +45,28 @@ export interface IListing {
   updatedAt: number
 }
 
+export interface ListingParticipant {  
+  name: string
+  id: string
+  photo: string
+}
+
 export interface IListingImage {
   id: string
   name: string
   uri: string
 }
 
+export interface IUserListingFilter {
+  ownerId?: string
+  agentId?: string
+}
+
 export interface IListingFilter {
   minPrice?: number
   maxPrice?: number
   state?: string
-  city?: string
+  city?: string  
   bedrooms?: string
   bathrooms?: string
 }

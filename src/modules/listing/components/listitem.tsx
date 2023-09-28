@@ -4,7 +4,7 @@ import { CameraIcon, LocationIcon, VideoIcon } from '@/assets/icons'
 import { HvButton } from '@/components'
 import CurrencyFormat from 'react-currency-format'
 import HouseImg from '../../../assets/images/slide-3.jpg'
-import { IListing } from '../model'
+import { IListing, ListingStatus } from '../model'
 import { useRouter } from 'next/router'
 
 interface IProps {
@@ -31,18 +31,26 @@ export const ListItem: FC<IProps> = ({ item }) => {
             value={item.price}
             displayType={'text'}
             thousandSeparator={true}
-            prefix={'$'}
+            prefix={'₦'}
             renderText={(value) => <h1 className="font-bold text-primary text-xl">{value}</h1>}
           />
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2">
-              <CameraIcon className="w-4 h-4 text-colors-cadet" />
-              <p className="text-[13px] text-colors-cadet">{item.photos.length}</p>
+            <div className="flex gap-2 items-center">
+              <div
+                className={`w-2 h-2 rounded-full 
+                  ${item.status == (ListingStatus[0] as any) && 'bg-green-500'} 
+                  ${item.status == (ListingStatus[1] as any) && 'bg-blue-500'} 
+                `}
+              />
+              <p className="text-[13px] text-colors-cadet capitalize">
+                {item.status == (ListingStatus[0] as any) && 'Active'}
+                {item.status == (ListingStatus[1] as any) && 'Sold'}
+              </p>
             </div>
 
             <div className="flex items-center gap-2">
-              <VideoIcon className="w-4 h-4 text-colors-cadet" />
-              <p className="text-[13px] text-colors-cadet">3</p>
+              <CameraIcon className="w-4 h-4 text-colors-cadet" />
+              <p className="text-[13px] text-colors-cadet">{item.photos.length}</p>
             </div>
           </div>
         </div>
@@ -72,7 +80,7 @@ export const ListItem: FC<IProps> = ({ item }) => {
         </div>
 
         <div className="flex items-center gap-2 mb-5">
-          <LocationIcon className="w-3 h-3 text-colors-cadet" />
+          <LocationIcon className="w-4 h-4 text-colors-cadet" />
           <p className="text-[13px] text-colors-cadet">
             {item.state} {' , '} {item.city}
           </p>

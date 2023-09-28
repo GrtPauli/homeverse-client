@@ -28,7 +28,7 @@ export const ListingDetailPage: FC<IProps> = ({ id, agent = false }) => {
       {!initLoading && (
         <>
           {agent ? (
-            <AgentHubLayout containerClassName="pt-[100px]">
+            <AgentHubLayout containerClassName="pt-[100px">
               <DetailsContent listing={listing} agent />
             </AgentHubLayout>
           ) : (

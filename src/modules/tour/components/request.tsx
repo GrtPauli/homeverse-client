@@ -15,6 +15,7 @@ import { useTourContext } from '../context'
 import { useAuthContext } from '@/modules/auth/context'
 import { IListing } from '@/modules/listing/model'
 import { TourMethod, TourStatus } from '../model'
+import { useRouter } from 'next/router'
 
 type ValuePiece = Date | string | null
 type Value = ValuePiece | [ValuePiece, ValuePiece]
@@ -36,12 +37,13 @@ export const RequestTour: FC<IProps> = ({ showModal, setShowModal }) => {
   const [time, setTime] = useState('10:00')
   const { loading, createTourRequest, createTour } = useTourContext()
   const { firebaseAuth } = useAuthContext()
+  const router = useRouter()
 
   const handleSubmit = () => {
     createTour({
-      agentId: showModal.data.agent,
-      agentName: 'Paul Andrew',
-      agentPhoto: firebaseAuth.currentUser.photoURL,
+      agentId: showModal.data.agentId,
+      agentName: showModal.data.agent.name,
+      agentPhoto: showModal.data.agent.photo,
       method: method == 'in-person' ? (TourMethod[0] as any) : (TourMethod[1] as any),
       propertyId: showModal.data._id,
       propertyListingDate: showModal.data.createdAt,
@@ -50,7 +52,10 @@ export const RequestTour: FC<IProps> = ({ showModal, setShowModal }) => {
       touristPhoto: firebaseAuth.currentUser.photoURL,
       tourScheduledDate: day.setHours(parseInt(time.split(':')[0]), parseInt(time.split(':')[1])),
       tourStatus: TourStatus[3] as any,
-    }).then(() => setShowModal({ ...showModal, open: false }))
+    }).then(() => {
+      setShowModal({ ...showModal, open: false })
+      router.push("/my/tours")
+    })
 
     // createTourRequest({
     //   agentId: showModal.data.agent,

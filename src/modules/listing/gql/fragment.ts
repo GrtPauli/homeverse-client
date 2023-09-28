@@ -6,20 +6,28 @@ export const ListingFragment = gql`
     price
     homeType
     description
-    location {
-      state
-      city
-      address
-      zip
-    }
+    state
+    city
+    address
+    zip
+    ownerId
+    agentId
     photos {
       id
       name
       uri
     }
     yearBuilt
-    owner
-    agent
+    owner {
+      name
+      id
+      photo
+    }
+    agent {
+      name
+      id
+      photo
+    }
     status
     bedrooms
     totalRooms

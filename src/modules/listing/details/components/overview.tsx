@@ -29,12 +29,7 @@ export const ListingOverview: FC<IProps> = ({ listing }) => {
 
           <div>
             <p className="font-bold text-dark-prussian-blue">Bathrooms</p>
-            <p className="text-colors-cadet text-sm">
-              {listing.fullBathrooms +
-                listing.oneFourBathrooms +
-                listing.oneTwoBathrooms +
-                listing.threeFourBathrooms}
-            </p>
+            <p className="text-colors-cadet text-sm">{listing.bathrooms}</p>
           </div>
         </div>
 

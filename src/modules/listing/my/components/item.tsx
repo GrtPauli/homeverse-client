@@ -3,7 +3,7 @@ import { Image } from 'antd'
 import HouseImg from '../../../assets/images/slide-2.jpg'
 import { CameraIcon, LocationIcon, VideoIcon } from '@/assets/icons'
 import { HvButton } from '@/components'
-import { IListing } from '../../model'
+import { IListing, ListingStatus } from '../../model'
 import CurrencyFormat from 'react-currency-format'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
@@ -32,18 +32,26 @@ export const ListingItem: FC<IProps> = ({ item }) => {
             value={item.price}
             displayType={'text'}
             thousandSeparator={true}
-            prefix={'$'}
+            prefix={'₦'}
             renderText={(value) => <h1 className="font-bold text-primary text-xl">{value}</h1>}
           />
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2">
-              <CameraIcon className="w-4 h-4 text-colors-cadet" />
-              <p className="text-[13px] text-colors-cadet">{item.photos.length}</p>
+            <div className="flex gap-2 items-center">
+              <div
+                className={`w-2 h-2 rounded-full 
+                  ${item.status == (ListingStatus[0] as any) && 'bg-green-500'} 
+                  ${item.status == (ListingStatus[1] as any) && 'bg-blue-500'} 
+                `}
+              />
+              <p className="text-[13px] text-colors-cadet capitalize">
+                {item.status == (ListingStatus[0] as any) && 'Active'}
+                {item.status == (ListingStatus[1] as any) && 'Sold'}
+              </p>
             </div>
 
             <div className="flex items-center gap-2">
-              <VideoIcon className="w-4 h-4 text-colors-cadet" />
-              <p className="text-[13px] text-colors-cadet">3</p>
+              <CameraIcon className="w-4 h-4 text-colors-cadet" />
+              <p className="text-[13px] text-colors-cadet">{item.photos.length}</p>
             </div>
           </div>
         </div>
@@ -55,12 +63,7 @@ export const ListingItem: FC<IProps> = ({ item }) => {
           </div>
 
           <div className="flex items-center gap-1 border-r pr-2">
-            <p>
-              {item.fullBathrooms +
-                item.oneFourBathrooms +
-                item.oneTwoBathrooms +
-                item.threeFourBathrooms}
-            </p>
+            <p>{item.bathrooms}</p>
             <p>Bathrooms</p>
           </div>
 
@@ -78,10 +81,9 @@ export const ListingItem: FC<IProps> = ({ item }) => {
         </div>
 
         <div className="flex items-center gap-2 mb-5">
-          {/* <LocationIcon className='w-3 h-3 text-colors-cadet'/> */}
-          <Image src={item.countryFlag} width="18px" height="18px" />
+          <LocationIcon className='w-4 h-4 text-colors-cadet'/>
           <p className="text-[13px] text-colors-cadet">
-            {item.country} {' , '} {item.state} {' , '} {item.city}
+            {item.state} {' , '} {item.city}
           </p>
         </div>
 

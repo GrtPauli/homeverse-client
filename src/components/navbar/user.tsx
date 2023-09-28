@@ -57,7 +57,7 @@ const UserProfile = ({ content }: any) => {
                     width={40}
                     preview={false}
                     height={40}
-                    className="rounded-full"
+                    className="rounded-full object-center object-cover"
                   />
                   {/* <ChevronDownIcon className='text-light-white w-4 h-4'/> */}
                 </button>

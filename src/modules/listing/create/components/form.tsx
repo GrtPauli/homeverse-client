@@ -48,41 +48,35 @@ export const ListingForm: FC<IProps> = ({ id }) => {
   }
 
   const handleSubmit = (val: any) => {
-    let zip = val?.zip
-    let address = val?.address
     let yearBuilt = val?.yearBuilt.value
     let propertySizeUnit = val?.propertySizeUnit.value
     let homeType = val?.homeType.value
 
-    delete val?.zip
-    delete val?.address
     delete val?.yearBuilt
     delete val?.propertySizeUnit
     delete val?.homeType
 
     if (id) {
       updateListing(id, {
-        photos: photos.length > 0 ? photos : null,
-        location: {
-          zip: zip || null,
-          address: address || null,
-          city: location.city?.name,
-          state: location.state?.name,
-        },
-        yearBuilt: yearBuilt || null,
-        propertySizeUnit: propertySizeUnit || null,
-        homeType: homeType || null,
+        photos: photos.length > 0 ? photos : listing.photos,
+        city: location.city?.name || listing.city,
+        state: location.state?.name || listing.state,
+        yearBuilt: yearBuilt || listing.yearBuilt,
+        propertySizeUnit: propertySizeUnit || listing.propertySizeUnit,
+        homeType: homeType || listing.homeType,
         ...val,
       }).then(() => router.push(`/dashboard/listings/detail/${id}`))
     } else {
-      createListing(firebaseAuth?.currentUser?.uid, {
-        photos: photos.length > 0 ? photos : null,
-        location: {
-          zip: zip || null,
-          address: address || null,
-          city: location.city?.name,
-          state: location.state?.name,
+      createListing({
+        agentId: firebaseAuth?.currentUser?.uid,
+        agent: {
+          id: firebaseAuth?.currentUser?.uid,
+          name: firebaseAuth?.currentUser?.displayName,
+          photo: firebaseAuth?.currentUser?.photoURL
         },
+        photos: photos.length > 0 ? photos : null,
+        city: location.city?.name || null,
+        state: location.state?.name || null,
         yearBuilt: yearBuilt || null,
         propertySizeUnit: propertySizeUnit || null,
         homeType: homeType || null,
@@ -114,8 +108,8 @@ export const ListingForm: FC<IProps> = ({ id }) => {
             totalRooms: listing?.totalRooms || null,
             garages: listing?.garages || null,
             bathrooms: listing?.bathrooms || null,
-            address: listing?.location?.address || null,
-            zip: listing?.location?.zip || null,
+            address: listing?.address || null,
+            zip: listing?.zip || null,
             propertySize: listing?.propertySize || null,
             propertySizeUnit: listing?.propertySizeUnit || null,
             basementSqFt: listing?.basementSqFt || null,

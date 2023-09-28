@@ -132,7 +132,7 @@ const ProfileContextProvider: FC<IProps> = ({ children }) => {
   const updateProfilePic = (image: IImage): Promise<void> => {
     setLoading(true)
     const storage = getStorage()
-    const storageRef = ref(storage, 'profile-pic')
+    const storageRef = ref(storage, `${firebaseAuth.currentUser.uid}-profile-pic`)
 
     return new Promise<void>((resolve, reject) => {
       uploadString(storageRef, image.uri, 'data_url').then((snapshot) => {

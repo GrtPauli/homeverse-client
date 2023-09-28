@@ -9,14 +9,26 @@ export const HomePageFragment = gql`
       description
       state
       city
+      address
+      zip
+      ownerId
+      agentId
       photos {
         id
         name
         uri
       }
       yearBuilt
-      owner
-      agent
+      owner {
+        name
+        id
+        photo
+      }
+      agent {
+        name
+        id
+        photo
+      }
       status
       bedrooms
       totalRooms

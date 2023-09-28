@@ -5,7 +5,7 @@ import { HvButton } from '@/components'
 import CurrencyFormat from 'react-currency-format'
 import HouseImg from '../../../assets/images/slide-3.jpg'
 import { useRouter } from 'next/router'
-import { IListing } from '@/modules/listing/model'
+import { IListing, ListingStatus } from '@/modules/listing/model'
 
 interface IProps {
   item: IListing
@@ -35,14 +35,22 @@ export const ListItem: FC<IProps> = ({ item }) => {
             renderText={(value) => <h1 className="font-bold text-primary text-xl">{value}</h1>}
           />
           <div className="flex items-center gap-3">
+            <div className="flex gap-2 items-center">
+              <div
+                className={`w-2 h-2 rounded-full 
+                  ${item.status == (ListingStatus[0] as any) && 'bg-green-500'} 
+                  ${item.status == (ListingStatus[1] as any) && 'bg-blue-500'} 
+                `}
+              />
+              <p className="text-[13px] text-colors-cadet capitalize">
+                {item.status == (ListingStatus[0] as any) && 'Active'}
+                {item.status == (ListingStatus[1] as any) && 'Sold'}
+              </p>
+            </div>
+            
             <div className="flex items-center gap-2">
               <CameraIcon className="w-4 h-4 text-colors-cadet" />
               <p className="text-[13px] text-colors-cadet">{item.photos.length}</p>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <VideoIcon className="w-4 h-4 text-colors-cadet" />
-              <p className="text-[13px] text-colors-cadet">3</p>
             </div>
           </div>
         </div>

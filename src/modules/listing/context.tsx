@@ -1,6 +1,6 @@
 import { FC, ReactNode, createContext, useContext, useState } from 'react'
 import { useRouter } from 'next/router'
-import { IListing, IListingFilter } from './model'
+import { IListing, IListingFilter, IUserListingFilter } from './model'
 import {
   useCreateListing,
   useGetListing,
@@ -14,8 +14,8 @@ interface IListingState {
   initLoading: boolean
   loading: boolean
   filterLoading: boolean
-  createListing: (userId: string, listing: IListing) => Promise<void>
-  getUserListings: (userId: string) => Promise<void>
+  createListing: (listing: IListing) => Promise<void>
+  getUserListings: (filter: IUserListingFilter) => Promise<void>
   getListings: (filter?: IListingFilter) => Promise<void>
   getListing: (id: string, noLoading?: boolean) => Promise<void>
   updateListing: (id: string, listing: Partial<IListing>) => Promise<void>
@@ -100,12 +100,11 @@ const ListingContextProvider: FC<IProps> = ({ children }) => {
     })
   }
 
-  const createListing = (userId: string, listing: IListing): Promise<void> => {
+  const createListing = (listing: IListing): Promise<void> => {
     setLoading(true)
     return new Promise((resolve, reject) => {
       createListingQuery[0]({
         variables: {
-          userId,
           listing,
         },
       })
@@ -123,11 +122,11 @@ const ListingContextProvider: FC<IProps> = ({ children }) => {
     })
   }
 
-  const getUserListings = (userId: string): Promise<void> => {
+  const getUserListings = (filter: IUserListingFilter): Promise<void> => {
     setLoading(true)
     return new Promise((resolve, reject) => {
       getUserListingsQuery[0]({
-        variables: { userId },
+        variables: { filter },
       })
         .then(async (rs) => {
           if (rs?.data?.getUserListings) {

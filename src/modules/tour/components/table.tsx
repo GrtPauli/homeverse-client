@@ -7,9 +7,15 @@ import { APP_DATE_FORMAT, APP_DATE_TIME_FORMAT } from '@/constants/Helper'
 import { HvChatIcon, HvEditIcon, HvHomeIcon, HvInfoIcon, HvTickCircleIcon } from '@/assets/icons'
 import { useTourContext } from '../context'
 import HvSwitchInput from '@/components/input/switch'
+import { HvClipBoardIcon } from '@/assets/icons/clipboard'
+import { HvModal } from '@/components'
+import { TourDetails } from './details'
+import { useListingContext } from '@/modules/listing/context'
 
 export const ToursTable = ({ agent }: any) => {
   const { tours } = useTourContext()
+  const [ detailModal, setDetailModal ] = useState<boolean>(false)
+  const { listing, getListing, initLoading } = useListingContext()
 
   const columns: ColumnsType<ITour> = [
     {
@@ -52,23 +58,23 @@ export const ToursTable = ({ agent }: any) => {
       key: 'method',
       render: (value) => <p>{value == TourMethod[0] ? 'In Person' : 'Video Call'}</p>,
     },
-    {
-      title: 'Property ID',
-      dataIndex: 'propertyId',
-      key: 'propertyId',
-      render: (value) => <>{value.slice(0, 6)}</>,
-    },
+    // {
+    //   title: 'Property ID',
+    //   dataIndex: 'propertyId',
+    //   key: 'propertyId',
+    //   render: (value) => <>{value.slice(0, 6)}</>,
+    // },
     {
       title: 'Tour Rating',
       dataIndex: 'rating',
       key: 'rating',
     },
-    {
-      title: 'Listing Date',
-      dataIndex: 'propertyListingDate',
-      key: 'propertyListingDate',
-      render: (value) => <>{moment(value).format(APP_DATE_FORMAT)}</>,
-    },
+    // {
+    //   title: 'Listing Date',
+    //   dataIndex: 'propertyListingDate',
+    //   key: 'propertyListingDate',
+    //   render: (value) => <>{moment(value).format(APP_DATE_FORMAT)}</>,
+    // },
     {
       title: 'Actions',
       key: 'action',
@@ -76,16 +82,16 @@ export const ToursTable = ({ agent }: any) => {
         <div className="flex items-center gap-5 justify-center">
           {agent && record.tourStatus == (TourStatus[3] as any) && (
             <button onClick={() => {}}>
-              <HvTickCircleIcon className="w-5 h-5 text-colors-cadet" />
+              <HvTickCircleIcon className="w-5 h-5 text-colors-cadet hover:text-primary duration-150 ease-in" />
             </button>
           )}
 
           <button className="">
-            <HvChatIcon className="w-5 h-5 text-colors-cadet" />
+            <HvChatIcon className="w-5 h-5 text-colors-cadet hover:text-primary duration-150 ease-in" />
           </button>
 
           <button>
-            <HvHomeIcon className="w-5 h-5 text-colors-cadet" />
+            <HvClipBoardIcon className="w-5 h-5 text-colors-cadet hover:text-primary duration-150 ease-in" />
           </button>
         </div>
       ),
@@ -93,23 +99,33 @@ export const ToursTable = ({ agent }: any) => {
   ]
 
   return (
-    <div className="pt-3">
-      <TableFilter />
-      {tours.length > 0 ? (
-        <ConfigProvider
-          theme={{
-            token: {
-              fontFamily: '',
-              colorPrimary: '#FF5A3D',
-            },
-          }}
-        >
-          <Table className="translate-y-2" bordered columns={columns} dataSource={tours} />
-        </ConfigProvider>
-      ) : (
-        <Empty />
-      )}
-    </div>
+    <>
+      <div className="pt-3">
+        <TableFilter />
+        {tours.length > 0 ? (
+          <ConfigProvider
+            theme={{
+              token: {
+                fontFamily: '',
+                colorPrimary: '#FF5A3D',
+              },
+            }}
+          >
+            <Table className="translate-y-2" bordered columns={columns} dataSource={tours} />
+          </ConfigProvider>
+        ) : (
+          <Empty />
+        )}
+      </div>
+
+      <HvModal
+        open={detailModal}
+        onDismiss={() => setDetailModal(false)}
+        title='Tour Details'
+      >
+        <TourDetails/>
+      </HvModal>
+    </>
   )
 }
 

@@ -1,5 +1,5 @@
 import { AgentHubLayout } from '@/components/layout/hub'
-import React, { useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
 import { ConfigProvider, Empty, Tabs } from 'antd'
 import type { TabsProps } from 'antd'
 import { SaleListings } from './components/sale'
@@ -12,7 +12,11 @@ import { NoListing } from '../components'
 import { HvHomeIcon } from '@/assets/icons'
 import Link from 'next/link'
 
-export const MyListingsPage = () => {
+interface IProps {
+  agent?: boolean
+}
+
+export const MyListingsPage: FC<IProps> = ({ agent = false }) => {
   const items: TabsProps['items'] = [
     {
       key: '1',
@@ -31,7 +35,8 @@ export const MyListingsPage = () => {
 
   useEffect(() => {
     if (firebaseInitLoading == false) {
-      getUserListings(firebaseAuth?.currentUser?.uid)
+      agent == true ? getUserListings({agentId: firebaseAuth?.currentUser?.uid})
+      : getUserListings({ownerId: firebaseAuth?.currentUser?.uid})
     }
   }, [firebaseInitLoading])
 
@@ -64,7 +69,7 @@ export const MyListingsPage = () => {
             </div>
 
             <div className="w-[100%] bg-light-white rounded-lg shadow-lg px-10 pb-8 pt-3">
-              {userListings.length == 0 && (
+              {userListings.length == 0 ? (
                 <div className="py-14 text-center flex justify-center flex-col items-center">
                   <HvEmpty
                     description={
@@ -75,18 +80,18 @@ export const MyListingsPage = () => {
                     }
                   />
                 </div>
+              ) : (
+                <ConfigProvider
+                  theme={{
+                    token: {
+                      fontFamily: '',
+                      colorPrimary: '#FF5A3D',
+                    },
+                  }}
+                >
+                  <Tabs defaultActiveKey="1" items={items} />
+                </ConfigProvider>
               )}
-
-              {/* <ConfigProvider
-                theme={{
-                  token: {
-                    fontFamily: '',
-                    colorPrimary: '#FF5A3D',
-                  },
-                }}
-              >
-                <Tabs defaultActiveKey="1" items={items} />
-              </ConfigProvider> */}
             </div>
           </div>
         </AgentHubLayout>

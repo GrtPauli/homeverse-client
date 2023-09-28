@@ -48,7 +48,7 @@ export const DetailsContent: FC<IProps> = ({ listing, agent = false }) => {
   ]
 
   return (
-    <>
+    <div className='mb-20'>
       <ConfigProvider
         theme={{
           token: {
@@ -77,7 +77,7 @@ export const DetailsContent: FC<IProps> = ({ listing, agent = false }) => {
                 value={listing.price}
                 displayType={'text'}
                 thousandSeparator={true}
-                prefix={'$'}
+                prefix={'₦'}
                 renderText={(value) => (
                   <h1 className="font-extrabold text-3xl text-primary">{value}</h1>
                 )}
@@ -191,6 +191,6 @@ export const DetailsContent: FC<IProps> = ({ listing, agent = false }) => {
         subTitle="Are you sure want to mark this listing as sold ?"
         onDismiss={() => setConfirmModal(false)}
       />
-    </>
+    </div>
   )
 }
