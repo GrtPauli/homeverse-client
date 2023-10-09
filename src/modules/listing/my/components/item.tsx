@@ -81,7 +81,7 @@ export const ListingItem: FC<IProps> = ({ item }) => {
         </div>
 
         <div className="flex items-center gap-2 mb-5">
-          <LocationIcon className='w-4 h-4 text-colors-cadet'/>
+          <LocationIcon className="w-4 h-4 text-colors-cadet" />
           <p className="text-[13px] text-colors-cadet">
             {item.state} {' , '} {item.city}
           </p>

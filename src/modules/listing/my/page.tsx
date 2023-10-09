@@ -35,8 +35,9 @@ export const MyListingsPage: FC<IProps> = ({ agent = false }) => {
 
   useEffect(() => {
     if (firebaseInitLoading == false) {
-      agent == true ? getUserListings({agentId: firebaseAuth?.currentUser?.uid})
-      : getUserListings({ownerId: firebaseAuth?.currentUser?.uid})
+      agent == true
+        ? getUserListings({ agentId: firebaseAuth?.currentUser?.uid })
+        : getUserListings({ ownerId: firebaseAuth?.currentUser?.uid })
     }
   }, [firebaseInitLoading])
 

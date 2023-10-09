@@ -27,7 +27,7 @@ interface ITourState {
   tourRequests: ITourRequest[]
   tours: ITour[]
   createTourRequest: (request: ICreateTourRequestInput) => Promise<void>
-  getTours: (input: IGetTourInfoInput) => Promise<void>
+  getTours: (input: IGetTourInfoInput, noInitLoader?: boolean) => Promise<void>
   getTourInfo: (input: IGetTourInfoInput) => Promise<void>
   updateTourRequest: (id: string, requestStatus: TourRequestStatus, vc?: boolean) => Promise<void>
   updateTour: (id: string, tour: IUpdateTourInput) => Promise<void>
@@ -137,8 +137,8 @@ const TourContextProvider: FC<IProps> = ({ children }) => {
     })
   }
 
-  const getTours = (input: IGetTourInfoInput): Promise<void> => {
-    setInitLoading(true)
+  const getTours = (input: IGetTourInfoInput, noInitLoader?: boolean): Promise<void> => {
+    noInitLoader ? setLoading(true) : setInitLoading(true)
     return new Promise((resolve, reject) => {
       getToursQuery[0]({
         variables: {
@@ -153,7 +153,9 @@ const TourContextProvider: FC<IProps> = ({ children }) => {
             reject()
           }
         })
-        .finally(() => setInitLoading(false))
+        .finally(() => {
+          noInitLoader ? setLoading(false) : setInitLoading(false)
+        })
     })
   }
 

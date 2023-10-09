@@ -48,7 +48,7 @@ export const DetailsContent: FC<IProps> = ({ listing, agent = false }) => {
   ]
 
   return (
-    <div className='mb-20'>
+    <div className="mb-20">
       <ConfigProvider
         theme={{
           token: {

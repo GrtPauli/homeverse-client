@@ -1,7 +1,7 @@
 import React from 'react'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
-import { ListItem } from './listitem'
+import { ListItem } from './listitem2'
 import { useHomeContext } from '../context'
 
 const responsive = {

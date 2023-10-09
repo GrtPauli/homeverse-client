@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200;0,6..12,300;0,6..12,400;0,6..12,500;0,6..12,600;0,6..12,700;0,6..12,800;0,6..12,900;0,6..12,1000;1,6..12,200;1,6..12,300;1,6..12,400;1,6..12,500;1,6..12,600;1,6..12,700;1,6..12,800;1,6..12,900;1,6..12,1000&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200;0,6..12,300;0,6..12,400;0,6..12,500;0,6..12,600;0,6..12,700;0,6..12,800;0,6..12,900;0,6..12,1000;1,6..12,200;1,6..12,300;1,6..12,400;1,6..12,500;1,6..12,600;1,6..12,700;1,6..12,800;1,6..12,900;1,6..12,1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Niramit:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap'); */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -73,6 +76,8 @@
 \*-----------------------------------*/
 body {
   font-family: 'Montserrat', sans-serif;
+  font-family: 'Nunito Sans', sans-serif;
+  /* font-family: 'Niramit', sans-serif; */
 }
 
 input::-webkit-outer-spin-button,
@@ -125,7 +130,25 @@ input[type='number'] {
   margin-bottom: 0px;
   padding: 0px;
 }
-
+.ant-steps-item-wait .ant-steps-item-title,
+.ant-steps-icon {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+.ant-steps-item-container .ant-steps-item-icon {
+  padding-top: 4.5px !important;
+}
+.ant-steps-item-content > .ant-steps-item-title::after {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+}
+.ant-progress-circle-path {
+  stroke: #ff5a3d !important;
+}
+.ant-tabs-ink-bar.ant-tabs-ink-bar-animated {
+  height: 4px !important;
+}
+.ant-tabs-tab {
+  padding: 15px 0 !important;
+}
 .slide-1 {
   background-image: url(../assets/images/slide-1.jpg);
 }

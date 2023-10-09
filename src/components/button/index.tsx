@@ -44,8 +44,8 @@ export const HvButton: FC<IProps> = ({
   ${
     disabled
       ? 'bg-colors-cadet cursor-not-allowed text-light-white'
-      : outline
-      ? 'border-primary text-primary border'
+      : btnLight
+      ? 'bg-white text-primary hover:bg-primary hover:shadow-lg hover:text-white duration-150 ease-in'
       : 'bg-primary text-light-white hover:bg-white hover:shadow-lg hover:text-primary duration-150 ease-in'
   }
   rounded-full ${paddingX ? paddingX : 'px-8'} gap-3 ${
@@ -58,7 +58,7 @@ export const HvButton: FC<IProps> = ({
 
   return (
     <button
-      className={loading ? loadingClassName : regClassName}
+      className={className ? className : loading ? loadingClassName : regClassName}
       type={type ? type : 'button'}
       onClick={onClick}
       disabled={loading}

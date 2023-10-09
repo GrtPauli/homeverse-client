@@ -9,6 +9,7 @@ interface IProps extends ModalProps {
   width?: string | number
   children: ReactNode
   wrapClassName?: string
+  className?: string
 }
 
 export const HvModal: FC<IProps> = ({
@@ -19,6 +20,7 @@ export const HvModal: FC<IProps> = ({
   centered = true,
   width,
   wrapClassName,
+  className,
   ...props
 }) => {
   return (
@@ -43,7 +45,7 @@ export const HvModal: FC<IProps> = ({
         <div className="bg-dark-prussian-blue w-full px-5 py-4 text-light-white ">
           <h1 className="font-bold text-lg -mt-0.5">{title}</h1>
         </div>
-        <div className="px-5 py-5">{children}</div>
+        <div className={`px-5 py-5 ${className}`}>{children}</div>
       </Modal>
     </ConfigProvider>
   )

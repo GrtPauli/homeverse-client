@@ -51,10 +51,10 @@ export const RequestTour: FC<IProps> = ({ showModal, setShowModal }) => {
       touristName: firebaseAuth.currentUser.displayName,
       touristPhoto: firebaseAuth.currentUser.photoURL,
       tourScheduledDate: day.setHours(parseInt(time.split(':')[0]), parseInt(time.split(':')[1])),
-      tourStatus: TourStatus[3] as any,
+      tourStatus: TourStatus[0] as any,
     }).then(() => {
       setShowModal({ ...showModal, open: false })
-      router.push("/my/tours")
+      router.push('/my/tours')
     })
 
     // createTourRequest({

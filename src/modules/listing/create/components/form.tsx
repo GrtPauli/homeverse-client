@@ -72,7 +72,7 @@ export const ListingForm: FC<IProps> = ({ id }) => {
         agent: {
           id: firebaseAuth?.currentUser?.uid,
           name: firebaseAuth?.currentUser?.displayName,
-          photo: firebaseAuth?.currentUser?.photoURL
+          photo: firebaseAuth?.currentUser?.photoURL,
         },
         photos: photos.length > 0 ? photos : null,
         city: location.city?.name || null,

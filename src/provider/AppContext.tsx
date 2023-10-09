@@ -7,6 +7,7 @@ import { HomeContextProvider } from '@/modules/home/context'
 import { ListingContextProvider } from '@/modules/listing/context'
 import { MessageContextProvider } from '@/modules/messages/context'
 import { ProfileContextProvider } from '@/modules/profile/context'
+import { RentalContextProvider } from '@/modules/rental-manager/context'
 import { TourContextProvider } from '@/modules/tour/context'
 import React, { ComponentProps, FC } from 'react'
 
@@ -31,6 +32,7 @@ const providers = [
   ListingContextProvider,
   HomeContextProvider,
   ProfileContextProvider,
+  RentalContextProvider,
   FinderContextProvider,
   ContactContextProvider,
   ChatContextProvider,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { ListItem } from './listitem'
+import { ListItem } from './listitem2'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import { useHomeContext } from '../context'

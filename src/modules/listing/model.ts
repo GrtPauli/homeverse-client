@@ -45,7 +45,7 @@ export interface IListing {
   updatedAt: number
 }
 
-export interface ListingParticipant {  
+export interface ListingParticipant {
   name: string
   id: string
   photo: string
@@ -66,7 +66,7 @@ export interface IListingFilter {
   minPrice?: number
   maxPrice?: number
   state?: string
-  city?: string  
+  city?: string
   bedrooms?: string
   bathrooms?: string
 }
